@@ -67,11 +67,7 @@ export default function TutorPage() {
               <input className="w-full bg-transparent outline-none" placeholder="Ask something, or say 'give me a hint'" />
               <button className="rounded-full bg-teal px-4 py-2 text-white"><Send className="h-4 w-4" /></button>
             </div>
-            <div className="mt-4 flex items-center justify-between text-sm text-slate-500">
-              <div className="flex items-center gap-2"><Mic className="h-4 w-4" />Voice button UI</div>
-              <div className="flex items-center gap-2"><Volume2 className="h-4 w-4" />Read aloud</div>
-              <div className="flex items-center gap-2"><MessageCircle className="h-4 w-4" />Saved session</div>
-            </div>
+            
           </div>
         </GlassCard>
       </div>

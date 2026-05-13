@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { ReactNode } from "react";
 import { ArrowRight, BadgeCheck, Bot, Brain, ChevronRight, Flame, GraduationCap, LayoutDashboard, LineChart, ShieldCheck, Sparkles, Users } from "lucide-react";
 import { ThemeToggleCompact } from "@/components/theme-toggle";
@@ -15,8 +16,8 @@ export function cn(...classes: Array<string | undefined | false>) {
 export function BrandMark() {
   return (
     <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
-      <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-teal to-marigold text-white shadow-glow">
-        <Sparkles className="h-5 w-5" />
+      <div className="h-11 w-11 flex-shrink-0 overflow-hidden rounded-2xl shadow-glow">
+        <Image src="/brain-logo.png" alt="FutureMinds AI Labs logo" width={44} height={44} className="h-full w-full object-cover" />
       </div>
       <div>
         <div className="text-sm font-semibold uppercase tracking-[0.35em] text-royal/70">FutureMinds</div>
@@ -29,8 +30,8 @@ export function BrandMark() {
 export function BrandMarkWhite() {
   return (
     <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
-      <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-teal to-marigold text-white shadow-glow">
-        <Sparkles className="h-5 w-5" />
+      <div className="h-11 w-11 flex-shrink-0 overflow-hidden rounded-2xl shadow-glow">
+        <Image src="/brain-logo.png" alt="FutureMinds AI Labs logo" width={44} height={44} className="h-full w-full object-cover" />
       </div>
       <div>
         <div className="text-sm font-semibold uppercase tracking-[0.35em] text-white/60">FutureMinds</div>
@@ -91,13 +92,14 @@ export function SecondaryButton({ href, children, className }: { href: string; c
   );
 }
 
-export function Pill({ children, tone = "teal" }: { children: ReactNode; tone?: "teal" | "gold" | "crimson" | "royal" | "marigold" }) {
+export function Pill({ children, tone = "teal" }: { children: ReactNode; tone?: "teal" | "gold" | "crimson" | "royal" | "marigold" | "indigo" }) {
   const toneClass = {
     teal: "bg-teal/10 text-teal",
     gold: "bg-gold/15 text-[#8a6213]",
     crimson: "bg-crimson/10 text-crimson",
     royal: "bg-royal/10 text-royal",
     marigold: "bg-marigold/15 text-[#ad5e00]",
+    indigo: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
   }[tone];
 
   return <span className={cn("inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold", toneClass)}>{children}</span>;

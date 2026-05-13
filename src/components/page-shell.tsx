@@ -1,16 +1,23 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, type ReactNode } from "react";
 import {
-  ArrowLeft, ArrowRight, Bell, Brain, CalendarCheck, ClipboardList,
-  FileBarChart2, FlaskConical, Home, Menu, Settings, Sparkles, Star,
-  Trophy, Users2, Video,
+  ArrowLeft, ArrowRight, Bell, Brain, Building2, CalendarCheck, ChevronRight,
+  ClipboardList, FileBarChart2, FlaskConical, Home, LayoutDashboard, LogOut,
+  Menu, Settings, Shield, Sparkles, Star, Trophy, Users2, Video,
 } from "lucide-react";
 import { DashboardContainer, DashboardSidebar, DashboardTopbar, GlassCard, ProgressBar, BrandMark, BrandMarkWhite, Pill, cn } from "@/components/platform";
 import { leaderboard, parentHighlights, savedTutorSessions, studentBadges, teacherRoster } from "@/lib/mock-data";
 
-/* ── Sidebar nav definitions per role ─────────────────────── */
+const adminNav = [
+  { label: "Dashboard", href: "/admin",          icon: <LayoutDashboard className="h-4 w-4" /> },
+  { label: "Schools",   href: "/admin/schools",  icon: <Building2 className="h-4 w-4" /> },
+  { label: "Users",     href: "/admin/users",    icon: <Users2 className="h-4 w-4" /> },
+  { label: "Settings",  href: "/admin/settings", icon: <Settings className="h-4 w-4" /> },
+];
+
 const studentNav = [
   { label: "Dashboard", href: "/student",   icon: <Home className="h-4 w-4" /> },
   { label: "Modules",   href: "/modules",   icon: <Menu className="h-4 w-4" /> },
@@ -286,5 +293,141 @@ export function ParentSummary() {
         ))}
       </div>
     </PanelCard>
+  );
+}
+
+/* ── Admin Shell ──────────────────────────────────────────── */
+export function AdminShell({ title, active, children }: { title: string; active: string; children: ReactNode }) {
+  const [collapsed, setCollapsed] = useState(false);
+
+  return (
+    <DashboardContainer>
+      <div className="mx-auto flex min-h-screen max-w-[1600px] gap-5 px-4 py-5 sm:px-6 lg:px-8 lg:py-7">
+        {/* Admin Sidebar — indigo/violet */}
+        <div className={`flex-shrink-0 transition-all duration-300 ${collapsed ? "w-[72px]" : "w-[260px]"}`}>
+          <aside
+            className={cn(
+              "flex h-full flex-col rounded-3xl py-5 text-white shadow-glass",
+              "bg-gradient-to-b from-[#1e1b4b] via-[#312e81] to-[#1e1935]",
+              "border border-white/10 transition-all duration-300 ease-in-out",
+              collapsed ? "items-center px-3" : "px-4"
+            )}
+            style={{ boxShadow: "0 24px 64px rgba(10,5,50,0.45), inset 0 1px 0 rgba(255,255,255,0.12)" }}
+          >
+            {/* Brand + toggle */}
+            <div className={cn("flex w-full items-center", collapsed ? "justify-center" : "justify-between gap-2")}>
+              <div className={cn("transition-all duration-300 overflow-hidden", collapsed ? "w-10" : "flex-1")}>
+                {collapsed ? (
+                  <Link href="/" className="h-10 w-10 overflow-hidden rounded-2xl shadow-glow transition-opacity hover:opacity-80 block">
+                    <Image src="/brain-logo.png" alt="logo" width={40} height={40} className="h-full w-full object-cover" />
+                  </Link>
+                ) : (
+                  <BrandMarkWhite />
+                )}
+              </div>
+              <button
+                onClick={() => setCollapsed((c) => !c)}
+                aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+                className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-white/10 text-white/50 transition-all duration-200 hover:bg-white/20 hover:text-white hover:scale-105 active:scale-95"
+              >
+                <ChevronRight className={cn("h-4 w-4 transition-transform duration-300 ease-in-out", collapsed ? "rotate-0" : "rotate-180")} />
+              </button>
+            </div>
+
+            {/* Admin badge */}
+            {!collapsed && (
+              <div className="mt-3 rounded-2xl border border-indigo-400/25 bg-indigo-500/10 px-3 py-2 text-center">
+                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-indigo-300">Administrator Console</p>
+              </div>
+            )}
+
+            <div className="mt-4 h-px w-full rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+            {/* Nav links */}
+            <nav className="mt-4 flex w-full flex-col gap-0.5">
+              {adminNav.map((item) => {
+                const isActive = item.label === active;
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    title={collapsed ? item.label : undefined}
+                    className={cn(
+                      "group relative flex items-center rounded-2xl py-2.5 text-sm font-semibold",
+                      "transition-all duration-200 ease-out overflow-hidden",
+                      collapsed ? "justify-center px-2" : "gap-3 px-3.5",
+                      isActive
+                        ? "bg-white text-indigo-700 shadow-md"
+                        : "text-white/65 hover:bg-white/10 hover:text-white"
+                    )}
+                  >
+                    {isActive && (
+                      <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-r-full bg-gradient-to-b from-indigo-400 to-violet-500" />
+                    )}
+                    <span className={cn(
+                      "flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-xl transition-all duration-200",
+                      isActive ? "bg-indigo-50 text-indigo-700" : "text-white/65 group-hover:text-white group-hover:bg-white/10"
+                    )}>
+                      {item.icon}
+                    </span>
+                    <span className={cn("whitespace-nowrap transition-all duration-300 ease-in-out", collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100")}>
+                      {item.label}
+                    </span>
+                    {!isActive && (
+                      <span className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-white/6 via-transparent to-transparent" />
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* Admin info at bottom */}
+            <div className="mt-auto">
+              {collapsed ? (
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-500/20 text-indigo-300" title="Super Admin">
+                  <Shield className="h-5 w-5" />
+                </div>
+              ) : (
+                <div className="rounded-3xl border border-white/10 bg-white/8 p-4 backdrop-blur-sm">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Shield className="h-4 w-4 text-indigo-300 flex-shrink-0" />
+                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/40">Admin Access</p>
+                  </div>
+                  <p className="text-sm font-bold text-white">Super Admin</p>
+                  <p className="text-xs text-white/40 mt-0.5">Full platform control</p>
+                  <Link
+                    href="/"
+                    className="mt-3 flex items-center gap-2 rounded-xl bg-white/10 px-3 py-2 text-xs font-semibold text-white/70 transition-all hover:bg-red-500/20 hover:text-red-300"
+                  >
+                    <LogOut className="h-3.5 w-3.5" />
+                    Sign Out
+                  </Link>
+                </div>
+              )}
+            </div>
+          </aside>
+        </div>
+
+        {/* Main content */}
+        <div className="min-w-0 flex-1 space-y-6">
+          {/* Admin topbar */}
+          <div className="flex flex-col gap-4 rounded-3xl border border-white/70 bg-white/80 dark:bg-[#1e1b2e]/90 dark:border-white/8 p-4 shadow-glass backdrop-blur-xl lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-indigo-500 dark:text-indigo-400">{title}</p>
+              <h1 className="text-xl font-bold text-ink">Welcome back, Admin</h1>
+            </div>
+            <div className="flex flex-1 items-center gap-3 lg:max-w-2xl lg:justify-end">
+              <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-royal/10 dark:border-white/10 bg-surface px-4 py-3">
+                <LayoutDashboard className="h-4 w-4 text-indigo-400/60" />
+                <input className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400 text-ink" placeholder="Search schools, users…" />
+              </div>
+              <div className="rounded-full bg-indigo-500/10 px-4 py-3 text-sm font-semibold text-indigo-600 dark:text-indigo-400">12 Schools</div>
+              <div className="rounded-full bg-violet-500/10 px-4 py-3 text-sm font-semibold text-violet-600 dark:text-violet-400">2,747 Users</div>
+            </div>
+          </div>
+          {children}
+        </div>
+      </div>
+    </DashboardContainer>
   );
 }

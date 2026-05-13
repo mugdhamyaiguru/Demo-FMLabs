@@ -1,19 +1,21 @@
 "use client";
-import { User2, Bell, Moon, Shield, Mail, Phone, School, Users2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { LogOut, User2, Bell, Moon, Shield, Mail, Phone, School, Users2 } from "lucide-react";
 import { AppShell } from "@/components/page-shell";
 import { GlassCard, Pill } from "@/components/platform";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const toggles = [
-  { label: "Inactivity Alerts",      desc: "Notify me if Aanya hasn't logged in for 3+ days", on: true },
-  { label: "Score Drop Alerts",      desc: "Alert when subject score drops below 65%",         on: true },
-  { label: "Assignment Reminders",   desc: "Remind me of upcoming due dates",                   on: true },
-  { label: "Teacher Messages",       desc: "Receive messages from Aanya's teachers",            on: true },
-  { label: "Weekly Email Summary",   desc: "Weekly progress email every Monday morning",        on: false },
-  { label: "Certification Updates",  desc: "Notify when Aanya earns a new certificate",        on: true },
+  { label: "Inactivity Alerts", desc: "Notify me if Aanya hasn't logged in for 3+ days", on: true },
+  { label: "Score Drop Alerts", desc: "Alert when subject score drops below 65%", on: true },
+  { label: "Assignment Reminders", desc: "Remind me of upcoming due dates", on: true },
+  { label: "Teacher Messages", desc: "Receive messages from Aanya's teachers", on: true },
+  { label: "Weekly Email Summary", desc: "Weekly progress email every Monday morning", on: false },
+  { label: "Certification Updates", desc: "Notify when Aanya earns a new certificate", on: true },
 ];
 
 export default function ParentSettingsPage() {
+  const router = useRouter();
   return (
     <AppShell active="Settings" title="Parent Settings" role="parent">
       <div className="space-y-5">
@@ -44,9 +46,9 @@ export default function ParentSettingsPage() {
 
             <div className="space-y-3">
               {[
-                { label: "Full Name",  value: "Sanjay Sharma",         type: "text",  Icon: User2  },
-                { label: "Email",      value: "sanjay@email.com",       type: "email", Icon: Mail   },
-                { label: "Phone",      value: "+91 98765 11111",        type: "tel",   Icon: Phone  },
+                { label: "Full Name", value: "Sanjay Sharma", type: "text", Icon: User2 },
+                { label: "Email", value: "sanjay@email.com", type: "email", Icon: Mail },
+                { label: "Phone", value: "+91 98765 11111", type: "tel", Icon: Phone },
               ].map(({ label, value, type, Icon }) => (
                 <label key={label} className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-slate-500">{label}</span>
@@ -134,6 +136,27 @@ export default function ParentSettingsPage() {
               <ThemeToggle className="w-full justify-between" />
               <div className="mt-3 rounded-2xl border border-royal/8 dark:border-white/8 bg-surface px-4 py-3">
                 <p className="text-xs text-slate-400">The compact <span className="font-semibold text-ink">☀ / 🌙</span> icon in the topbar also cycles through all three modes.</p>
+              </div>
+            </GlassCard>
+
+            {/* Sign Out */}
+            <GlassCard className="p-6 border border-red-500/20">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-red-500 to-rose-600 shadow-lg">
+                    <LogOut className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-base font-bold text-ink">Sign Out</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => router.push("/")}
+                  className="flex items-center gap-2 rounded-2xl bg-gradient-to-r from-red-500 to-rose-600 px-6 py-2.5 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg active:scale-95"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Sign Out
+                </button>
               </div>
             </GlassCard>
           </div>
