@@ -93,46 +93,67 @@ textarea:focus-visible {
 /* ─── Floating Orbs ──────────────────────────────────────── */
 .orb {
   position: absolute;
-  border-radius: 9999px;
-  filter: blur(20px);
-  opacity: 0.72;
-  animation: float 14s ease-in-out infinite;
+  filter: blur(80px);
+  opacity: 0.75;
+  animation: morph-float 16s ease-in-out infinite;
 }
 
 .orb-1 {
-  top: 6rem;
-  left: -4rem;
-  height: 16rem;
-  width: 16rem;
-  background: rgba(24, 155, 155, 0.16);
+  top: 4rem;
+  left: -6rem;
+  height: 24rem;
+  width: 24rem;
+  background: radial-gradient(circle, rgba(24, 155, 155, 0.28) 0%, transparent 80%);
 }
 
 .orb-2 {
-  top: 14rem;
-  right: -5rem;
-  height: 18rem;
-  width: 18rem;
-  background: rgba(252, 148, 56, 0.16);
-  animation-delay: -3s;
+  top: 18rem;
+  right: -8rem;
+  height: 28rem;
+  width: 28rem;
+  background: radial-gradient(circle, rgba(252, 148, 56, 0.22) 0%, transparent 80%);
+  animation-delay: -4s;
+  animation-duration: 20s;
 }
 
 .orb-3 {
-  bottom: -4rem;
-  left: 30%;
-  height: 14rem;
-  width: 14rem;
-  background: rgba(216, 164, 68, 0.18);
-  animation-delay: -7s;
+  bottom: 8rem;
+  left: 20%;
+  height: 22rem;
+  width: 22rem;
+  background: radial-gradient(circle, rgba(216, 164, 68, 0.24) 0%, transparent 80%);
+  animation-delay: -8s;
+  animation-duration: 18s;
 }
 
-@keyframes float {
-  0%,
+@keyframes morph-float {
+  0% {
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    border-radius: 70% 30% 52% 48% / 60% 40% 60% 40%;
+    transform: translate(40px, -60px) scale(1.15) rotate(120deg);
+  }
+  66% {
+    border-radius: 28% 72% 37% 63% / 51% 43% 57% 49%;
+    transform: translate(-30px, 40px) scale(0.9) rotate(240deg);
+  }
   100% {
-    transform: translateY(0) scale(1);
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    transform: translate(0, 0) scale(1) rotate(360deg);
   }
-  50% {
-    transform: translateY(-18px) scale(1.05);
-  }
+}
+
+/* ─── Animated Text Gradient ────────────────────────────── */
+@keyframes text-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient-text {
+  background-size: 200% auto;
+  animation: text-gradient 6s linear infinite;
 }
 
 /* ─── Utility helpers ───────────────────────────────────── */
@@ -191,4 +212,72 @@ textarea:focus-visible {
 
 .dark .text-slate-700 {
   color: rgba(220, 215, 235, 0.9) !important;
+}
+
+/* ─── Floating Background Elements ───────────────────────── */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translateY(-25px) rotate(10deg) scale(1.05);
+  }
+}
+@keyframes float-medium {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translateY(-35px) rotate(-15deg) scale(0.95);
+  }
+}
+@keyframes float-fast {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) rotate(8deg) scale(1.02);
+  }
+}
+.animate-float-slow {
+  animation: float-slow 12s ease-in-out infinite;
+}
+.animate-float-medium {
+  animation: float-medium 9s ease-in-out infinite;
+}
+.animate-float-fast {
+  animation: float-fast 7s ease-in-out infinite;
+}
+
+/* Floating animation variations with offsets */
+.animate-float-1 {
+  animation: float-slow 14s ease-in-out infinite;
+  animation-delay: -2s;
+}
+.animate-float-2 {
+  animation: float-medium 10s ease-in-out infinite;
+  animation-delay: -5s;
+}
+.animate-float-3 {
+  animation: float-fast 8s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+/* Custom typewriter cursor animation */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: var(--teal) }
+}
+.animate-cursor {
+  animation: blink-caret 0.75s step-end infinite;
+}
+
+/* Shimmer shine effect for premium cards */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+.shimmer-trigger:hover .shimmer-element {
+  animation: shimmer 1.5s infinite;
 }

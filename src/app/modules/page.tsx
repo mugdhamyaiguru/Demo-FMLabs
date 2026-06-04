@@ -1,4 +1,5 @@
 import { Search, SlidersHorizontal, BookMarked, Clock3, Flame, Play, Layers3 } from "lucide-react";
+import Link from "next/link";
 import { AppShell } from "@/components/page-shell";
 import { EmptyState, GlassCard, Pill, ProgressBar, SectionHeading } from "@/components/platform";
 import { dashboardModules } from "@/lib/mock-data";
@@ -25,19 +26,19 @@ export default function ModulesPage() {
       <div className="space-y-6">
 
         {/* ── Header card ── */}
-        <GlassCard className="p-6">
+        <div className="border-b border-slate-200/40 dark:border-white/5 pb-6">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
             <SectionHeading eyebrow="Module library" title="Explore bite-sized lessons by subject" />
             {/* Search + filter */}
             <div className="flex flex-1 flex-col gap-3 lg:max-w-xl lg:flex-row">
-              <div className="flex flex-1 items-center gap-2 rounded-2xl border border-royal/10 bg-surface px-4 py-3 transition-colors focus-within:border-teal focus-within:bg-white">
-                <Search className="h-4 w-4 flex-shrink-0 text-royal/40" />
+              <div className="flex flex-1 items-center gap-2 rounded-full border border-slate-200/35 dark:border-white/5 bg-white/40 dark:bg-white/5 px-4 py-2.5 transition-all focus-within:border-teal focus-within:bg-white/80 dark:focus-within:bg-white/10">
+                <Search className="h-4 w-4 flex-shrink-0 text-royal/40 dark:text-white/40" />
                 <input
-                  className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400"
+                  className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400 text-ink"
                   placeholder="Search modules, subjects, topics…"
                 />
               </div>
-              <button className="flex items-center justify-center gap-2 rounded-2xl border border-royal/10 bg-surface px-4 py-3 text-sm font-semibold text-slate-600 transition-colors hover:border-teal hover:text-teal">
+              <button className="flex items-center justify-center gap-2 rounded-full border border-slate-200/35 dark:border-white/5 bg-white/40 dark:bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-600 dark:text-slate-400 transition-all hover:border-teal hover:text-teal hover:bg-white/80">
                 <SlidersHorizontal className="h-4 w-4" /> Filters
               </button>
             </div>
@@ -51,14 +52,14 @@ export default function ModulesPage() {
                 className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
                   i === 0
                     ? "bg-royal text-white shadow-sm"
-                    : "border border-royal/10 bg-white text-slate-600 hover:border-royal/25 hover:text-ink"
+                    : "border border-slate-200/35 dark:border-white/5 bg-white/40 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:border-teal hover:text-teal"
                 }`}
               >
                 {cat}
               </button>
             ))}
           </div>
-        </GlassCard>
+        </div>
 
         {/* ── Module grid ── */}
         {visibleModules.length > 0 ? (
@@ -70,7 +71,7 @@ export default function ModulesPage() {
               return (
                 <div
                   key={module.title}
-                  className="group overflow-hidden rounded-[1.5rem] bg-white shadow-sm ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                  className="group overflow-hidden rounded-[2rem] bg-white/50 dark:bg-[#1e1b2e]/50 border border-slate-200/20 dark:border-white/5 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.01]"
                 >
                   {/* Card header */}
                   <div className={`relative h-48 bg-gradient-to-br ${gradient} p-5`}>
@@ -113,11 +114,14 @@ export default function ModulesPage() {
                       <ProgressBar value={module.progress} accent={accent} />
                     </div>
 
-                    {/* Action button */}
-                    <button className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl border border-royal/10 bg-surface py-2.5 text-sm font-semibold text-royal transition-all hover:bg-royal hover:text-white">
+                    {/* Action Link */}
+                    <Link
+                      href={`/lesson?module=${encodeURIComponent(module.title)}`}
+                      className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl border border-royal/10 bg-surface py-2.5 text-sm font-semibold text-royal transition-all hover:bg-royal hover:text-white"
+                    >
                       <Play className="h-4 w-4" />
                       {module.progress > 0 ? "Resume Lesson" : "Start Lesson"}
-                    </button>
+                    </Link>
                   </div>
                 </div>
               );

@@ -12,7 +12,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 
 function FieldRow({ label, value, Icon }: { label: string; value: string; Icon: React.ElementType }) {
   return (
-    <div className="flex items-center gap-4 rounded-2xl border border-royal/8 bg-white/60 dark:bg-white/5 dark:border-white/8 px-4 py-3.5">
+    <div className="flex items-center gap-4 rounded-2xl border border-royal/8 bg-white/60 dark:bg-white/5 dark:border-white/8 px-4 py-3.5 shadow-sm">
       <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-royal/8 dark:bg-royal/20 text-royal dark:text-teal">
         <Icon className="h-4 w-4" />
       </div>
@@ -26,7 +26,7 @@ function FieldRow({ label, value, Icon }: { label: string; value: string; Icon: 
 
 function ToggleRow({ label, detail, enabled }: { label: string; detail: string; enabled: boolean }) {
   return (
-    <div className="flex items-center justify-between rounded-2xl border border-royal/8 dark:border-white/8 bg-white/60 dark:bg-white/5 px-4 py-3.5">
+    <div className="flex items-center justify-between rounded-2xl border border-royal/8 dark:border-white/8 bg-white/60 dark:bg-white/5 px-4 py-3.5 shadow-sm">
       <div>
         <p className="text-sm font-semibold text-ink">{label}</p>
         <p className="mt-0.5 text-xs text-slate-400">{detail}</p>
@@ -92,39 +92,49 @@ export default function TeacherSettingsPage() {
           </div>
         </GlassCard>
 
+        {/* Configurations grid */}
         <div className="grid gap-5 xl:grid-cols-2">
-          {/* Appearance / Dark Mode */}
-          <GlassCard className="p-6 dark:bg-[#1e1b2e]/85 dark:border-white/8">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-royal to-[#6f5a88] shadow-sm">
-                {isDark ? <Moon className="h-4 w-4 text-white" /> : <Sun className="h-4 w-4 text-white" />}
+          {/* Appearance & Accessibility */}
+          <GlassCard className="p-6 dark:bg-[#1e1b2e]/85 dark:border-white/8 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-royal to-[#6f5a88] shadow-sm text-white">
+                  {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4 text-white" />}
+                </div>
+                <h3 className="text-lg font-bold text-ink">Appearance & Accessibility</h3>
               </div>
-              <h3 className="text-lg font-bold text-ink">Appearance</h3>
+
+              {/* Theme toggle — 3-way */}
+              <div className="rounded-2xl border border-royal/8 dark:border-white/8 bg-white/60 dark:bg-white/5 p-4 shadow-sm">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className={`flex h-10 w-10 items-center justify-center rounded-xl transition-all ${isDark ? "bg-[#12101e] text-teal" : "bg-amber-50 text-amber-500"}`}>
+                    {isDark ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-ink">{isDark ? "Dark Mode" : "Light Mode"} (active)</p>
+                    <p className="text-xs text-slate-400">Choose Light, Dark, or follow your OS</p>
+                  </div>
+                </div>
+                <ThemeToggle className="w-full justify-between" />
+              </div>
             </div>
 
-            {/* Theme toggle — 3-way */}
-            <div className="rounded-2xl border border-royal/8 dark:border-white/8 bg-white/60 dark:bg-white/5 p-4">
-              <div className="flex items-center gap-3 mb-3">
-                <div className={`flex h-10 w-10 items-center justify-center rounded-xl transition-all ${isDark ? "bg-[#12101e] text-teal" : "bg-amber-50 text-amber-500"}`}>
-                  {isDark ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-ink">{isDark ? "Dark Mode" : "Light Mode"} (active)</p>
-                  <p className="text-xs text-slate-400">Choose Light, Dark, or follow your OS</p>
-                </div>
-              </div>
-              <ThemeToggle className="w-full justify-between" />
-            </div>
-
-            <div className="mt-3 grid grid-cols-2 gap-3">
+            {/* Combined Display Settings Grid */}
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
               {[
-                { label: "Reduced motion", value: "Off" },
-                { label: "Large text", value: "On" },
-              ].map((item) => (
-                <div key={item.label} className="rounded-2xl bg-surface dark:bg-slate-800/50 p-4">
-                  <div className="flex items-center justify-between">
-                    <p className="text-xs font-semibold text-slate-500">{item.label}</p>
-                    <Pill tone={item.value === "On" ? "teal" : "gold"}>{item.value}</Pill>
+                { label: "Reduced motion", value: "Off", icon: Moon },
+                { label: "Large text", value: "On", icon: BookOpen },
+                { label: "High contrast", value: "Recommended", icon: ShieldCheck },
+                { label: "Keyboard shortcuts", value: "Available", icon: KeyRound },
+                { label: "Screen reader", value: "Compatible", icon: Accessibility },
+              ].map(({ label, value, icon: Icon }) => (
+                <div key={label} className="flex items-center gap-3 rounded-2xl bg-surface dark:bg-slate-800/40 p-3.5 border border-royal/5 dark:border-white/5 shadow-sm">
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-white dark:bg-slate-700 text-teal shadow-sm">
+                    <Icon className="h-4 w-4" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] font-bold text-slate-400 truncate uppercase tracking-wider leading-none">{label}</p>
+                    <p className="mt-1 text-xs font-bold text-ink leading-none">{value}</p>
                   </div>
                 </div>
               ))}
@@ -134,8 +144,8 @@ export default function TeacherSettingsPage() {
           {/* Notifications */}
           <GlassCard className="p-6 dark:bg-[#1e1b2e]/85 dark:border-white/8">
             <div className="flex items-center gap-3 mb-5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-teal to-[#0d7272] shadow-sm">
-                <Bell className="h-4 w-4 text-white" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-teal to-[#0d7272] shadow-sm text-white">
+                <Bell className="h-4 w-4" />
               </div>
               <h3 className="text-lg font-bold text-ink">Notifications</h3>
             </div>
@@ -148,40 +158,12 @@ export default function TeacherSettingsPage() {
           </GlassCard>
         </div>
 
-        {/* Accessibility */}
-        <GlassCard className="p-6 dark:bg-[#1e1b2e]/85 dark:border-white/8">
-          <div className="flex items-center gap-3 mb-5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-gold to-marigold shadow-sm">
-              <Accessibility className="h-4 w-4 text-white" />
-            </div>
-            <h3 className="text-lg font-bold text-ink">Accessibility</h3>
-          </div>
-          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-            {[
-              { label: "High contrast", value: "Recommended", icon: ShieldCheck },
-              { label: "Large text", value: "On", icon: BookOpen },
-              { label: "Keyboard shortcuts", value: "Available", icon: KeyRound },
-              { label: "Screen reader", value: "Compatible", icon: Accessibility },
-            ].map(({ label, value, icon: Icon }) => (
-              <div key={label} className="flex items-center gap-3 rounded-2xl bg-surface dark:bg-slate-800/50 p-4">
-                <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-white dark:bg-slate-700 text-teal shadow-sm">
-                  <Icon className="h-4 w-4" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="text-xs font-semibold text-slate-500 truncate">{label}</p>
-                  <p className="mt-0.5 text-sm font-bold text-ink">{value}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </GlassCard>
-
         {/* Sign Out */}
         <GlassCard className="p-6 dark:bg-[#1e1b2e]/85 dark:border-white/8 border border-red-500/20">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center gap-4">
-              <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-red-500 to-rose-600 shadow-lg">
-                <LogOut className="h-5 w-5 text-white" />
+              <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-red-500 to-rose-600 shadow-lg text-white">
+                <LogOut className="h-5 w-5" />
               </div>
               <div>
                 <p className="text-base font-bold text-ink">Sign Out</p>

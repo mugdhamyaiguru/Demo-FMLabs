@@ -23,7 +23,6 @@ const studentNav = [
   { label: "Modules",   href: "/modules",   icon: <Menu className="h-4 w-4" /> },
   { label: "AI Tutor",  href: "/tutor",     icon: <Star className="h-4 w-4" /> },
   { label: "Progress",  href: "/progress",  icon: <Trophy className="h-4 w-4" /> },
-  { label: "Projects",  href: "/lesson",    icon: <ArrowRight className="h-4 w-4" /> },
   { label: "Rewards",   href: "/rewards",   icon: <Bell className="h-4 w-4" /> },
   { label: "Settings",  href: "/settings",  icon: <Settings className="h-4 w-4" /> },
 ];
@@ -144,20 +143,20 @@ export function RightRail() {
   ];
 
   return (
-    <div className="space-y-4">
+    <GlassCard className="p-5 space-y-6">
       {/* What's Next */}
-      <GlassCard className="p-5">
+      <div>
         <div className="flex items-center gap-2 mb-4">
           <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-teal to-[#5bcac8] text-white shadow-sm">
             <Sparkles className="h-4 w-4" />
           </div>
-          <h3 className="text-base font-bold text-ink">What's Next For You?</h3>
+          <h3 className="text-base font-bold text-ink">What&apos;s Next For You?</h3>
         </div>
         <div className="space-y-2.5">
           {nextItems.map((item) => (
             <div
               key={item.title}
-              className="group flex cursor-pointer items-center gap-3 rounded-2xl border border-royal/8 bg-surface px-4 py-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-teal/20 hover:shadow-sm"
+              className="group flex cursor-pointer items-center gap-3 rounded-2xl border border-slate-200/20 dark:border-white/5 bg-white/40 dark:bg-white/5 px-4 py-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-teal/20 hover:shadow-sm"
             >
               <span className={`mt-0.5 h-2 w-2 flex-shrink-0 rounded-full ${item.dot}`} />
               <div className="min-w-0 flex-1">
@@ -170,37 +169,12 @@ export function RightRail() {
             </div>
           ))}
         </div>
-      </GlassCard>
+      </div>
 
-      {/* Saved Tutor Sessions */}
-      <GlassCard className="p-5">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-royal to-[#6f5a88] text-white shadow-sm">
-            <Brain className="h-4 w-4" />
-          </div>
-          <h3 className="text-base font-bold text-ink">Saved Tutor Sessions</h3>
-        </div>
-        <div className="space-y-2.5">
-          {savedTutorSessions.map((session, i) => (
-            <div
-              key={session.title}
-              className="group flex cursor-pointer items-center gap-3 rounded-2xl bg-white p-3.5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
-            >
-              <div className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl text-sm font-black text-white shadow-sm ${i === 0 ? "bg-teal" : i === 1 ? "bg-royal" : "bg-marigold"}`}>
-                {session.title.charAt(0)}
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-semibold text-ink">{session.title}</p>
-                <p className="text-xs text-slate-400">{session.time}</p>
-              </div>
-              <ArrowRight className="h-4 w-4 flex-shrink-0 text-slate-300 transition-colors group-hover:text-teal" />
-            </div>
-          ))}
-        </div>
-      </GlassCard>
+      <div className="h-px bg-slate-200/40 dark:bg-white/5" />
 
       {/* Leaderboard Preview */}
-      <GlassCard className="p-5">
+      <div>
         <div className="flex items-center gap-2 mb-4">
           <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-gold to-marigold text-white shadow-sm">
             <Trophy className="h-4 w-4" />
@@ -215,7 +189,7 @@ export function RightRail() {
                 "flex items-center gap-3 rounded-2xl px-3.5 py-3 transition-all duration-200 hover:-translate-y-0.5",
                 index === 0
                   ? "bg-gradient-to-r from-gold/15 to-marigold/10 border border-gold/20"
-                  : "bg-white shadow-sm hover:shadow-md"
+                  : "bg-white/50 dark:bg-white/5 border border-slate-200/20 dark:border-white/5 shadow-sm hover:shadow-md"
               )}
             >
               <span className={cn(
@@ -236,8 +210,8 @@ export function RightRail() {
             </div>
           ))}
         </div>
-      </GlassCard>
-    </div>
+      </div>
+    </GlassCard>
   );
 }
 

@@ -12,103 +12,163 @@ export default function ProgressPage() {
 
   return (
     <AppShell active="Progress" title="Progress Dashboard">
-      <div className="space-y-5">
-        <div className="flex flex-col gap-4 rounded-3xl bg-white/80 p-5 shadow-glass backdrop-blur-xl lg:flex-row lg:items-center lg:justify-between">
+      <div className="space-y-6 max-w-5xl">
+        {/* Header */}
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between border-b border-slate-200/40 dark:border-white/5 pb-6 mb-2">
           <SectionHeading eyebrow="Analytics" title="Learning progress at a glance" />
-          <button className="inline-flex items-center gap-2 rounded-full bg-royal px-5 py-3 font-semibold text-white shadow-lg"><Download className="h-4 w-4" />Download report</button>
+          <button className="inline-flex items-center gap-2 rounded-full bg-royal px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:bg-[#3d3252] hover:-translate-y-0.5">
+            <Download className="h-4 w-4" /> Download report
+          </button>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-3">
-          <GlassCard className="p-6 lg:col-span-1">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xl font-black text-ink">Streak Heatmap</h3>
-              <Flame className="h-5 w-5 text-marigold" />
+        {/* Top Console: Streak Heatmap, Skill Distribution, Badges */}
+        <div className="grid gap-8 lg:grid-cols-[1.2fr_auto_0.8fr_auto_1.1fr] rounded-[2.5rem] bg-white/40 dark:bg-[#1a1727]/30 border border-slate-200/20 dark:border-white/5 p-8 backdrop-blur-md">
+          
+          {/* Enhanced Streak Heatmap */}
+          <div className="space-y-4 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-base font-bold text-ink">Streak Heatmap</h3>
+                <Flame className="h-5 w-5 text-marigold" />
+              </div>
+              
+              <div className="space-y-2">
+                {/* Day Labels */}
+                <div className="grid grid-cols-7 gap-2 text-center text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                  <span>Mon</span>
+                  <span>Tue</span>
+                  <span>Wed</span>
+                  <span>Thu</span>
+                  <span>Fri</span>
+                  <span>Sat</span>
+                  <span>Sun</span>
+                </div>
+
+                {/* Heatmap Blocks */}
+                <div className="grid grid-cols-7 gap-2">
+                  {Array.from({ length: 35 }).map((_, index) => {
+                    const dayNum = index + 1;
+                    let xp = 0;
+                    let bg = "bg-royal/5 dark:bg-white/5";
+                    let status = "No activity";
+
+                    if (index % 5 === 0) {
+                      xp = 250 + (index * 5);
+                      bg = "bg-teal";
+                      status = "Goal Completed";
+                    } else if (index % 3 === 0) {
+                      xp = 80 + (index * 3);
+                      bg = "bg-marigold/80";
+                      status = "Practice Session";
+                    }
+
+                    return (
+                      <div
+                        key={index}
+                        title={`Day ${dayNum}: ${xp} XP (${status})`}
+                        className={`h-5 rounded-md ${bg} cursor-pointer transition-all duration-200 hover:scale-110`}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-            <div className="mt-5 grid grid-cols-7 gap-2">
-              {Array.from({ length: 35 }).map((_, index) => (
-                <div key={index} className={index % 5 === 0 ? "h-5 rounded-md bg-teal" : index % 3 === 0 ? "h-5 rounded-md bg-marigold/80" : "h-5 rounded-md bg-surface"} />
-              ))}
+
+            {/* Heatmap Legend */}
+            <div className="flex items-center gap-4 text-[9px] text-slate-400 font-bold justify-end mt-2 pt-2 border-t border-slate-200/20 dark:border-white/5">
+              <div className="flex items-center gap-1.5">
+                <div className="h-3 w-3 rounded bg-royal/5 dark:bg-white/5" />
+                <span>0 XP</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="h-3 w-3 rounded bg-marigold/80" />
+                <span>1 - 249 XP</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="h-3 w-3 rounded bg-teal" />
+                <span>250+ XP</span>
+              </div>
             </div>
-          </GlassCard>
-          <GlassCard className="p-6 lg:col-span-1">
+          </div>
+
+          <div className="hidden lg:block w-px bg-slate-200/30 dark:bg-white/5 h-full self-stretch" />
+
+          {/* Skill Distribution */}
+          <div className="space-y-4 flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-black text-ink">Skill Distribution</h3>
+              <h3 className="text-base font-bold text-ink">Skill Distribution</h3>
               <PieChart className="h-5 w-5 text-teal" />
             </div>
-            <div className="mt-6 flex items-center justify-center">
-              <div className="flex h-44 w-44 items-center justify-center rounded-full bg-[conic-gradient(from_120deg,_#189B9B_0_42%,_#FC9438_42%_70%,_#D8A444_70%_100%)]">
-                <div className="flex h-28 w-28 items-center justify-center rounded-full bg-white text-center">
+            <div className="flex items-center justify-center py-2">
+              <div className="flex h-36 w-36 items-center justify-center rounded-full bg-[conic-gradient(from_120deg,_#189B9B_0_42%,_#FC9438_42%_70%,_#D8A444_70%_100%)]">
+                <div className="flex h-24 w-24 items-center justify-center rounded-full bg-white dark:bg-[#1e1b2e] text-center shadow-sm">
                   <div>
-                    <p className="text-3xl font-black text-ink">78%</p>
-                    <p className="text-xs text-slate-500">mastery</p>
+                    <p className="text-2xl font-black text-ink">78%</p>
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-slate-400">mastery</p>
                   </div>
                 </div>
               </div>
             </div>
-          </GlassCard>
-          <GlassCard className="p-6 lg:col-span-1">
+          </div>
+
+          <div className="hidden lg:block w-px bg-slate-200/30 dark:bg-white/5 h-full self-stretch" />
+
+          {/* Badges Earned */}
+          <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-black text-ink">Badges Earned</h3>
+              <h3 className="text-base font-bold text-ink">Badges Earned</h3>
               <BadgeCheck className="h-5 w-5 text-gold" />
             </div>
-            <div className="mt-5 space-y-3">
+            <div className="space-y-1 pt-1">
               {[
                 "7-Day Streak",
                 "Quick Thinker",
                 "Quiz Master",
                 "Project Builder",
               ].map((badge) => (
-                <div key={badge} className="rounded-2xl bg-surface px-4 py-3 font-semibold text-ink">{badge}</div>
+                <div key={badge} className="flex items-center gap-2.5 py-2 border-b border-slate-200/20 dark:border-white/5 text-xs font-semibold text-ink">
+                  <span className="h-1.5 w-1.5 rounded-full bg-teal" />
+                  <span>{badge}</span>
+                </div>
               ))}
             </div>
-          </GlassCard>
+          </div>
         </div>
 
-        <div className="grid gap-5 xl:grid-cols-2">
-          <GlassCard className="p-6">
+        {/* ── Expanded Weekly Learning Graph (Subject Performance Removed) ── */}
+        <div className="rounded-[2.5rem] bg-white/40 dark:bg-[#1a1727]/30 border border-slate-200/20 dark:border-white/5 p-8 backdrop-blur-md">
+          <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-black text-ink">Weekly Learning Graph</h3>
+              <h3 className="text-base font-bold text-ink">Weekly Learning Graph</h3>
               <TrendingUp className="h-5 w-5 text-teal" />
             </div>
-            <div className="mt-6 grid grid-cols-7 items-end gap-3">
+            <p className="text-xs text-slate-400">Daily study hours logged this week</p>
+            <div className="grid grid-cols-7 items-end gap-6 pt-8 max-w-2xl mx-auto h-40">
               {[38, 54, 64, 72, 56, 80, 90].map((height, index) => (
-                <div key={index} className="flex flex-col items-center gap-2">
-                  <div className="w-full rounded-t-3xl bg-gradient-to-t from-teal to-marigold" style={{ height: `${height}px` }} />
-                  <span className="text-xs text-slate-500">D{index + 1}</span>
+                <div key={index} className="flex flex-col items-center gap-2 h-full justify-end">
+                  <div className="w-full rounded-t-xl bg-gradient-to-t from-teal to-marigold transition-all duration-500 hover:opacity-90 cursor-pointer shadow-sm" style={{ height: `${height}%` }} />
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Day 0{index + 1}</span>
                 </div>
               ))}
             </div>
-          </GlassCard>
-          <GlassCard className="p-6">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xl font-black text-ink">Subject Performance</h3>
-              <Trophy className="h-5 w-5 text-gold" />
-            </div>
-            <div className="mt-5 space-y-4">
-              {[
-                ["Mathematics", 82, "teal"],
-                ["Science", 76, "marigold"],
-                ["Computer Basics", 69, "gold"],
-              ].map(([subject, value, tone]) => (
-                <div key={subject as string}>
-                  <div className="mb-2 flex justify-between text-sm"><span className="text-slate-500">{subject as string}</span><span className="font-semibold text-ink">{value as number}%</span></div>
-                  <ProgressBar value={value as number} accent={tone as "teal" | "gold" | "marigold"} />
-                </div>
-              ))}
-            </div>
-          </GlassCard>
+          </div>
         </div>
 
-        <div className="grid gap-5 xl:grid-cols-2">
-          <GlassCard className="p-6">
+        {/* ── Bottom Console: Weak Topics & Leaderboard ── */}
+        <div className="grid gap-8 md:grid-cols-[1fr_auto_1fr] rounded-[2.5rem] bg-white/40 dark:bg-[#1a1727]/30 border border-slate-200/20 dark:border-white/5 p-8 backdrop-blur-md">
+          {/* Weak Topics */}
+          <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-black text-ink">Weak Topics</h3>
+              <h3 className="text-base font-bold text-ink">Weak Topics</h3>
               <AlertTriangle className="h-5 w-5 text-crimson" />
             </div>
             {weakTopics.length > 0 ? (
-              <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              <div className="flex flex-wrap gap-3 pt-2">
                 {weakTopics.map((topic) => (
-                  <div key={topic} className="rounded-2xl border border-crimson/10 bg-crimson/5 px-4 py-4 text-sm font-semibold text-crimson">{topic}</div>
+                  <div key={topic} className="flex items-center gap-2 rounded-full bg-crimson/10 border border-crimson/10 px-4.5 py-2 text-xs font-semibold text-crimson">
+                    <span className="h-1.5 w-1.5 rounded-full bg-crimson animate-pulse" />
+                    <span>{topic}</span>
+                  </div>
                 ))}
               </div>
             ) : (
@@ -120,19 +180,23 @@ export default function ProgressPage() {
                 />
               </div>
             )}
-          </GlassCard>
-          <GlassCard className="p-6">
+          </div>
+
+          <div className="hidden md:block w-px bg-slate-200/30 dark:bg-white/5 h-full self-stretch" />
+
+          {/* Leaderboard Ranking */}
+          <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-black text-ink">Leaderboard Ranking</h3>
+              <h3 className="text-base font-bold text-ink">Leaderboard Ranking</h3>
               <Trophy className="h-5 w-5 text-gold" />
             </div>
             {leaderboardRows.length > 0 ? (
-              <div className="mt-5 space-y-3">
+              <div className="space-y-1">
                 {leaderboardRows.map(([rank, name, xp]) => (
-                  <div key={name} className="flex items-center justify-between rounded-2xl bg-surface px-4 py-3">
-                    <span className="font-semibold text-ink">{rank}</span>
-                    <span className="font-semibold text-ink">{name}</span>
-                    <span className="text-slate-500">{xp}</span>
+                  <div key={name} className="flex items-center justify-between py-2.5 border-b border-slate-200/20 dark:border-white/5 text-xs font-semibold">
+                    <span className="text-ink font-bold">{rank}</span>
+                    <span className="text-ink font-medium">{name}</span>
+                    <span className="text-slate-500 font-semibold">{xp}</span>
                   </div>
                 ))}
               </div>
@@ -145,7 +209,7 @@ export default function ProgressPage() {
                 />
               </div>
             )}
-          </GlassCard>
+          </div>
         </div>
       </div>
     </AppShell>

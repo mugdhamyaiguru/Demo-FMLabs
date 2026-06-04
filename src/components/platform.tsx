@@ -44,8 +44,8 @@ export function BrandMarkWhite() {
 export function GlassCard({ children, className }: GlassCardProps) {
   return (
     <div className={cn(
-      "rounded-3xl border border-white/70 bg-white/75 p-6 shadow-glass backdrop-blur-xl",
-      "dark:bg-[#1e1b2e]/85 dark:border-white/8",
+      "rounded-[2rem] border border-slate-200/30 bg-white/60 p-6 shadow-glass backdrop-blur-xl transition-all duration-300",
+      "dark:bg-[#1e1b2e]/60 dark:border-white/5",
       className
     )}>
       {children}
@@ -258,7 +258,7 @@ export function DashboardSidebar({ active, items, collapsed = false, onToggle }:
                 style={{ width: "72%" }}
               />
             </div>
-            <p className="mt-2 text-xs text-white/40">Keep going — you're on a roll!</p>
+            <p className="mt-2 text-xs text-white/40">Keep going — you&apos;re on a roll!</p>
           </div>
         )}
       </div>
@@ -268,18 +268,18 @@ export function DashboardSidebar({ active, items, collapsed = false, onToggle }:
 
 export function DashboardTopbar({ title, greeting = "learner", searchPlaceholder = "Search modules, lessons, or topics" }: { title: string; greeting?: string; searchPlaceholder?: string }) {
   return (
-    <div className="flex flex-col gap-4 rounded-3xl border border-white/70 bg-white/80 dark:bg-[#1e1b2e]/90 dark:border-white/8 p-4 shadow-glass backdrop-blur-xl lg:flex-row lg:items-center lg:justify-between">
+    <div className="flex flex-col gap-4 py-3 lg:flex-row lg:items-center lg:justify-between border-b border-slate-200/40 dark:border-white/5 pb-6">
       <div>
-        <p className="text-xs uppercase tracking-[0.3em] text-teal">{title}</p>
-        <h1 className="text-xl font-bold text-ink">Welcome back, {greeting}</h1>
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">{title}</p>
+        <h1 className="text-2xl font-black text-ink mt-0.5">Welcome back, {greeting}</h1>
       </div>
       <div className="flex flex-1 items-center gap-3 lg:max-w-2xl lg:justify-end">
-        <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-royal/10 dark:border-white/10 bg-surface px-4 py-3">
-          <LayoutDashboard className="h-4 w-4 text-royal/50 dark:text-white/30" />
+        <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-slate-200/35 dark:border-white/5 bg-white/40 dark:bg-white/5 px-4 py-2.5">
+          <LayoutDashboard className="h-4 w-4 text-royal/40 dark:text-white/30" />
           <input className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400 text-ink" placeholder={searchPlaceholder} />
         </div>
-        <div className="rounded-full bg-teal/10 px-4 py-3 text-sm font-semibold text-teal">18 day streak</div>
-        <div className="rounded-full bg-marigold/15 px-4 py-3 text-sm font-semibold text-[#b3690d]">1,240 XP</div>
+        <div className="rounded-full bg-teal/10 px-4.5 py-2 text-sm font-semibold text-teal">18 day streak</div>
+        <div className="rounded-full bg-marigold/15 px-4.5 py-2 text-sm font-semibold text-[#b3690d]">1,240 XP</div>
         <ThemeToggleCompact />
       </div>
     </div>
@@ -318,23 +318,32 @@ export function FloatingOrbs() {
 
 export function FeatureBadge({ icon, title, description }: { icon: ReactNode; title: string; description: string }) {
   return (
-    <GlassCard className="group h-full p-5 transition-transform duration-300 hover:-translate-y-1">
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal/10 text-teal transition-colors group-hover:bg-teal group-hover:text-white">{icon}</div>
-      <h3 className="mt-5 text-xl font-bold text-ink">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">{description}</p>
-    </GlassCard>
+    <div className="group h-full p-6 rounded-[2rem] border border-transparent transition-all duration-300 hover:border-slate-200/35 dark:hover:border-white/5 hover:bg-white/40 dark:hover:bg-white/5 hover:shadow-glass hover:backdrop-blur-md">
+      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal/10 text-teal transition-all duration-300 group-hover:scale-110 group-hover:bg-teal group-hover:text-white shadow-sm">{icon}</div>
+      <h3 className="mt-5 text-xl font-bold text-ink group-hover:text-teal transition-colors">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{description}</p>
+    </div>
   );
 }
 
 export function SimpleList({ items }: { items: Array<{ title: string; description: string; icon: ReactNode }> }) {
   return (
-    <div className="grid gap-4 md:grid-cols-3">
-      {items.map((item) => (
-        <GlassCard key={item.title} className="p-5">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-marigold/15 text-marigold">{item.icon}</div>
-          <h3 className="mt-5 text-xl font-bold text-ink">{item.title}</h3>
-          <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">{item.description}</p>
-        </GlassCard>
+    <div className="grid gap-8 md:grid-cols-3 relative">
+      {items.map((item, idx) => (
+        <div key={item.title} className="relative flex flex-col items-start p-2">
+          {/* Step connector line */}
+          {idx < items.length - 1 && (
+            <div className="hidden md:block absolute top-7 left-14 right-[-2rem] h-[1px] bg-gradient-to-r from-marigold/30 to-transparent" />
+          )}
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-marigold to-orange-500 text-white shadow-lg transition-transform duration-300 hover:rotate-6">
+            {item.icon}
+          </div>
+          <div className="mt-6 flex items-center gap-2">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-marigold">Step 0{idx + 1}</span>
+          </div>
+          <h3 className="mt-2 text-xl font-bold text-ink">{item.title}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{item.description}</p>
+        </div>
       ))}
     </div>
   );
