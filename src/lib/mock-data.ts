@@ -23,17 +23,21 @@ export const roleCards = [
 export const dashboardModules = [
   { title: "Fractions Lab", subject: "Mathematics", xp: 120, time: "12 min", progress: 72, difficulty: "Beginner" },
   { title: "Energy Transfer", subject: "Science", xp: 140, time: "15 min", progress: 41, difficulty: "Intermediate" },
-  { title: "Python Basics", subject: "Computer Basics", xp: 160, time: "18 min", progress: 58, difficulty: "Beginner" },
+  { title: "Python Basics", subject: "Coding", xp: 100, time: "10 min", progress: 58, difficulty: "Beginner" },
+  { title: "Binary Basics", subject: "Computer Basics", xp: 100, time: "10 min", progress: 68, difficulty: "Beginner" },
+  { title: "Decimals Demystified", subject: "Mathematics", xp: 130, time: "14 min", progress: 55, difficulty: "Intermediate" },
   { title: "Linear Patterns", subject: "Mathematics", xp: 180, time: "20 min", progress: 26, difficulty: "Advanced" },
   { title: "Cell Explorer", subject: "Science", xp: 130, time: "11 min", progress: 88, difficulty: "Beginner" },
   { title: "Internet Safety", subject: "Computer Basics", xp: 150, time: "14 min", progress: 33, difficulty: "Intermediate" },
 ];
 
 export const studentBadges = [
-  { name: "7-Day Streak", color: "gold" },
-  { name: "Quiz Master", color: "teal" },
-  { name: "Helper", color: "marigold" },
-  { name: "Fast Learner", color: "crimson" },
+  { name: "7-Day Streak", color: "gold", earned: true },
+  { name: "Quiz Master", color: "teal", earned: true },
+  { name: "Helper", color: "marigold", earned: true },
+  { name: "Fast Learner", color: "crimson", earned: true },
+  { name: "Bookworm", color: "slate", earned: false },
+  { name: "Top Scorer", color: "slate", earned: false },
 ];
 
 export const leaderboard = [

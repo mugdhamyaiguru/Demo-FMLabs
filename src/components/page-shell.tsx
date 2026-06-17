@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import {
   ArrowLeft, ArrowRight, Bell, Brain, Building2, CalendarCheck, ChevronRight,
   ClipboardList, FileBarChart2, FlaskConical, Home, LayoutDashboard, LogOut,
   Menu, Settings, Shield, Sparkles, Star, Trophy, Users2, Video,
 } from "lucide-react";
-import { DashboardContainer, DashboardSidebar, DashboardTopbar, GlassCard, ProgressBar, BrandMark, BrandMarkWhite, Pill, cn } from "@/components/platform";
-import { leaderboard, parentHighlights, savedTutorSessions, studentBadges, teacherRoster } from "@/lib/mock-data";
+import { DashboardContainer, DashboardNavbar, DashboardTopbar, GlassCard, ProgressBar, BrandMark, BrandMarkWhite, Pill, cn } from "@/components/platform";
+import { parentHighlights, savedTutorSessions, studentBadges, teacherRoster } from "@/lib/mock-data";
 
 const adminNav = [
   { label: "Dashboard", href: "/admin",          icon: <LayoutDashboard className="h-4 w-4" /> },
@@ -74,33 +74,39 @@ export function AuthShell({ title, subtitle, children, illustration }: { title: 
 }
 
 export function AppShell({ title, active, children, rightPanel, role = "student" }: { title: string; active: string; children: ReactNode; rightPanel?: ReactNode; role?: "student" | "teacher" | "parent" }) {
-  const [collapsed, setCollapsed] = useState(false);
   const navItems = role === "teacher" ? teacherNav : role === "parent" ? parentNav : studentNav;
 
   return (
     <DashboardContainer>
-      <div className="mx-auto flex min-h-screen max-w-[1600px] gap-5 px-4 py-5 sm:px-6 lg:px-8 lg:py-7">
-        {/* Sidebar */}
-        <div className={`flex-shrink-0 transition-all duration-300 ${collapsed ? "w-[72px]" : "w-[260px]"}`}>
-          <DashboardSidebar
-            active={active}
-            items={navItems}
-            collapsed={collapsed}
-            onToggle={() => setCollapsed((c) => !c)}
-          />
-        </div>
+      <div className="mx-auto flex min-h-screen w-full max-w-none flex-col gap-6 px-8 py-5 lg:px-12 lg:py-7">
+        {/* Top Navbar */}
+        <DashboardNavbar active={active} items={navItems} role={role} />
 
-        {/* Main content */}
-        <div className="min-w-0 flex-1 space-y-6">
-          <DashboardTopbar title={title} greeting={role === "teacher" ? "teacher" : role === "parent" ? "parent" : "learner"} />
-          {children}
-        </div>
+        {/* Content Area */}
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Main content */}
+          <div className="min-w-0 flex-1 space-y-6">
+            {active !== "Modules" && (
+              <DashboardTopbar
+                title={title}
+                greeting={role === "teacher" ? "teacher" : role === "parent" ? "parent" : "learner"}
+                showGreeting={active === "Dashboard"}
+              />
+            )}
+            {children}
+          </div>
 
-        {/* Right panel */}
-        {rightPanel && (
-          <div className="w-[340px] flex-shrink-0 space-y-5">{rightPanel}</div>
-        )}
+          {/* Right panel */}
+          {rightPanel && (
+            <div className="w-full lg:w-[340px] flex-shrink-0 space-y-5">{rightPanel}</div>
+          )}
+        </div>
       </div>
+
+      {/* Floating help button */}
+      <button className="fixed bottom-6 right-6 flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 hover:bg-slate-700 text-white shadow-lg border border-white/10 text-sm font-bold z-50 transition-colors">
+        ?
+      </button>
     </DashboardContainer>
   );
 }
@@ -142,8 +148,18 @@ export function RightRail() {
     { title: "Continue Python Basics", label: "Coding", accentBg: "bg-gold/10", accentText: "text-[#8a6213]", dot: "bg-gold" },
   ];
 
+  const weekDays = [
+    { day: "Mon", checked: true },
+    { day: "Tue", checked: true },
+    { day: "Wed", checked: true },
+    { day: "Thu", checked: true },
+    { day: "Fri", checked: false },
+    { day: "Sat", checked: false },
+    { day: "Sun", checked: false },
+  ];
+
   return (
-    <GlassCard className="p-5 space-y-6">
+    <GlassCard className="p-5 space-y-6 dark:bg-[#11131e]/50 dark:border-white/5">
       {/* What's Next */}
       <div>
         <div className="flex items-center gap-2 mb-4">
@@ -161,7 +177,6 @@ export function RightRail() {
               <span className={`mt-0.5 h-2 w-2 flex-shrink-0 rounded-full ${item.dot}`} />
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-semibold text-ink">{item.title}</p>
-                <p className="mt-0.5 text-xs text-slate-400">AI-recommended · Tap to start</p>
               </div>
               <span className={`flex-shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ${item.accentBg} ${item.accentText}`}>
                 {item.label}
@@ -173,43 +188,51 @@ export function RightRail() {
 
       <div className="h-px bg-slate-200/40 dark:bg-white/5" />
 
-      {/* Leaderboard Preview */}
+      {/* This Week */}
       <div>
-        <div className="flex items-center gap-2 mb-4">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-gold to-marigold text-white shadow-sm">
-            <Trophy className="h-4 w-4" />
-          </div>
-          <h3 className="text-base font-bold text-ink">Leaderboard</h3>
-        </div>
-        <div className="space-y-2">
-          {leaderboard.slice(0, 4).map((item, index) => (
-            <div
-              key={item.name}
-              className={cn(
-                "flex items-center gap-3 rounded-2xl px-3.5 py-3 transition-all duration-200 hover:-translate-y-0.5",
-                index === 0
-                  ? "bg-gradient-to-r from-gold/15 to-marigold/10 border border-gold/20"
-                  : "bg-white/50 dark:bg-white/5 border border-slate-200/20 dark:border-white/5 shadow-sm hover:shadow-md"
+        <h3 className="text-base font-bold text-ink mb-4">This Week</h3>
+        <div className="space-y-3">
+          {weekDays.map((item) => (
+            <div key={item.day} className="flex items-center gap-3">
+              {item.checked ? (
+                <div className="flex h-4.5 w-4.5 items-center justify-center rounded-full bg-teal/20 text-teal border border-teal/30">
+                  <span className="text-[9px]">✓</span>
+                </div>
+              ) : (
+                <div className="h-4.5 w-4.5 rounded-full border border-slate-700 dark:border-white/10 bg-transparent" />
               )}
-            >
-              <span className={cn(
-                "flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-xs font-black",
-                index === 0 ? "bg-gold text-white" :
-                index === 1 ? "bg-slate-200 text-slate-600" :
-                index === 2 ? "bg-[#cd7f32]/20 text-[#cd7f32]" :
-                "bg-surface text-slate-500"
-              )}>
-                {index + 1}
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-semibold text-ink">{item.name}</p>
-              </div>
-              <span className={cn("flex-shrink-0 text-xs font-bold", index === 0 ? "text-gold" : "text-slate-500")}>
-                {item.xp} XP
-              </span>
+              <span className="text-xs font-semibold text-slate-500 w-8">{item.day}</span>
+              <div className={`h-1 flex-1 rounded-full ${item.checked ? 'bg-teal' : 'bg-slate-700/50 dark:bg-white/5'}`} />
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="h-px bg-slate-200/40 dark:bg-white/5" />
+
+      {/* Daily Goal */}
+      <div>
+        <h3 className="text-base font-bold text-ink">Daily Goal</h3>
+        <p className="text-xs text-slate-400 mt-1">3 of 5 lessons done</p>
+        <div className="mt-3">
+          <ProgressBar value={60} accent="teal" />
+        </div>
+        <div className="flex justify-between items-center mt-2 text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+          <span>60%</span>
+          <span>5 lessons</span>
+        </div>
+      </div>
+
+      <div className="h-px bg-slate-200/40 dark:bg-white/5" />
+
+      {/* Next Session */}
+      <div>
+        <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-wider mb-3">
+          <CalendarCheck className="h-4 w-4 text-slate-500" />
+          <span>Next session</span>
+        </div>
+        <h4 className="text-sm font-bold text-ink">Algebra Review</h4>
+        <p className="text-xs text-[#818cf8] font-bold mt-1">Today, 4:00 PM</p>
       </div>
     </GlassCard>
   );
@@ -272,123 +295,25 @@ export function ParentSummary() {
 
 /* ── Admin Shell ──────────────────────────────────────────── */
 export function AdminShell({ title, active, children }: { title: string; active: string; children: ReactNode }) {
-  const [collapsed, setCollapsed] = useState(false);
-
   return (
     <DashboardContainer>
-      <div className="mx-auto flex min-h-screen max-w-[1600px] gap-5 px-4 py-5 sm:px-6 lg:px-8 lg:py-7">
-        {/* Admin Sidebar — indigo/violet */}
-        <div className={`flex-shrink-0 transition-all duration-300 ${collapsed ? "w-[72px]" : "w-[260px]"}`}>
-          <aside
-            className={cn(
-              "flex h-full flex-col rounded-3xl py-5 text-white shadow-glass",
-              "bg-gradient-to-b from-[#1e1b4b] via-[#312e81] to-[#1e1935]",
-              "border border-white/10 transition-all duration-300 ease-in-out",
-              collapsed ? "items-center px-3" : "px-4"
-            )}
-            style={{ boxShadow: "0 24px 64px rgba(10,5,50,0.45), inset 0 1px 0 rgba(255,255,255,0.12)" }}
-          >
-            {/* Brand + toggle */}
-            <div className={cn("flex w-full items-center", collapsed ? "justify-center" : "justify-between gap-2")}>
-              <div className={cn("transition-all duration-300 overflow-hidden", collapsed ? "w-10" : "flex-1")}>
-                {collapsed ? (
-                  <Link href="/" className="h-10 w-10 overflow-hidden rounded-2xl shadow-glow transition-opacity hover:opacity-80 block">
-                    <Image src="/brain-logo.png" alt="logo" width={40} height={40} className="h-full w-full object-cover" />
-                  </Link>
-                ) : (
-                  <BrandMarkWhite />
-                )}
-              </div>
-              <button
-                onClick={() => setCollapsed((c) => !c)}
-                aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-                className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-white/10 text-white/50 transition-all duration-200 hover:bg-white/20 hover:text-white hover:scale-105 active:scale-95"
-              >
-                <ChevronRight className={cn("h-4 w-4 transition-transform duration-300 ease-in-out", collapsed ? "rotate-0" : "rotate-180")} />
-              </button>
-            </div>
-
-            {/* Admin badge */}
-            {!collapsed && (
-              <div className="mt-3 rounded-2xl border border-indigo-400/25 bg-indigo-500/10 px-3 py-2 text-center">
-                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-indigo-300">Administrator Console</p>
-              </div>
-            )}
-
-            <div className="mt-4 h-px w-full rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-
-            {/* Nav links */}
-            <nav className="mt-4 flex w-full flex-col gap-0.5">
-              {adminNav.map((item) => {
-                const isActive = item.label === active;
-                return (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    title={collapsed ? item.label : undefined}
-                    className={cn(
-                      "group relative flex items-center rounded-2xl py-2.5 text-sm font-semibold",
-                      "transition-all duration-200 ease-out overflow-hidden",
-                      collapsed ? "justify-center px-2" : "gap-3 px-3.5",
-                      isActive
-                        ? "bg-white text-indigo-700 shadow-md"
-                        : "text-white/65 hover:bg-white/10 hover:text-white"
-                    )}
-                  >
-                    {isActive && (
-                      <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-r-full bg-gradient-to-b from-indigo-400 to-violet-500" />
-                    )}
-                    <span className={cn(
-                      "flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-xl transition-all duration-200",
-                      isActive ? "bg-indigo-50 text-indigo-700" : "text-white/65 group-hover:text-white group-hover:bg-white/10"
-                    )}>
-                      {item.icon}
-                    </span>
-                    <span className={cn("whitespace-nowrap transition-all duration-300 ease-in-out", collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100")}>
-                      {item.label}
-                    </span>
-                    {!isActive && (
-                      <span className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-white/6 via-transparent to-transparent" />
-                    )}
-                  </Link>
-                );
-              })}
-            </nav>
-
-            {/* Admin info at bottom */}
-            <div className="mt-auto">
-              {collapsed ? (
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-500/20 text-indigo-300" title="Super Admin">
-                  <Shield className="h-5 w-5" />
-                </div>
-              ) : (
-                <div className="rounded-3xl border border-white/10 bg-white/8 p-4 backdrop-blur-sm">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Shield className="h-4 w-4 text-indigo-300 flex-shrink-0" />
-                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/40">Admin Access</p>
-                  </div>
-                  <p className="text-sm font-bold text-white">Super Admin</p>
-                  <p className="text-xs text-white/40 mt-0.5">Full platform control</p>
-                  <Link
-                    href="/"
-                    className="mt-3 flex items-center gap-2 rounded-xl bg-white/10 px-3 py-2 text-xs font-semibold text-white/70 transition-all hover:bg-red-500/20 hover:text-red-300"
-                  >
-                    <LogOut className="h-3.5 w-3.5" />
-                    Sign Out
-                  </Link>
-                </div>
-              )}
-            </div>
-          </aside>
-        </div>
+      <div className="mx-auto flex min-h-screen w-full max-w-none flex-col gap-6 px-8 py-5 lg:px-12 lg:py-7">
+        {/* Top Navbar */}
+        <DashboardNavbar active={active} items={adminNav} role="admin" />
 
         {/* Main content */}
         <div className="min-w-0 flex-1 space-y-6">
           {/* Admin topbar */}
           <div className="flex flex-col gap-4 rounded-3xl border border-white/70 bg-white/80 dark:bg-[#1e1b2e]/90 dark:border-white/8 p-4 shadow-glass backdrop-blur-xl lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-indigo-500 dark:text-indigo-400">{title}</p>
-              <h1 className="text-xl font-bold text-ink">Welcome back, Admin</h1>
+              {active === "Dashboard" ? (
+                <>
+                  <p className="text-xs uppercase tracking-[0.3em] text-indigo-500 dark:text-indigo-400">{title}</p>
+                  <h1 className="text-xl font-bold text-ink">Welcome back, Admin</h1>
+                </>
+              ) : (
+                <h1 className="text-xl font-bold text-ink">{title}</h1>
+              )}
             </div>
             <div className="flex flex-1 items-center gap-3 lg:max-w-2xl lg:justify-end">
               <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-royal/10 dark:border-white/10 bg-surface px-4 py-3">

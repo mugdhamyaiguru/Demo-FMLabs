@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
-import { BookOpen, Clock3, HelpCircle, PlayCircle, Sparkles, Target, ArrowLeft, ArrowRight } from "lucide-react";
+import { BookOpen, Clock3, HelpCircle, PlayCircle, Sparkles, Target, ArrowLeft, ArrowRight, ThumbsUp, ThumbsDown, Flag } from "lucide-react";
 import { AppShell } from "@/components/page-shell";
 import { GlassCard, Pill, ProgressBar } from "@/components/platform";
 import Link from "next/link";
@@ -183,39 +183,6 @@ function LessonInner() {
         {/* Left Column: Interactive Workspace Hub */}
         <div className="space-y-6">
           
-          {/* Header/Cover Card */}
-          <GlassCard className="overflow-hidden p-0 border border-slate-200/30 dark:border-white/5 shadow-lg bg-gradient-to-br from-[#1b1731] via-[#2d224d] to-[#12101e] relative text-white">
-            <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-            <div className="absolute right-0 top-0 h-48 w-48 rounded-full bg-teal/15 blur-3xl" />
-            <div className="absolute left-1/4 bottom-0 h-40 w-40 rounded-full bg-royal/15 blur-3xl" />
-            
-            <div className="relative p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-              <div className="space-y-4 max-w-2xl">
-                <div className="flex items-center gap-2">
-                  <Pill tone={subjectPillTone}>{detail.subject}</Pill>
-                  <Pill tone="gold">{detail.difficulty}</Pill>
-                </div>
-                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">{decodedModule}</h1>
-                <p className="text-sm md:text-base text-slate-300 leading-relaxed max-w-xl">{detail.subtitle} · {detail.description}</p>
-              </div>
-              
-              <div className="flex md:flex-col items-start gap-3 flex-shrink-0 bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm">
-                <div className="flex items-center gap-2.5 text-xs font-semibold text-slate-300">
-                  <Clock3 className="h-4 w-4 text-teal" />
-                  <span>{detail.time} duration</span>
-                </div>
-                <div className="flex items-center gap-2.5 text-xs font-semibold text-slate-300">
-                  <Sparkles className="h-4 w-4 text-marigold animate-pulse" />
-                  <span>+{detail.xp} XP Reward</span>
-                </div>
-                <div className="flex items-center gap-2.5 text-xs font-semibold text-slate-300">
-                  <BookOpen className="h-4 w-4 text-indigo-400" />
-                  <span>{detail.path.length} Core Steps</span>
-                </div>
-              </div>
-            </div>
-          </GlassCard>
-
           {/* Interactive Workspace Card */}
           <GlassCard className="overflow-hidden p-0 dark:bg-[#1e1b2e]/85 dark:border-white/8 shadow-md">
             <div className="p-6 space-y-6">
@@ -296,16 +263,35 @@ function LessonInner() {
                 </div>
               </div>
 
-              {/* Action Buttons Row */}
-              <div className="flex items-center justify-end gap-3 pt-2">
-                <button className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-teal to-[#36a5a3] hover:from-[#1b8d8b] hover:to-[#2c9896] px-5 py-2.5 text-xs font-bold text-white shadow-glow transition-all duration-300 hover:-translate-y-0.5 active:scale-95">
-                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                  Mark Complete
-                </button>
-                <button className="inline-flex items-center justify-center gap-2 rounded-full border border-royal/15 bg-white dark:bg-white/5 dark:border-white/10 px-5 py-2.5 text-xs font-bold text-ink transition-all duration-300 hover:-translate-y-0.5 hover:border-teal hover:text-teal active:scale-95">
-                  Start Quiz
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </button>
+              {/* Action and Feedback Buttons Row */}
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-t border-slate-200/40 dark:border-white/5 pt-4">
+                {/* Left: Feedback controls */}
+                <div className="flex items-center gap-6 text-blue-600 dark:text-blue-400">
+                  <button className="flex items-center gap-2 hover:opacity-85 transition-opacity duration-150 active:scale-95">
+                    <ThumbsUp className="h-5 w-5" />
+                    <span className="text-sm font-bold">Like</span>
+                  </button>
+                  <button className="flex items-center gap-2 hover:opacity-85 transition-opacity duration-150 active:scale-95">
+                    <ThumbsDown className="h-5 w-5" />
+                    <span className="text-sm font-bold">Dislike</span>
+                  </button>
+                  <button className="flex items-center gap-2 hover:opacity-85 transition-opacity duration-150 active:scale-95">
+                    <Flag className="h-5 w-5" />
+                    <span className="text-sm font-bold">Report an issue</span>
+                  </button>
+                </div>
+
+                {/* Right: Actions */}
+                <div className="flex items-center gap-3">
+                  <button className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-teal to-[#36a5a3] hover:from-[#1b8d8b] hover:to-[#2c9896] px-5 py-2.5 text-xs font-bold text-white shadow-glow transition-all duration-300 hover:-translate-y-0.5 active:scale-95">
+                    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    Mark Complete
+                  </button>
+                  <button className="inline-flex items-center justify-center gap-2 rounded-full border border-royal/15 bg-white dark:bg-white/5 dark:border-white/10 px-5 py-2.5 text-xs font-bold text-ink transition-all duration-300 hover:-translate-y-0.5 hover:border-teal hover:text-teal active:scale-95">
+                    Start Quiz
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </button>
+                </div>
               </div>
 
             </div>
@@ -335,84 +321,89 @@ function LessonInner() {
         {/* Right Column: Widgets / Lesson Navigation */}
         <div className="space-y-6">
           
-          {/* Lesson Path Card (Stepper Style) */}
-          <GlassCard className="space-y-4 p-5 h-fit dark:bg-[#1e1b2e]/85 dark:border-white/8">
-            <div className="flex items-center justify-between border-b border-slate-200/40 dark:border-white/5 pb-3">
-              <h3 className="text-sm font-bold text-ink uppercase tracking-wider">Lesson Path</h3>
-              <Pill tone={subjectPillTone}>Active Step {activeStep}/{detail.path.length}</Pill>
-            </div>
-            
-            <div className="relative pl-1.5 mt-5 space-y-5">
-              {/* Stepper connecting line */}
-              <div className="absolute left-[15px] top-3.5 bottom-3.5 w-[2px] bg-slate-200 dark:bg-slate-700/60" />
-              
-              {detail.path.map((step, index) => {
-                const stepNum = index + 1;
-                const isActive = activeStep === stepNum;
-                const isCompleted = stepNum < activeStep;
-                
-                return (
-                  <button
-                    key={step}
-                    onClick={() => setActiveStep(stepNum)}
-                    className="relative w-full flex items-start gap-4 text-left group focus:outline-none"
-                  >
-                    {/* Indicator node */}
-                    <div className="relative z-10 flex h-7.5 w-7.5 flex-shrink-0 items-center justify-center rounded-full transition-all duration-300">
-                      {isCompleted ? (
-                        <div className="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-teal text-white shadow-glow">
-                          <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                      ) : isActive ? (
-                        <div className="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-royal text-white shadow-md ring-4 ring-royal/20 font-bold text-xs">
-                          {stepNum}
-                        </div>
-                      ) : (
-                        <div className="flex h-7.5 w-7.5 items-center justify-center rounded-full border-2 border-slate-200 bg-white text-slate-400 group-hover:border-teal group-hover:text-teal dark:border-slate-700 dark:bg-slate-900 transition-colors font-bold text-xs">
-                          {stepNum}
-                        </div>
-                      )}
-                    </div>
-                    
-                    {/* Text description */}
-                    <div className="flex-1 min-w-0 pt-0.5">
-                      <p className={`text-xs transition-colors leading-tight ${
-                        isActive 
-                          ? "text-royal dark:text-teal font-extrabold" 
-                          : "text-ink font-semibold group-hover:text-teal"
-                      }`}>
-                        {step}
-                      </p>
-                      <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">Estimated 3-5 min</p>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </GlassCard>
-
-          {/* Progress Tracker Card */}
-          <GlassCard className="p-5 dark:bg-[#1e1b2e]/85 dark:border-white/8">
-            <div className="flex items-center justify-between border-b border-slate-200/40 dark:border-white/5 pb-3">
-              <h3 className="text-sm font-bold text-ink uppercase tracking-wider">Progress Tracker</h3>
-              <Target className="h-4 w-4 text-marigold" />
-            </div>
-            <div className="mt-4 space-y-4">
-              <div>
-                <div className="mb-1.5 flex justify-between text-xs font-bold">
-                  <span className="text-slate-500">Lesson progress</span>
-                  <span className="font-extrabold text-teal">{detail.progress}%</span>
-                </div>
-                <ProgressBar value={detail.progress} accent="teal" />
+           {/* Combined Lesson Path & Progress Tracker Card */}
+          <GlassCard className="p-5 space-y-6 dark:bg-[#1e1b2e]/85 dark:border-white/8">
+            {/* Lesson Path Header */}
+            <div>
+              <div className="flex items-center justify-between border-b border-slate-200/40 dark:border-white/5 pb-3">
+                <h3 className="text-sm font-bold text-ink uppercase tracking-wider">Lesson Path</h3>
+                <Pill tone={subjectPillTone}>Active Step {activeStep}/{detail.path.length}</Pill>
               </div>
-              <div>
-                <div className="mb-1.5 flex justify-between text-xs font-bold">
-                  <span className="text-slate-550">Topic confidence</span>
-                  <span className="font-extrabold text-marigold">{detail.confidence}%</span>
+              
+              <div className="relative pl-1.5 mt-5 space-y-5">
+                {/* Stepper connecting line */}
+                <div className="absolute left-[15px] top-3.5 bottom-3.5 w-[2px] bg-slate-200 dark:bg-slate-700/60" />
+                
+                {detail.path.map((step, index) => {
+                  const stepNum = index + 1;
+                  const isActive = activeStep === stepNum;
+                  const isCompleted = stepNum < activeStep;
+                  
+                  return (
+                    <button
+                      key={step}
+                      onClick={() => setActiveStep(stepNum)}
+                      className="relative w-full flex items-start gap-4 text-left group focus:outline-none"
+                    >
+                      {/* Indicator node */}
+                      <div className="relative z-10 flex h-7.5 w-7.5 flex-shrink-0 items-center justify-center rounded-full transition-all duration-300">
+                        {isCompleted ? (
+                          <div className="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-teal text-white shadow-glow">
+                            <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                        ) : isActive ? (
+                          <div className="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-royal text-white shadow-md ring-4 ring-royal/20 font-bold text-xs">
+                            {stepNum}
+                          </div>
+                        ) : (
+                          <div className="flex h-7.5 w-7.5 items-center justify-center rounded-full border-2 border-slate-200 bg-white text-slate-400 group-hover:border-teal group-hover:text-teal dark:border-slate-700 dark:bg-slate-900 transition-colors font-bold text-xs">
+                            {stepNum}
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Text description */}
+                      <div className="flex-1 min-w-0 pt-0.5">
+                        <p className={`text-xs transition-colors leading-tight ${
+                          isActive 
+                            ? "text-royal dark:text-teal font-extrabold" 
+                            : "text-ink font-semibold group-hover:text-teal"
+                        }`}>
+                          {step}
+                        </p>
+                        <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">Estimated 3-5 min</p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="h-px bg-slate-200/40 dark:bg-white/5" />
+
+            {/* Progress Tracker Section */}
+            <div>
+              <div className="flex items-center justify-between border-b border-slate-200/40 dark:border-white/5 pb-3">
+                <h3 className="text-sm font-bold text-ink uppercase tracking-wider">Progress Tracker</h3>
+                <Target className="h-4 w-4 text-marigold" />
+              </div>
+              <div className="mt-4 space-y-4">
+                <div>
+                  <div className="mb-1.5 flex justify-between text-xs font-bold">
+                    <span className="text-slate-500">Lesson progress</span>
+                    <span className="font-extrabold text-teal">{detail.progress}%</span>
+                  </div>
+                  <ProgressBar value={detail.progress} accent="teal" />
                 </div>
-                <ProgressBar value={detail.confidence} accent="marigold" />
+                <div>
+                  <div className="mb-1.5 flex justify-between text-xs font-bold">
+                    <span className="text-slate-550">Topic confidence</span>
+                    <span className="font-extrabold text-marigold">{detail.confidence}%</span>
+                  </div>
+                  <ProgressBar value={detail.confidence} accent="marigold" />
+                </div>
               </div>
             </div>
           </GlassCard>

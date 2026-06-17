@@ -1,21 +1,34 @@
 import { Search, SlidersHorizontal, BookMarked, Clock3, Flame, Play, Layers3 } from "lucide-react";
 import Link from "next/link";
 import { AppShell } from "@/components/page-shell";
-import { EmptyState, GlassCard, Pill, ProgressBar, SectionHeading } from "@/components/platform";
+import { EmptyState, ProgressBar, SectionHeading, cn } from "@/components/platform";
 import { dashboardModules } from "@/lib/mock-data";
+import { ThemeToggleCompact } from "@/components/theme-toggle";
 
 const categories = ["All", "Mathematics", "Science", "Computer Basics"];
 
-const subjectGradient: Record<string, string> = {
-  Mathematics: "from-[#3b2f6e] via-[#4e4260] to-[#189b9b]",
-  Science:     "from-[#0a4f3a] via-[#0d7a5e] to-[#189b9b]",
-  "Computer Basics": "from-[#2a1060] via-[#4e4260] to-[#fc9438]",
+// Custom dark gradient mapping for the card headers matching the screenshots
+const cardGradients: Record<string, string> = {
+  "Fractions Lab": "from-[#1e3a8a] via-[#172554] to-[#0f172a]/95", // Deep Blue
+  "Energy Transfer": "from-[#064e3b] via-[#022c22] to-[#0f172a]/95", // Deep Forest Green
+  "Binary Basics": "from-[#78350f] via-[#451a03] to-[#0f172a]/95", // Dark Gold / Brown
+  "Decimals Demystified": "from-[#581c87] via-[#3b0764] to-[#0f172a]/95", // Deep Purple
 };
 
-const subjectAccent: Record<string, "teal" | "marigold" | "gold"> = {
-  Mathematics: "teal",
-  Science:     "teal",
-  "Computer Basics": "marigold",
+// Custom subject tag styles matching the mockup
+const moduleTagClasses: Record<string, string> = {
+  "Fractions Lab": "bg-blue-500/10 text-blue-400 border border-blue-500/20",
+  "Energy Transfer": "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+  "Binary Basics": "bg-amber-500/10 text-amber-400 border border-amber-500/20",
+  "Decimals Demystified": "bg-fuchsia-500/10 text-fuchsia-400 border border-fuchsia-500/20",
+};
+
+// Custom button styles for active outlines at the bottom
+const moduleButtonClasses: Record<string, string> = {
+  "Fractions Lab": "text-blue-400 border-blue-500/15 bg-blue-500/5 hover:bg-blue-500/20 hover:text-white hover:border-blue-500",
+  "Energy Transfer": "text-emerald-400 border-emerald-500/15 bg-emerald-500/5 hover:bg-emerald-500/20 hover:text-white hover:border-emerald-500",
+  "Binary Basics": "text-amber-400 border-amber-500/15 bg-amber-500/5 hover:bg-amber-500/20 hover:text-white hover:border-amber-500",
+  "Decimals Demystified": "text-fuchsia-400 border-fuchsia-500/15 bg-fuchsia-500/5 hover:bg-fuchsia-500/20 hover:text-white hover:border-fuchsia-500",
 };
 
 export default function ModulesPage() {
@@ -26,11 +39,11 @@ export default function ModulesPage() {
       <div className="space-y-6">
 
         {/* ── Header card ── */}
-        <div className="border-b border-slate-200/40 dark:border-white/5 pb-6">
+        <div className="pb-6 border-b border-slate-200/40 dark:border-white/5">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
             <SectionHeading eyebrow="Module library" title="Explore bite-sized lessons by subject" />
             {/* Search + filter */}
-            <div className="flex flex-1 flex-col gap-3 lg:max-w-xl lg:flex-row">
+            <div className="flex flex-col flex-1 gap-3 lg:max-w-xl lg:flex-row lg:items-center">
               <div className="flex flex-1 items-center gap-2 rounded-full border border-slate-200/35 dark:border-white/5 bg-white/40 dark:bg-white/5 px-4 py-2.5 transition-all focus-within:border-teal focus-within:bg-white/80 dark:focus-within:bg-white/10">
                 <Search className="h-4 w-4 flex-shrink-0 text-royal/40 dark:text-white/40" />
                 <input
@@ -38,9 +51,12 @@ export default function ModulesPage() {
                   placeholder="Search modules, subjects, topics…"
                 />
               </div>
-              <button className="flex items-center justify-center gap-2 rounded-full border border-slate-200/35 dark:border-white/5 bg-white/40 dark:bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-600 dark:text-slate-400 transition-all hover:border-teal hover:text-teal hover:bg-white/80">
-                <SlidersHorizontal className="h-4 w-4" /> Filters
-              </button>
+              <div className="flex items-center gap-2">
+                <button className="flex items-center justify-center gap-2 rounded-full border border-slate-200/35 dark:border-white/5 bg-white/40 dark:bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-600 dark:text-slate-400 transition-all hover:border-teal hover:text-teal hover:bg-white/80">
+                  <SlidersHorizontal className="h-4 w-4" /> Filters
+                </button>
+                <ThemeToggleCompact />
+              </div>
             </div>
           </div>
 
@@ -64,9 +80,10 @@ export default function ModulesPage() {
         {/* ── Module grid ── */}
         {visibleModules.length > 0 ? (
           <div className="grid gap-5 sm:grid-cols-2">
-            {visibleModules.map((module, index) => {
-              const gradient = subjectGradient[module.subject] ?? "from-[#4e4260] via-[#2d3a7c] to-[#189b9b]";
-              const accent = subjectAccent[module.subject] ?? (index % 2 === 0 ? "teal" : "marigold");
+            {visibleModules.map((module) => {
+              const gradient = cardGradients[module.title] ?? "from-[#4e4260] via-[#2d3a7c] to-[#0f172a]";
+              const tagClass = moduleTagClasses[module.title] ?? "bg-slate-500/10 text-slate-400 border border-slate-500/20";
+              const buttonClass = moduleButtonClasses[module.title] ?? "text-slate-400 border-slate-500/15 bg-slate-500/5 hover:bg-slate-500/20 hover:text-white hover:border-slate-500";
 
               return (
                 <div
@@ -76,10 +93,12 @@ export default function ModulesPage() {
                   {/* Card header */}
                   <div className={`relative h-48 bg-gradient-to-br ${gradient} p-5`}>
                     {/* Decorative background shape */}
-                    <Layers3 className="absolute right-4 top-1/2 h-20 w-20 -translate-y-1/2 text-white/10" />
+                    <Layers3 className="absolute right-4 top-1/2 h-20 w-20 -translate-y-1/2 text-white/10 animate-pulse" />
 
                     <div className="flex items-start justify-between">
-                      <Pill tone="gold">{module.subject}</Pill>
+                      <span className={cn("inline-flex items-center rounded-full px-3 py-1 text-xs font-bold border uppercase tracking-wider", tagClass)}>
+                        {module.subject}
+                      </span>
                       <button className="rounded-xl bg-white/15 p-2 text-white/70 transition-colors hover:bg-white/25 hover:text-white">
                         <BookMarked className="h-4 w-4" />
                       </button>
@@ -99,8 +118,8 @@ export default function ModulesPage() {
                         <Clock3 className="h-4 w-4" />
                         <span>{module.time}</span>
                       </div>
-                      <div className="flex items-center gap-1.5 font-semibold text-marigold">
-                        <Flame className="h-4 w-4" />
+                      <div className="flex items-center gap-1.5 font-semibold text-amber-500">
+                        <Flame className="h-4 w-4 text-amber-500" />
                         <span>{module.xp} XP</span>
                       </div>
                     </div>
@@ -111,13 +130,16 @@ export default function ModulesPage() {
                         <span className="text-slate-500">Progress</span>
                         <span className="text-ink">{module.progress}%</span>
                       </div>
-                      <ProgressBar value={module.progress} accent={accent} />
+                      <ProgressBar value={module.progress} accent="teal" />
                     </div>
 
                     {/* Action Link */}
                     <Link
                       href={`/lesson?module=${encodeURIComponent(module.title)}`}
-                      className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl border border-royal/10 bg-surface py-2.5 text-sm font-semibold text-royal transition-all hover:bg-royal hover:text-white"
+                      className={cn(
+                        "mt-4 flex w-full items-center justify-center gap-2 rounded-2xl border py-2.5 text-sm font-semibold transition-all",
+                        buttonClass
+                      )}
                     >
                       <Play className="h-4 w-4" />
                       {module.progress > 0 ? "Resume Lesson" : "Start Lesson"}
