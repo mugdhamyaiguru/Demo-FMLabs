@@ -127,27 +127,44 @@ export default function RewardsPage() {
 
   return (
     <AppShell active="Rewards" title="Rewards & Achievements">
-      <div className="space-y-5">
-        {/* XP & Level Summary */}
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {[
-            { label: "Total XP",      value: "8,420", Icon: Zap,    grad: "from-gold to-marigold" },
-            { label: "Current Level", value: "12",    Icon: Crown,  grad: "from-teal to-[#0d7272]" },
-            { label: "Streak Days",   value: "18",    Icon: Flame,  grad: "from-crimson to-[#e05555]" },
-            { label: "Badges Earned", value: "14",    Icon: Trophy, grad: "from-royal to-[#6f5a88]" },
-          ].map(({ label, value, Icon, grad }) => (
-            <GlassCard key={label} className="p-5 dark:bg-[#1e1b2e]/85 dark:border-white/8">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">{label}</p>
-                  <p className="mt-2 text-3xl font-black text-ink">{value}</p>
-                </div>
-                <div className={`flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br ${grad} shadow-sm`}>
-                  <Icon className="h-5 w-5 text-white" />
-                </div>
-              </div>
-            </GlassCard>
-          ))}
+      <div className="space-y-5 w-full max-w-none px-8 xl:px-12 2xl:px-16">
+        {/* Metric Console */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-4 py-3 border-b border-slate-200/20 dark:border-white/5 pb-6">
+          <div className="flex flex-wrap items-center gap-6 md:gap-8 lg:gap-10 w-full justify-between animate-fade-in px-6 md:px-12">
+            {/* Total XP */}
+            <div className="space-y-1">
+              <div className="text-3xl font-black text-ink">8,420</div>
+              <div className="text-xs font-semibold text-slate-400">Total XP</div>
+              <div className="text-[10px] font-bold text-teal">685 / 1,000 XP</div>
+            </div>
+
+            <div className="hidden md:block h-8 w-px bg-slate-200/20 dark:bg-white/10" />
+
+            {/* Current Level */}
+            <div className="space-y-1">
+              <div className="text-3xl font-black text-ink">12</div>
+              <div className="text-xs font-semibold text-slate-400">Current Level</div>
+              <div className="text-[10px] font-bold text-teal">Level 13 next</div>
+            </div>
+
+            <div className="hidden md:block h-8 w-px bg-slate-200/20 dark:bg-white/10" />
+
+            {/* Streak Days */}
+            <div className="space-y-1">
+              <div className="text-3xl font-black text-ink">18</div>
+              <div className="text-xs font-semibold text-slate-400">Streak Days</div>
+              <div className="text-[10px] font-bold text-amber-500">Keep it up today!</div>
+            </div>
+
+            <div className="hidden md:block h-8 w-px bg-slate-200/20 dark:bg-white/10" />
+
+            {/* Badges Earned */}
+            <div className="space-y-1">
+              <div className="text-3xl font-black text-ink">14</div>
+              <div className="text-xs font-semibold text-slate-400">Badges Earned</div>
+              <div className="text-[10px] font-bold text-slate-500">Of 24 badges total</div>
+            </div>
+          </div>
         </div>
 
         {/* XP Progress & Streak */}
