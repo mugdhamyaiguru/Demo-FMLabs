@@ -12,7 +12,7 @@ export default function ProgressPage() {
 
   return (
     <AppShell active="Progress" title="Progress Dashboard">
-      <div className="space-y-6 max-w-5xl">
+      <div className="space-y-6 w-full max-w-none">
         {/* Header */}
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between border-b border-slate-200/40 dark:border-white/5 pb-6 mb-2">
           <SectionHeading eyebrow="Analytics" title="Learning progress at a glance" />
@@ -22,7 +22,7 @@ export default function ProgressPage() {
         </div>
 
         {/* Top Console: Streak Heatmap, Skill Distribution, Badges */}
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_auto_0.8fr_auto_1.1fr] rounded-[2.5rem] bg-white/40 dark:bg-[#1a1727]/30 border border-slate-200/20 dark:border-white/5 p-8 backdrop-blur-md">
+        <div className="grid gap-8 grid-cols-1 lg:grid-cols-[minmax(0,_1.2fr)_auto_minmax(0,_0.8fr)_auto_minmax(0,_1.1fr)] rounded-[2.5rem] bg-white/40 dark:bg-[#1a1727]/30 border border-slate-200/20 dark:border-white/5 p-8 backdrop-blur-md">
           
           {/* Enhanced Streak Heatmap */}
           <div className="space-y-4 flex flex-col justify-between">
@@ -143,7 +143,7 @@ export default function ProgressPage() {
               <TrendingUp className="h-5 w-5 text-teal" />
             </div>
             <p className="text-xs text-slate-400">Daily study hours logged this week</p>
-            <div className="grid grid-cols-7 items-end gap-6 pt-8 max-w-2xl mx-auto h-40">
+            <div className="grid grid-cols-7 items-end gap-4 md:gap-6 pt-8 w-full h-40">
               {[38, 54, 64, 72, 56, 80, 90].map((height, index) => (
                 <div key={index} className="flex flex-col items-center gap-2 h-full justify-end">
                   <div className="w-full rounded-t-xl bg-gradient-to-t from-teal to-marigold transition-all duration-500 hover:opacity-90 cursor-pointer shadow-sm" style={{ height: `${height}%` }} />
@@ -155,7 +155,7 @@ export default function ProgressPage() {
         </div>
 
         {/* ── Bottom Console: Weak Topics & Leaderboard ── */}
-        <div className="grid gap-8 md:grid-cols-[1fr_auto_1fr] rounded-[2.5rem] bg-white/40 dark:bg-[#1a1727]/30 border border-slate-200/20 dark:border-white/5 p-8 backdrop-blur-md">
+        <div className="grid gap-8 grid-cols-1 md:grid-cols-[minmax(0,_1fr)_auto_minmax(0,_1fr)] rounded-[2.5rem] bg-white/40 dark:bg-[#1a1727]/30 border border-slate-200/20 dark:border-white/5 p-8 backdrop-blur-md">
           {/* Weak Topics */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
