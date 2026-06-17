@@ -127,7 +127,7 @@ export default function RewardsPage() {
 
   return (
     <AppShell active="Rewards" title="Rewards & Achievements">
-      <div className="space-y-5 w-full max-w-none px-8 xl:px-12 2xl:px-16">
+      <div className="space-y-5 w-full max-w-none">
         {/* Metric Console */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-4 py-3 border-b border-slate-200/20 dark:border-white/5 pb-6">
           <div className="flex flex-wrap items-center gap-6 md:gap-8 lg:gap-10 w-full justify-between animate-fade-in px-6 md:px-12">
