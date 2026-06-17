@@ -374,11 +374,13 @@ export function DashboardTopbar({
   greeting = "learner",
   showGreeting = true,
   searchPlaceholder = "Search modules, lessons, or topics",
+  hideStats = false,
 }: {
   title: string;
   greeting?: string;
   showGreeting?: boolean;
   searchPlaceholder?: string;
+  hideStats?: boolean;
 }) {
   return (
     <div className={cn(
@@ -411,7 +413,7 @@ export function DashboardTopbar({
             <input className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400 text-ink" placeholder={searchPlaceholder} />
           </div>
         )}
-        {!showGreeting && (
+        {!showGreeting && !hideStats && (
           <>
             <div className="rounded-full bg-teal/10 px-4.5 py-2 text-sm font-semibold text-teal">18 day streak</div>
             <div className="rounded-full bg-marigold/15 px-4.5 py-2 text-sm font-semibold text-[#b3690d]">1,240 XP</div>

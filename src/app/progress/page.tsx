@@ -163,10 +163,10 @@ export default function ProgressPage() {
               <AlertTriangle className="h-5 w-5 text-crimson" />
             </div>
             {weakTopics.length > 0 ? (
-              <div className="flex flex-wrap gap-3 pt-2">
+              <div className="flex flex-col gap-3 pt-2">
                 {weakTopics.map((topic) => (
-                  <div key={topic} className="flex items-center gap-2 rounded-full bg-crimson/10 border border-crimson/10 px-4.5 py-2 text-xs font-semibold text-crimson">
-                    <span className="h-1.5 w-1.5 rounded-full bg-crimson animate-pulse" />
+                  <div key={topic} className="flex items-center gap-2.5 text-sm font-semibold text-ink">
+                    <span className="h-2 w-2 rounded-full bg-crimson" />
                     <span>{topic}</span>
                   </div>
                 ))}

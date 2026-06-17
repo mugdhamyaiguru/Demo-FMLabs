@@ -91,6 +91,7 @@ export function AppShell({ title, active, children, rightPanel, role = "student"
                 title={title}
                 greeting={role === "teacher" ? "teacher" : role === "parent" ? "parent" : "learner"}
                 showGreeting={active === "Dashboard"}
+                hideStats={active === "Progress"}
               />
             )}
             {children}
