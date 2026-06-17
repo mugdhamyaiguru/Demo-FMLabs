@@ -86,7 +86,7 @@ export function AppShell({ title, active, children, rightPanel, role = "student"
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Main content */}
           <div className="min-w-0 flex-1 space-y-6">
-            {active !== "Modules" && (
+            {active !== "Modules" && active !== "Settings" && (
               <DashboardTopbar
                 title={title}
                 greeting={role === "teacher" ? "teacher" : role === "parent" ? "parent" : "learner"}

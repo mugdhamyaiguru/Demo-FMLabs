@@ -2,13 +2,13 @@
 
 import {
   Accessibility, Bell, BookOpen, Building2, GraduationCap,
-  KeyRound, LogOut, Mail, Moon, Phone, School, ShieldCheck, Sun, User, UserCircle2, Users2,
+  KeyRound, LogOut, Mail, Moon, Phone, School, Search, ShieldCheck, Sun, User, UserCircle2, Users2,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/page-shell";
 import { GlassCard, Pill } from "@/components/platform";
 import { useTheme } from "@/components/theme-provider";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemeToggle, ThemeToggleCompact } from "@/components/theme-toggle";
 
 function FieldRow({ label, value, Icon }: { label: string; value: string; Icon: React.ElementType }) {
   return (
@@ -54,7 +54,14 @@ export default function TeacherSettingsPage() {
             <h1 className="mt-1 text-xl font-bold text-ink">Settings & Preferences</h1>
             <p className="mt-1 text-sm text-slate-500">Manage your profile, appearance, and notifications.</p>
           </div>
-          <Pill tone="marigold">Teacher</Pill>
+          <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto lg:justify-end">
+            <div className="flex min-w-0 flex-1 lg:w-72 xl:w-80 items-center gap-2 rounded-full border border-slate-200/35 dark:border-white/5 bg-white/40 dark:bg-white/5 px-4 py-2">
+              <Search className="h-4 w-4 text-slate-400 flex-shrink-0" />
+              <input className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400 text-ink" placeholder="Search preferences..." />
+            </div>
+            <Pill tone="marigold">Teacher</Pill>
+            <ThemeToggleCompact />
+          </div>
         </div>
 
         {/* Profile Card */}
