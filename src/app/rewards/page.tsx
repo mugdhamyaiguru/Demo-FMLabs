@@ -1,10 +1,66 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import {
   Trophy, BadgeCheck, Flame, Target, Star, Medal, Zap, Crown,
   Brain, Code2, Moon, Dumbbell, CalendarCheck, Bot, Share2,
-  Rocket, BookOpen, Palette, Unlock, Music, Award, FileText,
+  Rocket, BookOpen, Palette, Unlock, Music, Award, FileText, ChevronDown,
 } from "lucide-react";
 import { AppShell } from "@/components/page-shell";
 import { GlassCard, Pill, ProgressBar } from "@/components/platform";
+
+function Accordion({
+  title,
+  subtitle,
+  icon,
+  isOpen,
+  onToggle,
+  children,
+}: {
+  title: string;
+  subtitle: string;
+  icon: React.ReactNode;
+  isOpen: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="rounded-[2.5rem] border border-slate-200/20 dark:border-white/5 bg-white/40 dark:bg-[#1a1727]/30 backdrop-blur-md shadow-glass overflow-hidden transition-all duration-300">
+      {/* Header Button */}
+      <button
+        onClick={onToggle}
+        className="w-full flex items-center justify-between p-6 text-left hover:bg-slate-500/5 dark:hover:bg-white/5 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-teal/50"
+        aria-expanded={isOpen}
+      >
+        <div className="flex items-center gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-gold to-marigold shadow-md text-white flex-shrink-0">
+            {icon}
+          </div>
+          <div>
+            <h3 className="text-lg font-black text-ink leading-tight">{title}</h3>
+            <p className="mt-1.5 text-xs text-slate-400 dark:text-slate-550 font-bold uppercase tracking-wider leading-none">{subtitle}</p>
+          </div>
+        </div>
+        <ChevronDown 
+          className={`h-5 w-5 text-slate-400 transition-transform duration-300 ${
+            isOpen ? "rotate-180" : "rotate-0"
+          }`} 
+        />
+      </button>
+
+      {/* Content wrapper with smooth animation */}
+      <div 
+        className={`transition-all duration-300 ease-in-out ${
+          isOpen ? "max-h-[2200px] opacity-100 p-6 pt-0 border-t border-slate-200/20 dark:border-white/5" : "max-h-0 opacity-0 overflow-hidden pointer-events-none"
+        }`}
+      >
+        <div className="pt-6">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const badges = [
   { name: "Quick Learner",   desc: "Complete 5 modules",       earned: true,  Icon: Zap,          color: "from-gold to-marigold",       iconColor: "text-white" },
@@ -43,6 +99,32 @@ const leaderboard = [
 ];
 
 export default function RewardsPage() {
+  const [achievementsOpen, setAchievementsOpen] = useState(true);
+  const [shopOpen, setShopOpen] = useState(false);
+
+  useEffect(() => {
+    const ach = localStorage.getItem("rewards_ach_open");
+    const shp = localStorage.getItem("rewards_shp_open");
+    if (ach !== null) setAchievementsOpen(ach === "true");
+    if (shp !== null) setShopOpen(shp === "true");
+  }, []);
+
+  const toggleAchievements = () => {
+    setAchievementsOpen((prev) => {
+      const next = !prev;
+      localStorage.setItem("rewards_ach_open", String(next));
+      return next;
+    });
+  };
+
+  const toggleShop = () => {
+    setShopOpen((prev) => {
+      const next = !prev;
+      localStorage.setItem("rewards_shp_open", String(next));
+      return next;
+    });
+  };
+
   return (
     <AppShell active="Rewards" title="Rewards & Achievements">
       <div className="space-y-5">
@@ -113,17 +195,14 @@ export default function RewardsPage() {
           </GlassCard>
         </div>
 
-        {/* Badges & Achievements */}
-        <GlassCard className="p-6 dark:bg-[#1e1b2e]/85 dark:border-white/8">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <Pill tone="gold">Badges Unlocked</Pill>
-              <h3 className="mt-3 text-2xl font-black text-ink">14 Achievements</h3>
-            </div>
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-gold to-marigold shadow-sm">
-              <Trophy className="h-5 w-5 text-white" />
-            </div>
-          </div>
+        {/* Badges & Achievements Accordion */}
+        <Accordion
+          title="Achievements"
+          subtitle="14 badges earned"
+          icon={<Trophy className="h-6 w-6 text-white" />}
+          isOpen={achievementsOpen}
+          onToggle={toggleAchievements}
+        >
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {badges.map((badge) => (
               <div
@@ -147,7 +226,7 @@ export default function RewardsPage() {
               </div>
             ))}
           </div>
-        </GlassCard>
+        </Accordion>
 
         {/* Leaderboard & Rankings */}
         <div className="grid gap-5 lg:grid-cols-2">
@@ -217,18 +296,15 @@ export default function RewardsPage() {
           </GlassCard>
         </div>
 
-        {/* Reward Shop */}
-        <GlassCard className="p-6 dark:bg-[#1e1b2e]/85 dark:border-white/8">
-          <div className="flex items-center justify-between">
-            <div>
-              <Pill tone="gold">Reward Shop</Pill>
-              <h3 className="mt-3 text-2xl font-black text-ink">Redeem Your XP</h3>
-            </div>
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-gold to-marigold shadow-sm">
-              <Star className="h-5 w-5 text-white" />
-            </div>
-          </div>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Reward Shop Accordion */}
+        <Accordion
+          title="Reward Shop"
+          subtitle="8 rewards available"
+          icon={<Star className="h-6 w-6 text-white" />}
+          isOpen={shopOpen}
+          onToggle={toggleShop}
+        >
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {rewardShopItems.map((item) => (
               <div
                 key={item.reward}
@@ -255,7 +331,7 @@ export default function RewardsPage() {
               </div>
             ))}
           </div>
-        </GlassCard>
+        </Accordion>
       </div>
     </AppShell>
   );
