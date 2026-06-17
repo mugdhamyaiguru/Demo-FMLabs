@@ -37,7 +37,7 @@ const notifIcon = {
 export default function ParentPage() {
   return (
     <AppShell active="Dashboard" title="Parent Dashboard" role="parent">
-      <div className="space-y-6 max-w-5xl">
+      <div className="space-y-6 w-full max-w-none px-8 xl:px-12 2xl:px-16">
 
         {/* KPI Strip */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

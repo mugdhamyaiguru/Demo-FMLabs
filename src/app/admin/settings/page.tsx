@@ -22,7 +22,7 @@ export default function AdminSettingsPage() {
 
   return (
     <AdminShell active="Settings" title="Admin Settings">
-      <div className="space-y-5 max-w-4xl">
+      <div className="space-y-5 w-full max-w-none px-8 xl:px-12 2xl:px-16">
 
         {/* Profile */}
         <GlassCard className="p-6">

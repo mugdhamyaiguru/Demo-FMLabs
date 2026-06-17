@@ -56,7 +56,7 @@ function SectionHeader({ icon: Icon, label, title, grad }: { icon: React.Element
 export default function TeacherPage() {
   return (
     <AppShell active="Dashboard" title="Teacher Dashboard" role="teacher">
-      <div className="space-y-6 max-w-5xl">
+      <div className="space-y-6 w-full max-w-none px-8 xl:px-12 2xl:px-16">
 
         {/* ── KPI Strip ── */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
