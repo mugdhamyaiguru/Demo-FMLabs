@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { PersistentNavbar } from "@/components/persistent-navbar";
 
 export const metadata: Metadata = {
   metadataBase: new URL("http://localhost:3000"),
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             Skip to content
           </a>
           <div id="main-content" tabIndex={-1} className="min-h-screen outline-none">
+            <PersistentNavbar />
             {children}
           </div>
         </ThemeProvider>

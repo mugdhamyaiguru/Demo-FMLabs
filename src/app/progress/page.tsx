@@ -143,11 +143,37 @@ export default function ProgressPage() {
               <TrendingUp className="h-5 w-5 text-teal" />
             </div>
             <p className="text-xs text-slate-400">Daily study hours logged this week</p>
-            <div className="grid grid-cols-7 items-end gap-4 md:gap-6 pt-8 w-full h-40">
-              {[38, 54, 64, 72, 56, 80, 90].map((height, index) => (
+            <div className="grid grid-cols-7 items-end gap-4 md:gap-6 pt-10 w-full h-40">
+              {[
+                { day: "Day 01", hours: "1.9", height: 38 },
+                { day: "Day 02", hours: "2.7", height: 54 },
+                { day: "Day 03", hours: "3.2", height: 64 },
+                { day: "Day 04", hours: "3.6", height: 72 },
+                { day: "Day 05", hours: "2.8", height: 56 },
+                { day: "Day 06", hours: "4.0", height: 80 },
+                { day: "Day 07", hours: "4.5", height: 90 },
+              ].map((item, index) => (
                 <div key={index} className="flex flex-col items-center gap-2 h-full justify-end">
-                  <div className="w-full rounded-t-xl bg-gradient-to-t from-teal to-marigold transition-all duration-500 hover:opacity-90 cursor-pointer shadow-sm" style={{ height: `${height}%` }} />
-                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Day 0{index + 1}</span>
+                  {/* Bar Wrapper Container */}
+                  <div
+                    className="w-full relative group cursor-pointer"
+                    style={{ height: `${item.height}%` }}
+                  >
+                    {/* Tooltip */}
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-20">
+                      <div className="bg-slate-900/95 dark:bg-slate-800/95 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg shadow-xl border border-white/10 backdrop-blur-sm whitespace-nowrap text-center">
+                        {item.hours} hrs
+                      </div>
+                      <div className="w-1.5 h-1.5 bg-slate-900/95 dark:bg-slate-800/95 border-r border-b border-white/10 rotate-45 absolute -bottom-0.5 left-1/2 -translate-x-1/2" />
+                    </div>
+
+                    {/* Bar */}
+                    <div
+                      className="w-full h-full rounded-t-xl bg-[#14B8A6] hover:bg-[#20d4bf] hover:shadow-[0_0_15px_#14B8A6] hover:scale-[1.02] transition-all duration-300 animate-bar-grow"
+                      style={{ animationDelay: `${index * 80}ms` }}
+                    />
+                  </div>
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">{item.day}</span>
                 </div>
               ))}
             </div>

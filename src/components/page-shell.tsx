@@ -11,14 +11,14 @@ import {
 import { DashboardContainer, DashboardNavbar, DashboardTopbar, GlassCard, ProgressBar, BrandMark, BrandMarkWhite, Pill, cn } from "@/components/platform";
 import { parentHighlights, savedTutorSessions, studentBadges, teacherRoster } from "@/lib/mock-data";
 
-const adminNav = [
+export const adminNav = [
   { label: "Dashboard", href: "/admin",          icon: <LayoutDashboard className="h-4 w-4" /> },
   { label: "Schools",   href: "/admin/schools",  icon: <Building2 className="h-4 w-4" /> },
   { label: "Users",     href: "/admin/users",    icon: <Users2 className="h-4 w-4" /> },
   { label: "Settings",  href: "/admin/settings", icon: <Settings className="h-4 w-4" /> },
 ];
 
-const studentNav = [
+export const studentNav = [
   { label: "Dashboard", href: "/student",   icon: <Home className="h-4 w-4" /> },
   { label: "Modules",   href: "/modules",   icon: <Menu className="h-4 w-4" /> },
   { label: "AI Tutor",  href: "/tutor",     icon: <Star className="h-4 w-4" /> },
@@ -27,7 +27,7 @@ const studentNav = [
   { label: "Settings",  href: "/settings",  icon: <Settings className="h-4 w-4" /> },
 ];
 
-const teacherNav = [
+export const teacherNav = [
   { label: "Dashboard",     href: "/teacher",                icon: <Home className="h-4 w-4" /> },
   { label: "Roster",        href: "/teacher/roster",         icon: <Users2 className="h-4 w-4" /> },
   { label: "Assignments",   href: "/teacher/assignments",    icon: <ClipboardList className="h-4 w-4" /> },
@@ -39,7 +39,7 @@ const teacherNav = [
   { label: "Settings",      href: "/teacher/settings",       icon: <Settings className="h-4 w-4" /> },
 ];
 
-const parentNav = [
+export const parentNav = [
   { label: "Dashboard",    href: "/parent",               icon: <Home className="h-4 w-4" /> },
   { label: "Progress",     href: "/parent/progress",      icon: <Trophy className="h-4 w-4" /> },
   { label: "Attendance",   href: "/parent/attendance",    icon: <CalendarCheck className="h-4 w-4" /> },
@@ -74,14 +74,9 @@ export function AuthShell({ title, subtitle, children, illustration }: { title: 
 }
 
 export function AppShell({ title, active, children, rightPanel, role = "student" }: { title: string; active: string; children: ReactNode; rightPanel?: ReactNode; role?: "student" | "teacher" | "parent" }) {
-  const navItems = role === "teacher" ? teacherNav : role === "parent" ? parentNav : studentNav;
-
   return (
     <DashboardContainer>
-      <div className="mx-auto flex min-h-screen w-full max-w-none flex-col gap-6 px-8 py-5 lg:px-12 lg:py-7">
-        {/* Top Navbar */}
-        <DashboardNavbar active={active} items={navItems} role={role} />
-
+      <div className="mx-auto flex min-h-screen w-full max-w-none flex-col gap-6 px-8 pb-5 pt-0 lg:px-12 lg:pb-7 lg:pt-0">
         {/* Content Area */}
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Main content */}
@@ -298,10 +293,7 @@ export function ParentSummary() {
 export function AdminShell({ title, active, children }: { title: string; active: string; children: ReactNode }) {
   return (
     <DashboardContainer>
-      <div className="mx-auto flex min-h-screen w-full max-w-none flex-col gap-6 px-8 py-5 lg:px-12 lg:py-7">
-        {/* Top Navbar */}
-        <DashboardNavbar active={active} items={adminNav} role="admin" />
-
+      <div className="mx-auto flex min-h-screen w-full max-w-none flex-col gap-6 px-8 pb-5 pt-0 lg:px-12 lg:pb-7 lg:pt-0">
         {/* Main content */}
         <div className="min-w-0 flex-1 space-y-6">
           {/* Admin topbar */}

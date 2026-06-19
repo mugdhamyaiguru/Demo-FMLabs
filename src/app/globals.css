@@ -281,3 +281,18 @@ textarea:focus-visible {
 .shimmer-trigger:hover .shimmer-element {
   animation: shimmer 1.5s infinite;
 }
+
+/* Bar grow animation for learning graph */
+@keyframes barGrow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.animate-bar-grow {
+  transform: scaleY(0);
+  transform-origin: bottom;
+  animation: barGrow 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
