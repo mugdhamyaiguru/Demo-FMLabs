@@ -1,4 +1,4 @@
-import { Download, Flame, PieChart, TrendingUp, Trophy, AlertTriangle, BadgeCheck } from "lucide-react";
+import { Download, Flame, PieChart, TrendingUp, Trophy, AlertTriangle, BadgeCheck, CheckCircle2 } from "lucide-react";
 import { AppShell } from "@/components/page-shell";
 import { EmptyState, GlassCard, Pill, ProgressBar, SectionHeading } from "@/components/platform";
 
@@ -8,6 +8,15 @@ export default function ProgressPage() {
     ["#12", "Aanya", "1,240 XP"],
     ["#13", "Mira", "1,110 XP"],
     ["#14", "Ravi", "980 XP"],
+  ];
+  const lineChartData = [
+    { day: "Mon", value: 3, x: "5%", y: "60.4%" },
+    { day: "Tue", value: 5, x: "20%", y: "39.6%" },
+    { day: "Wed", value: 4, x: "35%", y: "50%" },
+    { day: "Thu", value: 6, x: "50%", y: "29.2%" },
+    { day: "Fri", value: 2, x: "65%", y: "70.8%" },
+    { day: "Sat", value: 7, x: "80%", y: "18.75%" },
+    { day: "Sun", value: 5, x: "95%", y: "39.6%" },
   ];
 
   return (
@@ -135,49 +144,233 @@ export default function ProgressPage() {
           </div>
         </div>
 
-        {/* ── Expanded Weekly Learning Graph (Subject Performance Removed) ── */}
-        <div className="rounded-[2.5rem] bg-white/40 dark:bg-[#1a1727]/30 border border-slate-200/20 dark:border-white/5 p-8 backdrop-blur-md">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-base font-bold text-ink">Weekly Learning Graph</h3>
-              <TrendingUp className="h-5 w-5 text-teal" />
+        {/* ── CSS Animations for Charts ── */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          @keyframes line-draw {
+            from { stroke-dashoffset: 500; }
+            to { stroke-dashoffset: 0; }
+          }
+          @keyframes radial-draw {
+            from { stroke-dashoffset: 314.2; }
+            to { stroke-dashoffset: 56.6; }
+          }
+          @keyframes fade-in-circle {
+            from { opacity: 0; transform: scale(0.6); }
+            to { opacity: 1; transform: scale(1); }
+          }
+          .animate-line-draw {
+            stroke-dasharray: 500;
+            stroke-dashoffset: 500;
+            animation: line-draw 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          }
+          .animate-radial-draw {
+            stroke-dasharray: 314.2;
+            animation: radial-draw 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          }
+          .animate-fade-in-circle {
+            animation: fade-in-circle 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          }
+        `}} />
+
+        {/* ── Side-by-Side Analytics Grid ── */}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 items-stretch w-full">
+          
+          {/* Left Card – Weekly Learning Graph */}
+          <div className="rounded-[2.5rem] bg-white/40 dark:bg-[#1a1727]/30 border border-slate-200/20 dark:border-white/5 p-8 backdrop-blur-md flex flex-col justify-between h-full">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-base font-bold text-ink">Weekly Learning Graph</h3>
+                <TrendingUp className="h-5 w-5 text-teal" />
+              </div>
+              <p className="text-xs text-slate-400">Daily study hours logged this week</p>
             </div>
-            <p className="text-xs text-slate-400">Daily study hours logged this week</p>
-            <div className="grid grid-cols-7 items-end gap-4 md:gap-6 pt-10 w-full h-40">
-              {[
-                { day: "Day 01", hours: "1.9", height: 38 },
-                { day: "Day 02", hours: "2.7", height: 54 },
-                { day: "Day 03", hours: "3.2", height: 64 },
-                { day: "Day 04", hours: "3.6", height: 72 },
-                { day: "Day 05", hours: "2.8", height: 56 },
-                { day: "Day 06", hours: "4.0", height: 80 },
-                { day: "Day 07", hours: "4.5", height: 90 },
-              ].map((item, index) => (
-                <div key={index} className="flex flex-col items-center gap-2 h-full justify-end">
-                  {/* Bar Wrapper Container */}
+            
+            <div className="flex-grow flex items-end pt-10">
+              <div className="grid grid-cols-7 items-end gap-2.5 sm:gap-4 md:gap-5 w-full h-40">
+                {[
+                  { day: "Day 01", hours: "1.9", height: 38 },
+                  { day: "Day 02", hours: "2.7", height: 54 },
+                  { day: "Day 03", hours: "3.2", height: 64 },
+                  { day: "Day 04", hours: "3.6", height: 72 },
+                  { day: "Day 05", hours: "2.8", height: 56 },
+                  { day: "Day 06", hours: "4.0", height: 80 },
+                  { day: "Day 07", hours: "4.5", height: 90 },
+                ].map((item, index) => (
+                  <div key={index} className="flex flex-col items-center gap-2 h-full justify-end">
+                    {/* Bar Wrapper Container */}
+                    <div
+                      className="w-full relative group cursor-pointer"
+                      style={{ height: `${item.height}%` }}
+                    >
+                      {/* Tooltip */}
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-20">
+                        <div className="bg-slate-900/95 dark:bg-slate-800/95 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg shadow-xl border border-white/10 backdrop-blur-sm whitespace-nowrap text-center">
+                          {item.hours} hrs
+                        </div>
+                        <div className="w-1.5 h-1.5 bg-slate-900/95 dark:bg-slate-800/95 border-r border-b border-white/10 rotate-45 absolute -bottom-0.5 left-1/2 -translate-x-1/2" />
+                      </div>
+
+                      {/* Bar */}
+                      <div
+                        className="w-full h-full rounded-t-xl bg-[#14B8A6] hover:bg-[#20d4bf] hover:shadow-[0_0_15px_#14B8A6] hover:scale-[1.02] transition-all duration-300 animate-bar-grow"
+                        style={{ animationDelay: `${index * 80}ms` }}
+                      />
+                    </div>
+                    <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">{item.day}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Right Card – Weekly Task Completion */}
+          <div className="rounded-[2.5rem] bg-white/40 dark:bg-[#1a1727]/30 border border-slate-200/20 dark:border-white/5 p-8 backdrop-blur-md flex flex-col justify-between h-full space-y-6">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-base font-bold text-ink">Weekly Task Completion</h3>
+                <CheckCircle2 className="h-5 w-5 text-teal" />
+              </div>
+              <p className="text-xs text-slate-400">Weekly task status and completions</p>
+            </div>
+
+            {/* Radial Chart Top */}
+            <div className="flex justify-center py-2">
+              <div className="relative flex items-center justify-center">
+                <svg width="120" height="120" className="transform -rotate-90">
+                  <circle
+                    cx="60"
+                    cy="60"
+                    r="50"
+                    className="stroke-slate-200/30 dark:stroke-white/5"
+                    strokeWidth="10"
+                    fill="transparent"
+                  />
+                  <circle
+                    cx="60"
+                    cy="60"
+                    r="50"
+                    className="stroke-teal animate-radial-draw"
+                    strokeWidth="10"
+                    fill="transparent"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <div className="absolute flex flex-col items-center justify-center text-center">
+                  <span className="text-3xl font-black text-ink">82%</span>
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Weekly Tasks</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Stats Middle */}
+            <div className="grid grid-cols-3 gap-3">
+              {/* Completed */}
+              <div className="flex flex-col items-center justify-center bg-teal/5 dark:bg-teal/10 rounded-2xl p-3 border border-teal/10">
+                <span className="text-[10px] font-bold text-teal uppercase tracking-wider flex items-center gap-1">
+                  <span className="h-1.5 w-1.5 rounded-full bg-teal" /> Completed
+                </span>
+                <span className="text-xl font-extrabold text-ink mt-1">23</span>
+              </div>
+              {/* Pending */}
+              <div className="flex flex-col items-center justify-center bg-marigold/5 dark:bg-marigold/10 rounded-2xl p-3 border border-marigold/10">
+                <span className="text-[10px] font-bold text-marigold uppercase tracking-wider flex items-center gap-1">
+                  <span className="h-1.5 w-1.5 rounded-full bg-marigold" /> Pending
+                </span>
+                <span className="text-xl font-extrabold text-ink mt-1">5</span>
+              </div>
+              {/* Missed */}
+              <div className="flex flex-col items-center justify-center bg-crimson/5 dark:bg-crimson/10 rounded-2xl p-3 border border-crimson/10">
+                <span className="text-[10px] font-bold text-crimson uppercase tracking-wider flex items-center gap-1">
+                  <span className="h-1.5 w-1.5 rounded-full bg-crimson" /> Missed
+                </span>
+                <span className="text-xl font-extrabold text-ink mt-1">2</span>
+              </div>
+            </div>
+
+            {/* Line Chart Bottom */}
+            <div className="space-y-2 pt-2 border-t border-slate-200/20 dark:border-white/5">
+              <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 text-center">Completed Tasks Trend</p>
+              
+              <div className="relative w-full h-24 mt-2">
+                {/* SVG for line chart */}
+                <svg viewBox="0 0 400 120" className="w-full h-full overflow-visible" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="taskAreaGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#189b9b" stopOpacity="0.25" />
+                      <stop offset="100%" stopColor="#189b9b" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Horizontal Grid lines */}
+                  <line x1="20" y1="10" x2="380" y2="10" className="stroke-slate-200/20 dark:stroke-white/5" strokeDasharray="3 3" />
+                  <line x1="20" y1="60" x2="380" y2="60" className="stroke-slate-200/20 dark:stroke-white/5" strokeDasharray="3 3" />
+                  <line x1="20" y1="110" x2="380" y2="110" className="stroke-slate-200/20 dark:stroke-white/5" strokeDasharray="3 3" />
+
+                  {/* Area under line path */}
+                  <path
+                    d="M 20 110 L 20 72.5 C 50 72.5, 50 47.5, 80 47.5 C 110 47.5, 110 60, 140 60 C 170 60, 170 35, 200 35 C 230 35, 230 85, 260 85 C 290 85, 290 22.5, 320 22.5 C 350 22.5, 350 47.5, 380 47.5 L 380 110 Z"
+                    fill="url(#taskAreaGrad)"
+                    className="opacity-0 animate-fade-in-simple"
+                    style={{ animationDelay: "600ms", animationFillMode: "forwards" }}
+                  />
+
+                  {/* Curved Path line */}
+                  <path
+                    d="M 20 72.5 C 50 72.5, 50 47.5, 80 47.5 C 110 47.5, 110 60, 140 60 C 170 60, 170 35, 200 35 C 230 35, 230 85, 260 85 C 290 85, 290 22.5, 320 22.5 C 350 22.5, 350 47.5, 380 47.5"
+                    fill="none"
+                    stroke="#189b9b"
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                    className="animate-line-draw"
+                  />
+                </svg>
+
+                {/* Overlay dots with tooltip */}
+                {lineChartData.map((item, index) => (
                   <div
-                    className="w-full relative group cursor-pointer"
-                    style={{ height: `${item.height}%` }}
+                    key={item.day}
+                    className="absolute group cursor-pointer"
+                    style={{
+                      left: item.x,
+                      top: item.y,
+                      transform: "translate(-50%, -50%)",
+                    }}
                   >
                     {/* Tooltip */}
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-20">
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-30">
                       <div className="bg-slate-900/95 dark:bg-slate-800/95 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg shadow-xl border border-white/10 backdrop-blur-sm whitespace-nowrap text-center">
-                        {item.hours} hrs
+                        {item.value} tasks
                       </div>
                       <div className="w-1.5 h-1.5 bg-slate-900/95 dark:bg-slate-800/95 border-r border-b border-white/10 rotate-45 absolute -bottom-0.5 left-1/2 -translate-x-1/2" />
                     </div>
 
-                    {/* Bar */}
+                    {/* Circle dot marker */}
                     <div
-                      className="w-full h-full rounded-t-xl bg-[#14B8A6] hover:bg-[#20d4bf] hover:shadow-[0_0_15px_#14B8A6] hover:scale-[1.02] transition-all duration-300 animate-bar-grow"
-                      style={{ animationDelay: `${index * 80}ms` }}
+                      className="h-3.5 w-3.5 rounded-full border-2 border-white dark:border-[#1e1b2e] bg-[#189b9b] shadow-[0_0_8px_#189b9b] transition-all duration-300 group-hover:scale-125 opacity-0 animate-fade-in-circle"
+                      style={{
+                        animationDelay: `${index * 120 + 200}ms`,
+                        animationFillMode: "forwards",
+                      }}
                     />
                   </div>
-                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">{item.day}</span>
-                </div>
-              ))}
+                ))}
+              </div>
+
+              {/* Labels below line chart */}
+              <div className="relative h-4 mt-2 w-full text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+                {lineChartData.map((item) => (
+                  <span
+                    key={item.day}
+                    className="absolute -translate-x-1/2 text-center"
+                    style={{ left: item.x }}
+                  >
+                    {item.day}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
+
         </div>
 
         {/* ── Bottom Console: Weak Topics & Leaderboard ── */}
