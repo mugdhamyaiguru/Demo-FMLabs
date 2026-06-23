@@ -15,28 +15,26 @@ export function cn(...classes: Array<string | undefined | false>) {
 
 export function BrandMark() {
   return (
-    <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
-      <div className="h-11 w-11 flex-shrink-0 overflow-hidden rounded-2xl shadow-glow">
-        <Image src="/brain-logo.png" alt="FutureMinds AI Labs logo" width={44} height={44} className="h-full w-full object-cover" />
+    <Link href="/" className="flex items-center gap-3 group">
+      <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-xl border border-slate-200/80 dark:border-white/10 bg-white/50 shadow-sm transition-all duration-300 group-hover:scale-105 group-hover:border-teal/30">
+        <Image src="/brain-logo.png" alt="FutureMinds AI Guru logo" width={40} height={40} className="h-full w-full object-cover" />
       </div>
-      <div>
-        <div className="text-sm font-semibold uppercase tracking-[0.35em] text-royal/70">FutureMinds</div>
-        <div className="text-lg font-bold text-ink">AI Guru</div>
-      </div>
+      <span className="text-[17px] font-bold tracking-tight text-ink transition-colors duration-300 group-hover:text-teal whitespace-nowrap">
+        FutureMinds AI Guru
+      </span>
     </Link>
   );
 }
 
 export function BrandMarkWhite() {
   return (
-    <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
-      <div className="h-11 w-11 flex-shrink-0 overflow-hidden rounded-2xl shadow-glow">
-        <Image src="/brain-logo.png" alt="FutureMinds AI Labs logo" width={44} height={44} className="h-full w-full object-cover" />
+    <Link href="/" className="flex items-center gap-3 group">
+      <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-xl border border-white/15 bg-white/10 shadow-sm transition-all duration-300 group-hover:scale-105 group-hover:border-marigold/30">
+        <Image src="/brain-logo.png" alt="FutureMinds AI Guru logo" width={40} height={40} className="h-full w-full object-cover" />
       </div>
-      <div>
-        <div className="text-sm font-semibold uppercase tracking-[0.35em] text-white/60">FutureMinds</div>
-        <div className="text-lg font-bold text-white">AI Guru</div>
-      </div>
+      <span className="text-[17px] font-bold tracking-tight text-white transition-colors duration-300 group-hover:text-marigold whitespace-nowrap">
+        FutureMinds AI Guru
+      </span>
     </Link>
   );
 }
@@ -318,7 +316,7 @@ export function FloatingOrbs() {
 
 export function FeatureBadge({ icon, title, description }: { icon: ReactNode; title: string; description: string }) {
   return (
-    <div className="group h-full p-6 rounded-[2rem] border border-transparent transition-all duration-300 hover:border-slate-200/35 dark:hover:border-white/5 hover:bg-white/40 dark:hover:bg-white/5 hover:shadow-glass hover:backdrop-blur-md">
+    <div className="group h-full p-6 rounded-[2rem] border border-transparent transition-all duration-300 hover:border-slate-200/50 dark:hover:border-white/5 hover:bg-white/70 dark:hover:bg-white/5 hover:shadow-glass hover:backdrop-blur-md">
       <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal/10 text-teal transition-all duration-300 group-hover:scale-110 group-hover:bg-teal group-hover:text-white shadow-sm">{icon}</div>
       <h3 className="mt-5 text-xl font-bold text-ink group-hover:text-teal transition-colors">{title}</h3>
       <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{description}</p>

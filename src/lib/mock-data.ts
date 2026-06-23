@@ -3,7 +3,6 @@ export const featureCards = [
   { title: "Personalized Learning", description: "Adaptive recommendations, modules, and progress-aware next steps.", accent: "marigold" },
   { title: "Progress Tracking", description: "Skill graphs, streaks, badges, and analytics that feel motivating.", accent: "gold" },
   { title: "Gamification", description: "XP, rewards, streaks, and celebratory moments that keep learners engaged.", accent: "crimson" },
-  { title: "Teacher Dashboard", description: "Professional overview for assignments, attendance, reports, and class insights.", accent: "teal" },
   { title: "Parent Dashboard", description: "Simple, trustworthy monitoring for progress, attendance, and weak topics.", accent: "gold" },
   { title: "Real-world Projects", description: "Student-friendly project cards that turn learning into practical outcomes.", accent: "marigold" },
 ];

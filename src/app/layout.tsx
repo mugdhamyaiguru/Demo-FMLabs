@@ -36,7 +36,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             __html: `(function(){try{
               var m=localStorage.getItem('fm-theme');
               var dark=(m==='dark')||(m==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches)||(!m&&window.matchMedia('(prefers-color-scheme: dark)').matches);
-              if(dark)document.documentElement.classList.add('dark');
+              if(dark && window.location.pathname !== '/') document.documentElement.classList.add('dark');
             }catch(e){}})();`,
           }}
         />
