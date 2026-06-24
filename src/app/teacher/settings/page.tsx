@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/page-shell";
 import { GlassCard, Pill } from "@/components/platform";
 import { useTheme } from "@/components/theme-provider";
-import { ThemeToggle, ThemeToggleCompact } from "@/components/theme-toggle";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 function FieldRow({ label, value, Icon }: { label: string; value: string; Icon: React.ElementType }) {
   return (
@@ -60,7 +60,6 @@ export default function TeacherSettingsPage() {
               <input className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400 text-ink" placeholder="Search preferences..." />
             </div>
             <Pill tone="marigold">Teacher</Pill>
-            <ThemeToggleCompact />
           </div>
         </div>
 

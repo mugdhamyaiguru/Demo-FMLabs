@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { ArrowRight, BadgeCheck, Bot, Brain, ChevronRight, Flame, GraduationCap, LayoutDashboard, LineChart, LogOut, Search, ShieldCheck, Sparkles, Users } from "lucide-react";
-import { ThemeToggleCompact } from "@/components/theme-toggle";
 
 type GlassCardProps = {
   children: ReactNode;
@@ -267,107 +266,7 @@ export function DashboardSidebar({ active, items, collapsed = false, onToggle }:
   );
 }
 
-export function DashboardNavbar({
-  active,
-  items,
-  role = "student",
-}: {
-  active: string;
-  items: Array<{ label: string; href: string; icon: ReactNode }>;
-  role?: "student" | "teacher" | "parent" | "admin";
-}) {
-  const gradientClass =
-    role === "admin"
-      ? "bg-gradient-to-r from-[#1e1b4b] via-[#312e81] to-[#1e1935]"
-      : "bg-gradient-to-r from-[#3a2f55] via-[#4e4260] to-[#2d2445]";
-
-  return (
-    <header
-      className={cn(
-        "flex flex-col lg:flex-row items-center justify-between gap-4 rounded-xl px-6 py-4 text-white shadow-glass border border-white/10",
-        gradientClass
-      )}
-      style={{ boxShadow: "0 12px 32px rgba(20,10,40,0.2), inset 0 1px 0 rgba(255,255,255,0.1)" }}
-    >
-      {/* Brand / Logo */}
-      <div className="flex items-center gap-2">
-        <BrandMarkWhite />
-        {role === "admin" && (
-          <span className="hidden sm:inline-block rounded-xl border border-indigo-400/25 bg-indigo-500/10 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-indigo-300">
-            Admin
-          </span>
-        )}
-      </div>
-
-      {/* Navigation Links */}
-      <nav className="flex flex-wrap items-center justify-center gap-1.5 md:gap-2">
-        {items.map((item) => {
-          const isActive = item.label === active;
-          return (
-            <Link
-              key={item.label}
-              href={item.href}
-              className={cn(
-                "group relative flex items-center rounded-lg py-2 px-3 text-xs md:text-sm font-semibold transition-all duration-200 ease-out overflow-hidden gap-1.5",
-                isActive
-                  ? "bg-white text-royal shadow-md"
-                  : "text-white/65 hover:bg-white/10 hover:text-white"
-              )}
-            >
-              {/* Icon */}
-              <span
-                className={cn(
-                  "flex h-5 w-5 items-center justify-center rounded-lg transition-all duration-200",
-                  isActive
-                    ? "bg-royal/8 text-royal"
-                    : "text-white/65 group-hover:text-white group-hover:bg-white/10"
-                )}
-              >
-                {item.icon}
-              </span>
-              <span>{item.label}</span>
-              {!isActive && (
-                <span className="pointer-events-none absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-white/6 via-transparent to-transparent" />
-              )}
-            </Link>
-          );
-        })}
-      </nav>
-
-      {/* Streak widget or controls */}
-      <div className="flex items-center gap-3">
-        {role === "admin" ? (
-          <Link
-            href="/"
-            className="flex items-center gap-1.5 rounded-xl bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/70 transition-all hover:bg-red-500/20 hover:text-red-300"
-          >
-            <LogOut className="h-3.5 w-3.5" />
-            Sign Out
-          </Link>
-        ) : (
-          <div className="flex items-center gap-2">
-            {/* Streak Pill */}
-            <div className="flex items-center gap-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 px-3.5 py-1.5 text-xs font-semibold text-amber-300 animate-fade-in">
-              <Flame className="h-3.5 w-3.5 text-amber-500 animate-pulse" />
-              <span>10 days</span>
-            </div>
-
-            {/* XP Pill */}
-            <div className="flex items-center gap-1.5 rounded-full bg-violet-500/10 border border-violet-500/25 px-3.5 py-1.5 text-xs font-semibold text-violet-300 animate-fade-in">
-              <Sparkles className="h-3.5 w-3.5 text-violet-400" />
-              <span>1,240 XP</span>
-            </div>
-
-            {/* Avatar */}
-            <div className="h-8 w-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xs shadow-md border border-white/20 select-none">
-              N
-            </div>
-          </div>
-        )}
-      </div>
-    </header>
-  );
-}
+export { DashboardNavbar } from "./dashboard-navbar";
 
 export function DashboardTopbar({
   title,
@@ -402,24 +301,17 @@ export function DashboardTopbar({
       </div>
       <div className="flex flex-1 items-center gap-3 lg:max-w-2xl lg:justify-end">
         {showGreeting && (
-          <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-slate-200/20 dark:border-white/5 bg-white/40 dark:bg-white/5 px-4 py-2.5 w-full max-w-2xl lg:max-w-3xl">
+          <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-slate-200/20 dark:border-white/5 bg-white/40 dark:bg-white/5 px-4 py-2.5 w-full">
             <Search className="h-4 w-4 text-slate-400 flex-shrink-0" />
             <input className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400 text-ink" placeholder="Search modules, lessons, or topics..." />
           </div>
         )}
         {!showGreeting && (
-          <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-slate-200/35 dark:border-white/5 bg-white/40 dark:bg-white/5 px-4 py-2.5">
+          <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-slate-200/35 dark:border-white/5 bg-white/40 dark:bg-white/5 px-4 py-2.5 w-full">
             <LayoutDashboard className="h-4 w-4 text-royal/40 dark:text-white/30" />
             <input className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400 text-ink" placeholder={searchPlaceholder} />
           </div>
         )}
-        {!showGreeting && !hideStats && (
-          <>
-            <div className="rounded-full bg-teal/10 px-4.5 py-2 text-sm font-semibold text-teal">18 day streak</div>
-            <div className="rounded-full bg-marigold/15 px-4.5 py-2 text-sm font-semibold text-[#b3690d]">1,240 XP</div>
-          </>
-        )}
-        <ThemeToggleCompact />
       </div>
     </div>
   );

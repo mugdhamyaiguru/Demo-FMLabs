@@ -3,7 +3,6 @@ import Link from "next/link";
 import { AppShell } from "@/components/page-shell";
 import { EmptyState, ProgressBar, SectionHeading, cn } from "@/components/platform";
 import { dashboardModules } from "@/lib/mock-data";
-import { ThemeToggleCompact } from "@/components/theme-toggle";
 
 const categories = ["All", "Mathematics", "Science", "Computer Basics"];
 
@@ -51,12 +50,9 @@ export default function ModulesPage() {
                   placeholder="Search modules, subjects, topics…"
                 />
               </div>
-              <div className="flex items-center gap-2">
-                <button className="flex items-center justify-center gap-2 rounded-full border border-slate-200/35 dark:border-white/5 bg-white/40 dark:bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-600 dark:text-slate-400 transition-all hover:border-teal hover:text-teal hover:bg-white/80">
-                  <SlidersHorizontal className="h-4 w-4" /> Filters
-                </button>
-                <ThemeToggleCompact />
-              </div>
+              <button className="flex items-center justify-center gap-2 rounded-full border border-slate-200/35 dark:border-white/5 bg-white/40 dark:bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-600 dark:text-slate-400 transition-all hover:border-teal hover:text-teal hover:bg-white/80">
+                <SlidersHorizontal className="h-4 w-4" /> Filters
+              </button>
             </div>
           </div>
 
@@ -79,7 +75,7 @@ export default function ModulesPage() {
 
         {/* ── Module grid ── */}
         {visibleModules.length > 0 ? (
-          <div className="grid gap-5 sm:grid-cols-2">
+          <div className="grid gap-6 lg:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {visibleModules.map((module) => {
               const gradient = cardGradients[module.title] ?? "from-[#4e4260] via-[#2d3a7c] to-[#0f172a]";
               const tagClass = moduleTagClasses[module.title] ?? "bg-slate-500/10 text-slate-400 border border-slate-500/20";
@@ -88,12 +84,12 @@ export default function ModulesPage() {
               return (
                 <div
                   key={module.title}
-                  className="group overflow-hidden rounded-[2rem] bg-white/50 dark:bg-[#1e1b2e]/50 border border-slate-200/20 dark:border-white/5 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.01]"
+                  className="group flex flex-col h-full overflow-hidden rounded-3xl bg-white/50 dark:bg-[#1e1b2e]/50 border border-slate-200/20 dark:border-white/5 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.01]"
                 >
                   {/* Card header */}
-                  <div className={`relative h-48 bg-gradient-to-br ${gradient} p-5`}>
+                  <div className={`relative h-44 bg-gradient-to-br ${gradient} p-5 flex-shrink-0`}>
                     {/* Decorative background shape */}
-                    <Layers3 className="absolute right-4 top-1/2 h-20 w-20 -translate-y-1/2 text-white/10 animate-pulse" />
+                    <Layers3 className="absolute right-4 top-1/2 h-18 w-18 -translate-y-1/2 text-white/10 animate-pulse" />
 
                     <div className="flex items-start justify-between">
                       <span className={cn("inline-flex items-center rounded-full px-3 py-1 text-xs font-bold border uppercase tracking-wider", tagClass)}>
@@ -111,33 +107,35 @@ export default function ModulesPage() {
                   </div>
 
                   {/* Card body */}
-                  <div className="p-5">
-                    {/* Stats row */}
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center gap-1.5 text-slate-500">
-                        <Clock3 className="h-4 w-4" />
-                        <span>{module.time}</span>
+                  <div className="flex flex-1 flex-col justify-between p-5">
+                    <div>
+                      {/* Stats row */}
+                      <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center gap-1.5 text-slate-500">
+                          <Clock3 className="h-4 w-4" />
+                          <span>{module.time}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 font-semibold text-amber-500">
+                          <Flame className="h-4 w-4 text-amber-500" />
+                          <span>{module.xp} XP</span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-1.5 font-semibold text-amber-500">
-                        <Flame className="h-4 w-4 text-amber-500" />
-                        <span>{module.xp} XP</span>
-                      </div>
-                    </div>
 
-                    {/* Progress */}
-                    <div className="mt-4">
-                      <div className="mb-2 flex justify-between text-xs font-semibold">
-                        <span className="text-slate-500">Progress</span>
-                        <span className="text-ink">{module.progress}%</span>
+                      {/* Progress */}
+                      <div className="mt-3.5">
+                        <div className="mb-2 flex justify-between text-xs font-semibold">
+                          <span className="text-slate-500">Progress</span>
+                          <span className="text-ink">{module.progress}%</span>
+                        </div>
+                        <ProgressBar value={module.progress} accent="teal" />
                       </div>
-                      <ProgressBar value={module.progress} accent="teal" />
                     </div>
 
                     {/* Action Link */}
                     <Link
                       href={`/lesson?module=${encodeURIComponent(module.title)}`}
                       className={cn(
-                        "mt-4 flex w-full items-center justify-center gap-2 rounded-2xl border py-2.5 text-sm font-semibold transition-all",
+                        "mt-3.5 flex w-full items-center justify-center gap-2 rounded-2xl border py-2.5 text-sm font-semibold transition-all",
                         buttonClass
                       )}
                     >
