@@ -62,10 +62,14 @@ export function EmptyState({ title, description, action, icon }: { title: string
   );
 }
 
-export function SectionHeading({ eyebrow, title, description }: { eyebrow?: string; title: string; description?: string }) {
+export function SectionHeading({ eyebrow, title, description, centered }: { eyebrow?: string; title: string; description?: string; centered?: boolean }) {
   return (
-    <div className="max-w-3xl space-y-3">
-      {eyebrow ? <p className="text-xs font-semibold uppercase tracking-[0.35em] text-teal">{eyebrow}</p> : null}
+    <div className={cn("max-w-3xl space-y-3.5", centered ? "mx-auto text-center" : "")}>
+      {eyebrow ? (
+        <div className="inline-flex items-center rounded-full bg-teal/10 dark:bg-teal/15 border border-teal/20 px-3.5 py-1 text-xs font-bold uppercase tracking-[0.18em] text-teal">
+          {eyebrow}
+        </div>
+      ) : null}
       <h2 className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">{title}</h2>
       {description ? <p className="text-sm leading-7 text-slate-500 dark:text-slate-400">{description}</p> : null}
     </div>

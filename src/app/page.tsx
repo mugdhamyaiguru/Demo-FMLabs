@@ -255,13 +255,14 @@ export default function HomePage() {
       </section>
 
       {/* ── Features ───────────────────────────────────────── */}
-      <section id="features" className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-20">
+      <section id="features" className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
         <SectionHeading
           eyebrow="Platform features"
           title="Built to feel futuristic, vibrant, and easy to use"
           description="The interface mixes SaaS clarity, playful gamification, and student-friendly visuals to make every workflow feel engaging."
+          centered
         />
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 lg:mt-20 grid gap-8 lg:gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {featureCards.map((feature) => (
             <FeatureBadge
               key={feature.title}
@@ -274,7 +275,7 @@ export default function HomePage() {
       </section>
 
       {/* ── How it works ───────────────────────────────────── */}
-      <section id="about" className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24 animate-fade-up">
+      <section id="about" className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32 animate-fade-up">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12">
           <SectionHeading
             eyebrow="How it works"
@@ -287,13 +288,13 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="relative mt-4">
+        <div className="relative mt-16 lg:mt-20">
           {/* Animated Gradient Progress Line (Desktop) */}
           <div className="hidden lg:block absolute top-12 left-[12%] right-[12%] h-[3px] bg-slate-200/40 dark:bg-white/5 rounded-full overflow-hidden -z-10">
             <div className="h-full bg-gradient-to-r from-[#189B9B] via-[#FC9438] to-[#189B9B] animate-shimmer-line" style={{ backgroundSize: "200% 100%" }} />
           </div>
 
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-10 lg:gap-12 md:grid-cols-3">
             {[
               {
                 step: "01",
@@ -355,17 +356,19 @@ export default function HomePage() {
       </section>
 
       {/* ── Role-based ─────────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24 animate-fade-up">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32 animate-fade-up">
         <SectionHeading
           eyebrow="Role-based learning"
           title="Every role gets a focused experience"
           description="The demo keeps the student journey immersive while still giving teachers and parents the insights they need."
         />
-        <RoleSelector />
+        <div className="mt-16 lg:mt-20">
+          <RoleSelector />
+        </div>
       </section>
 
       {/* ── Testimonials ───────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
         {/* Section header + social proof row */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <SectionHeading
@@ -397,7 +400,7 @@ export default function HomePage() {
         </div>
 
         {/* Desktop: 3-column premium card grid */}
-        <div className="mt-12 hidden lg:grid gap-6 lg:grid-cols-3">
+        <div className="mt-16 lg:mt-20 hidden lg:grid gap-8 lg:gap-10 lg:grid-cols-3">
           {testimonials.map((item) => {
             const roleColors: Record<string, { bg: string; text: string; border: string; accent: string }> = {
               "Grade 8": { bg: "bg-[#189b9b]/10", text: "text-[#189b9b]", border: "border-[#189b9b]/25", accent: "from-[#189b9b]" },
@@ -454,7 +457,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Partners ───────────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
         {/* Header: heading + description + verified badge grouped together */}
         <div className="max-w-4xl">
           <SectionHeading
@@ -469,7 +472,7 @@ export default function HomePage() {
         </div>
 
         {/* Partner cards grid */}
-        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className="mt-16 lg:mt-20 grid grid-cols-2 gap-6 sm:grid-cols-4">
           {[
             { name: "Global EdTech Alliance", logo: "GEA", category: "EdTech" },
             { name: "International School Network", logo: "ISN", category: "Schools" },
@@ -503,7 +506,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Global reach ───────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-20 overflow-hidden">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32 overflow-hidden">
         {/* Faint ambient radial — global context, not distracting */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[32rem] w-[48rem] rounded-full opacity-[0.07] blur-[80px]" style={{ background: "radial-gradient(ellipse, #189b9b 0%, #7c5cbf 50%, transparent 75%)" }} />
@@ -532,7 +535,7 @@ export default function HomePage() {
         </div>
 
         {/* Region cards */}
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 lg:mt-20 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { region: "North America", users: "240k+", countries: "USA, Canada, Mexico", flag: "🌎", color: "from-[#189b9b]" },
             { region: "Europe", users: "180k+", countries: "UK, Germany, France, Spain", flag: "🌍", color: "from-[#4e4260]" },
@@ -573,9 +576,9 @@ export default function HomePage() {
       </section>
 
       {/* ── Why FutureMinds Wins ─────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24 animate-fade-up">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32 animate-fade-up">
         {/* Header */}
-        <div className="mb-10">
+        <div className="mb-16 lg:mb-20">
           <SectionHeading
             eyebrow="Why FutureMinds wins"
             title="FutureMinds AI Guru stands apart"
@@ -765,13 +768,13 @@ export default function HomePage() {
       </section>
 
       {/* ── Compliance ─────────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-20">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
         <SectionHeading
           eyebrow="Compliance & security"
           title="Enterprise-grade protection and transparency"
           description="FERPA, GDPR, and COPPA compliant with SOC 2 Type II certification and annual security audits."
         />
-        <div className="mt-10 rounded-[2.5rem] bg-white/60 dark:bg-[#1a1727]/30 border border-slate-200/40 dark:border-white/5 p-8 backdrop-blur-md shadow-sm grid gap-8 md:grid-cols-3">
+        <div className="mt-16 lg:mt-20 rounded-[2.5rem] bg-white/60 dark:bg-[#1a1727]/30 border border-slate-200/40 dark:border-white/5 p-8 backdrop-blur-md shadow-sm grid gap-10 lg:gap-12 md:grid-cols-3">
           {[
             { title: "Data Privacy", items: ["GDPR Compliant", "FERPA Certified", "COPPA Compliant", "End-to-end Encryption"] },
             { title: "Security Standards", items: ["SOC 2 Type II", "ISO 27001", "Regular Penetration Testing", "99.9% Uptime SLA"] },
@@ -796,7 +799,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Contact / Get in Touch ───────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 pb-32 pt-12 lg:px-10">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 pt-20 pb-36 lg:pt-28 lg:pb-44 lg:px-10">
         <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#32284a] via-[#1e1930] to-[#131020] shadow-[0_32px_80px_rgba(0,0,0,0.55)]">
 
           {/* Ambient glow layers */}
@@ -814,7 +817,9 @@ export default function HomePage() {
             {/* ─── LEFT: Role-based contact options ─────────────── */}
             <div className="px-8 py-14 lg:px-14 lg:py-20 border-b border-white/[0.06] lg:border-b-0 lg:border-r lg:border-white/[0.06]">
               {/* Section label */}
-              <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#fc9438]">Get in touch</p>
+              <div className="inline-flex items-center rounded-full bg-[#fc9438]/10 border border-[#fc9438]/20 px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#fc9438]">
+                Get in touch
+              </div>
               <h2 className="mt-3 text-3xl font-extrabold leading-tight text-white sm:text-4xl">
                 We&apos;re here for<br className="hidden sm:block" /> every learner
               </h2>

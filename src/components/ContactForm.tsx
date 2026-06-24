@@ -3,7 +3,9 @@
 export default function ContactForm() {
   return (
     <div className="px-8 py-14 lg:px-14 lg:py-20">
-      <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#189b9b]">Book a demo</p>
+      <div className="inline-flex items-center rounded-full bg-[#189b9b]/10 border border-[#189b9b]/20 px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#189b9b]">
+        Book a demo
+      </div>
       <h3 className="mt-3 text-2xl font-extrabold text-white leading-snug">
         Start with FutureMinds
       </h3>
