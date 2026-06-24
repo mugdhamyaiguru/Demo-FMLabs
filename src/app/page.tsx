@@ -29,6 +29,7 @@ import ThemeForcer from "@/components/ThemeForcer";
 import RoleSelector from "@/components/RoleSelector";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import ContactForm from "@/components/ContactForm";
+import LandingHeader from "@/components/LandingHeader";
 
 export const metadata: Metadata = {
   title: "FutureMinds AI Guru",
@@ -58,23 +59,13 @@ export default function HomePage() {
   } as const;
 
   return (
-    <main className="relative overflow-hidden min-h-screen">
+    <main className="relative overflow-hidden min-h-screen pt-24">
       <ThemeForcer />
       {/* ── Header ─────────────────────────────────────────── */}
-      <header className="relative z-30 mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10 bg-transparent">
-        <BrandMark />
-        <nav className="hidden items-center gap-8 text-sm font-semibold text-slate-600 md:flex">
-          <a href="#features" className="transition-colors hover:text-[#189b9b]">Features</a>
-          <a href="#about" className="transition-colors hover:text-[#189b9b]">About</a>
-          <a href="/login" className="transition-colors hover:text-[#189b9b]">Login</a>
-          <a href="/signup" className="rounded-full bg-[#fc9438] px-6 py-2.5 text-sm font-bold text-white transition-all shadow-md hover:-translate-y-0.5 hover:bg-[#e67e22] hover:shadow-lg">
-            Signup
-          </a>
-        </nav>
-      </header>
+      <LandingHeader />
 
       {/* ── Hero Section ───────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-4 pb-16 pt-4 sm:px-6 lg:px-8 lg:pb-24 lg:pt-6">
+      <section id="home" className="relative z-10 mx-auto max-w-7xl px-4 pb-16 pt-4 sm:px-6 lg:px-8 lg:pb-24 lg:pt-6">
         <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#2e2542] via-[#201b33] to-[#171424] text-white px-8 py-16 sm:px-12 lg:px-16 shadow-2xl border border-white/10 ring-1 ring-white/5">
           {/* Interactive Liquid / Fluid Canvas Background */}
           <FluidBackground />
