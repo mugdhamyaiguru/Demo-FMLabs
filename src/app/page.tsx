@@ -255,7 +255,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Features ───────────────────────────────────────── */}
-      <section id="features" className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
+      <section id="features" className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
         <SectionHeading
           eyebrow="Platform features"
           title="Built to feel futuristic, vibrant, and easy to use"
@@ -275,7 +275,7 @@ export default function HomePage() {
       </section>
 
       {/* ── How it works ───────────────────────────────────── */}
-      <section id="about" className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32 animate-fade-up">
+      <section id="about" className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24 animate-fade-up">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12">
           <SectionHeading
             eyebrow="How it works"
@@ -356,7 +356,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Role-based ─────────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32 animate-fade-up">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24 animate-fade-up">
         <SectionHeading
           eyebrow="Role-based learning"
           title="Every role gets a focused experience"
@@ -368,7 +368,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Testimonials ───────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
         {/* Section header + social proof row */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <SectionHeading
@@ -457,7 +457,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Partners ───────────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
         {/* Header: heading + description + verified badge grouped together */}
         <div className="max-w-4xl">
           <SectionHeading
@@ -506,7 +506,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Global reach ───────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32 overflow-hidden">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24 overflow-hidden">
         {/* Faint ambient radial — global context, not distracting */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[32rem] w-[48rem] rounded-full opacity-[0.07] blur-[80px]" style={{ background: "radial-gradient(ellipse, #189b9b 0%, #7c5cbf 50%, transparent 75%)" }} />
@@ -576,7 +576,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Why FutureMinds Wins ─────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32 animate-fade-up">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24 animate-fade-up">
         {/* Header */}
         <div className="mb-16 lg:mb-20">
           <SectionHeading
@@ -768,7 +768,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Compliance ─────────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
         <SectionHeading
           eyebrow="Compliance & security"
           title="Enterprise-grade protection and transparency"
@@ -799,7 +799,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Contact / Get in Touch ───────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 pt-20 pb-36 lg:pt-28 lg:pb-44 lg:px-10">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:py-24 lg:px-10">
         <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#32284a] via-[#1e1930] to-[#131020] shadow-[0_32px_80px_rgba(0,0,0,0.55)]">
 
           {/* Ambient glow layers */}
