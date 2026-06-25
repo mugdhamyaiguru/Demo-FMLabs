@@ -6,7 +6,8 @@ import { BrandMark } from "@/components/platform";
 const navLinks = [
   { label: "Home", href: "#home", id: "home" },
   { label: "Features", href: "#features", id: "features" },
-  { label: "About", href: "#about", id: "about" },
+  { label: "How It Works", href: "#how-it-works", id: "how-it-works" },
+  { label: "Testimonials", href: "#testimonials", id: "testimonials" },
   { label: "Login", href: "/login", id: "login" },
 ];
 

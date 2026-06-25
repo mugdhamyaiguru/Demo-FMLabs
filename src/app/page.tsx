@@ -491,7 +491,7 @@ export default function HomePage() {
       </section>
 
       {/* ── How it works ───────────────────────────────────── */}
-      <section id="about" className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24 animate-fade-up">
+      <section id="how-it-works" className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24 animate-fade-up">
         <div className="pb-6">
           <SectionHeading
             eyebrow="How it works"
@@ -611,7 +611,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Testimonials ───────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+      <section id="testimonials" className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
         <div className="pb-6">
           <SectionHeading
             eyebrow="Testimonials"
