@@ -367,45 +367,34 @@ export default function HomePage() {
       </section>
 
       {/* ── Global reach ───────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24 overflow-hidden">
-        {/* Faint ambient radial — global context, not distracting */}
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-11 lg:px-10 lg:py-16 overflow-hidden">
+        {/* Faint ambient radial & SVG World Map background — global context, not distracting */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[32rem] w-[48rem] rounded-full opacity-[0.07] blur-[80px]" style={{ background: "radial-gradient(ellipse, #189b9b 0%, #7c5cbf 50%, transparent 75%)" }} />
+          <div 
+            className="absolute inset-0 opacity-[0.04] dark:opacity-[0.02] bg-center bg-no-repeat bg-contain"
+            style={{ backgroundImage: "url('https://raw.githubusercontent.com/flekschas/simple-world-map/master/world.svg')" }}
+          />
         </div>
 
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
-          <div>
-            <SectionHeading
-              eyebrow="Global reach"
-              title="Serving students and educators worldwide"
-            />
-          </div>
-          {/* Aggregate stat pill */}
-          <div className="flex-shrink-0 self-start sm:self-auto flex items-center gap-2.5 rounded-2xl border border-slate-200/60 dark:border-white/8 bg-white/70 dark:bg-[#1a1727]/50 px-4 py-3 shadow-sm backdrop-blur-md">
-            <div className="text-right">
-              <p className="text-xl font-black bg-gradient-to-r from-[#189b9b] to-[#4e4260] bg-clip-text text-transparent leading-none">835k+</p>
-              <p className="mt-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">active learners</p>
-            </div>
-            <div className="h-8 w-px bg-slate-200/80 dark:bg-white/10" />
-            <div className="text-right">
-              <p className="text-xl font-black bg-gradient-to-r from-[#fc9438] to-[#d8a444] bg-clip-text text-transparent leading-none">50+</p>
-              <p className="mt-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">countries</p>
-            </div>
-          </div>
+        <div>
+          <SectionHeading
+            title="Serving students and educators worldwide"
+          />
         </div>
 
         {/* Region cards */}
-        <div className="mt-16 lg:mt-20 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 lg:mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { region: "North America", users: "240k+", countries: "USA, Canada, Mexico", flag: "🌎", color: "from-[#189b9b]" },
-            { region: "Europe", users: "180k+", countries: "UK, Germany, France, Spain", flag: "🌍", color: "from-[#4e4260]" },
-            { region: "Asia-Pacific", users: "320k+", countries: "India, Singapore, Australia, Japan", flag: "🌏", color: "from-[#fc9438]" },
-            { region: "Middle East & Africa", users: "95k+", countries: "UAE, Saudi Arabia, South Africa", flag: "🌍", color: "from-[#189b9b]" },
+            { region: "North America", users: "240k+", countries: "USA, Canada, Mexico", color: "from-[#189b9b]" },
+            { region: "Europe", users: "180k+", countries: "UK, Germany, France, Spain", color: "from-[#4e4260]" },
+            { region: "Asia-Pacific", users: "320k+", countries: "India, Singapore, Australia, Japan", color: "from-[#fc9438]" },
+            { region: "Middle East & Africa", users: "95k+", countries: "UAE, Saudi Arabia, South Africa", color: "from-[#189b9b]" },
           ].map((region) => (
             <div
               key={region.region}
-              className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/60 dark:border-white/8 bg-white/70 dark:bg-[#1a1727]/40 p-6 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:border-[#189b9b]/25 dark:hover:border-[#189b9b]/15"
+              className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/60 dark:border-white/8 bg-white/70 dark:bg-[#1a1727]/40 p-5 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:border-[#189b9b]/25 dark:hover:border-[#189b9b]/15"
             >
               {/* Hover glow */}
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#189b9b]/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none" />
@@ -413,22 +402,21 @@ export default function HomePage() {
               {/* Top accent */}
               <div className={`absolute top-0 left-6 right-6 h-[2px] rounded-b-full bg-gradient-to-r ${region.color} to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-60`} />
 
-              {/* Region label + flag */}
-              <div className="flex items-center justify-between">
+              {/* Region label */}
+              <div>
                 <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#189b9b]">{region.region}</p>
-                <span className="text-base leading-none opacity-60 group-hover:opacity-100 transition-opacity duration-300">{region.flag}</span>
               </div>
 
               {/* Big number */}
-              <div className="mt-5">
-                <p className={`text-4xl font-black bg-gradient-to-r ${region.color} to-[#4e4260] bg-clip-text text-transparent leading-none`}>
+              <div className="mt-3">
+                <p className={`text-[2.25rem] sm:text-[2.5rem] font-black bg-gradient-to-r ${region.color} to-[#4e4260] bg-clip-text text-transparent leading-none`}>
                   {region.users}
                 </p>
                 <p className="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400">learners</p>
               </div>
 
               {/* Countries */}
-              <p className="mt-4 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+              <p className="mt-2.5 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
                 {region.countries}
               </p>
             </div>
