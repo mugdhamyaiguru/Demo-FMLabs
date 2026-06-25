@@ -164,9 +164,6 @@ export default function RoleSelector() {
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <h3 className="text-xl font-bold text-slate-800 dark:text-white">{item.title}</h3>
-                  {isActive && (
-                    <span className="inline-block h-2 w-2 rounded-full bg-current animate-ping" style={{ color: item.color === "teal" ? "#189b9b" : item.color === "gold" ? "#d8a444" : "#7c5cbf" }} />
-                  )}
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{item.description}</p>
               </div>
