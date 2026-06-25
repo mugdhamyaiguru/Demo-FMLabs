@@ -329,7 +329,6 @@ export default function HomePage() {
               <div className="flex flex-wrap gap-2.5">
                 <span className="inline-flex items-center rounded-full bg-[#189b9b]/20 text-[#21d0d0] px-3.5 py-1 text-xs font-semibold border border-[#189b9b]/35">AI-powered learning</span>
                 <span className="inline-flex items-center rounded-full bg-[#fc9438]/20 text-[#ffa24c] px-3.5 py-1 text-xs font-semibold border border-[#fc9438]/35">Gamified progress</span>
-                <span className="inline-flex items-center rounded-full bg-[#d8a444]/20 text-[#ffce6d] px-3.5 py-1 text-xs font-semibold border border-[#d8a444]/35">Premium MVP demo</span>
               </div>
 
               <div className="space-y-4">
@@ -613,89 +612,15 @@ export default function HomePage() {
 
       {/* ── Testimonials ───────────────────────────────────── */}
       <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
-        {/* Section header + social proof row */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="pb-6">
           <SectionHeading
             eyebrow="Testimonials"
             title="Loved by students, trusted by parents and educators"
+            centered
           />
-          <div className="flex items-center gap-2 flex-shrink-0 self-start md:self-auto">
-            <div className="flex -space-x-2">
-              {[
-                { initials: "AS", bg: "bg-[#189b9b]" },
-                { initials: "MP", bg: "bg-[#fc9438]" },
-                { initials: "SK", bg: "bg-[#7c5cbf]" },
-              ].map(({ initials, bg }) => (
-                <div key={initials} className={`flex h-8 w-8 items-center justify-center rounded-full text-[11px] font-bold text-white ring-2 ring-white dark:ring-[#12101e] ${bg}`}>
-                  {initials}
-                </div>
-              ))}
-            </div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 pl-1">
-              <p className="font-semibold text-slate-700 dark:text-slate-200">Loved by learners</p>
-              <div className="flex items-center gap-1 mt-0.5">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-3 w-3 fill-[#d8a444] text-[#d8a444]" />
-                ))}
-                <span className="ml-0.5">5.0</span>
-              </div>
-            </div>
-          </div>
         </div>
 
-        {/* Desktop: 3-column premium card grid */}
-        <div className="mt-16 lg:mt-20 hidden lg:grid gap-8 lg:gap-10 lg:grid-cols-3">
-          {testimonials.map((item) => {
-            const roleColors: Record<string, { bg: string; text: string; border: string; accent: string }> = {
-              "Grade 8": { bg: "bg-[#189b9b]/10", text: "text-[#189b9b]", border: "border-[#189b9b]/25", accent: "from-[#189b9b]" },
-              "Teacher": { bg: "bg-[#fc9438]/10", text: "text-[#fc9438]", border: "border-[#fc9438]/25", accent: "from-[#fc9438]" },
-              "Parent": { bg: "bg-[#7c5cbf]/10", text: "text-[#7c5cbf]", border: "border-[#7c5cbf]/25", accent: "from-[#7c5cbf]" },
-            };
-            const cfg = roleColors[item.role] ?? { bg: "bg-slate-100", text: "text-slate-500", border: "border-slate-200", accent: "from-slate-400" };
-            const initials = item.name.split(/[\s,]+/).filter(Boolean).slice(0, 2).map((w: string) => w[0].toUpperCase()).join("");
-            return (
-              <div
-                key={item.name}
-                className="group relative flex flex-col justify-between rounded-[2.5rem] border border-slate-200/60 dark:border-white/8 bg-white/75 dark:bg-[#1a1727]/50 p-8 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-slate-300/70 dark:hover:border-white/12 overflow-hidden"
-              >
-                {/* Top accent line */}
-                <div className={`absolute top-0 left-8 right-8 h-[2px] rounded-b-full bg-gradient-to-r ${cfg.accent} to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-100`} />
-
-                {/* Decorative background quote */}
-                <span className="absolute top-4 left-5 text-5xl font-sans font-light text-slate-300/50 dark:text-slate-600/40 pointer-events-none select-none leading-none">&ldquo;</span>
-
-                <div className="relative z-10 space-y-5">
-                  {/* Stars */}
-                  <div className="flex items-center gap-0.5">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="h-3.5 w-3.5 fill-[#d8a444] text-[#d8a444]" />
-                    ))}
-                  </div>
-                  {/* Quote */}
-                  <p className="text-base font-medium leading-relaxed text-slate-700 dark:text-slate-200">
-                    &ldquo;{item.quote}&rdquo;
-                  </p>
-                </div>
-
-                {/* Footer */}
-                <div className="relative z-10 mt-8 flex items-center gap-3.5">
-                  <div className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl text-sm font-bold ${cfg.bg} ${cfg.text}`}>
-                    {initials}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold text-slate-800 dark:text-slate-100 truncate">{item.name}</p>
-                    <span className={`mt-1 inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider border ${cfg.bg} ${cfg.text} ${cfg.border}`}>
-                      {item.role}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Mobile: carousel */}
-        <div className="lg:hidden">
+        <div className="mt-16 lg:mt-20">
           <TestimonialCarousel items={testimonials} />
         </div>
       </section>

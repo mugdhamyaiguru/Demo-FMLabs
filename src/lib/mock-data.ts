@@ -8,9 +8,60 @@ export const featureCards = [
 ];
 
 export const testimonials = [
-  { name: "Aanya, Student", role: "Grade 8", quote: "It feels like a game, but I can actually see myself improving every week." },
-  { name: "Mr. Patel", role: "Teacher", quote: "The classroom dashboard gives me a clean overview without feeling heavy." },
-  { name: "Ms. Khan", role: "Parent", quote: "I can understand progress at a glance and know where to help my child." },
+  {
+    name: "Rohan",
+    role: "Student, Grade 6",
+    quote: "I used to dread studying, but the XP and streaks make me actually want to open the platform every day. My grades have improved without it feeling like work.",
+    category: "Student"
+  },
+  {
+    name: "Ms. Sharma",
+    role: "Teacher",
+    quote: "I can see exactly which students are struggling and on which topic — without waiting for exam results. It's changed how I plan my lessons completely.",
+    category: "Teacher"
+  },
+  {
+    name: "Mrs. Iyer",
+    role: "Parent",
+    quote: "I don't have to wait for parent-teacher meetings to know how my son is doing. The weekly summary tells me everything I need in two minutes.",
+    category: "Parent"
+  },
+  {
+    name: "Priya",
+    role: "Student, Grade 4",
+    quote: "The AI tutor explains things in a way my textbook never could. I got full marks on my AI quiz after just two lessons.",
+    category: "Student"
+  },
+  {
+    name: "Mr. Desai",
+    role: "Teacher",
+    quote: "Seeing my entire class's attendance, streaks, and quiz scores in one dashboard has made parent meetings so much more productive. I come prepared with actual data.",
+    category: "Teacher"
+  },
+  {
+    name: "Mr. Mehta",
+    role: "Parent",
+    quote: "My daughter went from avoiding homework to asking for more practice modules. I didn't expect a platform to make that kind of difference.",
+    category: "Parent"
+  },
+  {
+    name: "Aanya",
+    role: "Student, Grade 8",
+    quote: "It feels like a game, but I can actually see myself improving every week.",
+    category: "Student"
+  },
+  {
+    name: "Mr. Patel",
+    role: "Teacher",
+    quote: "The classroom dashboard gives me a clean overview without feeling heavy.",
+    category: "Teacher"
+  },
+  {
+    name: "Ms. Khan",
+    role: "Parent",
+    quote: "I can understand progress at a glance and know where to help my child.",
+    category: "Parent"
+  }
 ];
 
 export const roleCards = [
