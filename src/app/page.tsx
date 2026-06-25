@@ -318,48 +318,40 @@ export default function HomePage() {
       </section>
 
       {/* ── Partners ───────────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
-        {/* Header: heading + description + verified badge grouped together */}
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-11 lg:px-10 lg:py-16">
+        {/* Header: heading + description grouped together */}
         <div className="max-w-4xl">
           <SectionHeading
-            eyebrow="Strategic partners"
-            title="Trusted by leading educational institutions globally"
-            description="FutureMinds AI Guru partners with schools, universities, and education platforms to transform learning."
+            title="Part of a Growing Education Network"
+            description="FutureMinds AI Guru partners with schools, universities and education platforms to transform learning."
           />
-          <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-[#189b9b]/25 bg-[#189b9b]/5 px-3 py-1 text-[11px] font-semibold text-[#189b9b]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#189b9b]" />
-            Verified partners
-          </div>
         </div>
 
         {/* Partner cards grid */}
-        <div className="mt-16 lg:mt-20 grid grid-cols-2 gap-6 sm:grid-cols-4">
+        <div className="mt-8 lg:mt-10 grid grid-cols-2 gap-5 sm:grid-cols-4">
           {[
-            { name: "Global EdTech Alliance", logo: "GEA", category: "EdTech" },
-            { name: "International School Network", logo: "ISN", category: "Schools" },
-            { name: "AI Learning Consortium", logo: "ALC", category: "AI & Research" },
-            { name: "Future Educators Foundation", logo: "FEF", category: "Foundation" },
+            { name: "Global EdTech Alliance", logo: "GEA" },
+            { name: "International School Network", logo: "ISN" },
+            { name: "AI Learning Consortium", logo: "ALC" },
+            { name: "Future Educators Foundation", logo: "FEF" },
           ].map((partner) => (
             <div
               key={partner.name}
-              className="group relative flex flex-col items-center gap-3 overflow-hidden rounded-2xl border border-slate-200/60 dark:border-white/8 bg-white/70 dark:bg-[#1a1727]/40 px-5 py-6 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-[#189b9b]/30 dark:hover:border-[#189b9b]/20 hover:shadow-md"
+              className="group relative flex flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl border border-slate-200/60 dark:border-white/8 bg-white/70 dark:bg-[#1a1727]/40 px-4 py-3.5 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-[#189b9b]/30 dark:hover:border-[#189b9b]/20 hover:shadow-md"
             >
               {/* Top accent line revealed on hover */}
               <div className="absolute top-0 inset-x-0 h-[2px] rounded-b-full bg-gradient-to-r from-[#189b9b] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-70" />
 
-              {/* Logo area — slightly larger, stronger default tint */}
-              <div className="flex h-16 w-16 items-center justify-center rounded-xl border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-white/8 text-[15px] font-black tracking-tight text-slate-600 dark:text-slate-300 shadow-sm transition-all duration-300 group-hover:border-[#189b9b]/35 group-hover:bg-[#189b9b]/10 group-hover:text-[#189b9b]">
+              {/* Logo area — slightly smaller, stronger default tint */}
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-white/8 text-[18px] font-black tracking-tight text-slate-600 dark:text-slate-300 shadow-sm transition-all duration-300 group-hover:border-[#189b9b]/35 group-hover:bg-[#189b9b]/10 group-hover:text-[#189b9b]">
                 {partner.logo}
               </div>
 
-              {/* Name + category — tighter spacing */}
-              <div className="space-y-1 text-center">
-                <p className="text-sm font-semibold leading-snug text-slate-700 dark:text-slate-200">
+              {/* Name — tighter spacing */}
+              <div className="text-center">
+                <p className="text-sm font-semibold leading-snug text-slate-600 dark:text-slate-300">
                   {partner.name}
                 </p>
-                <span className="inline-block rounded-full bg-slate-100 dark:bg-white/5 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                  {partner.category}
-                </span>
               </div>
             </div>
           ))}
