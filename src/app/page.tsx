@@ -419,16 +419,13 @@ export default function HomePage() {
       {/* ── Why FutureMinds Wins ─────────────────────────────── */}
       <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24 animate-fade-up">
         {/* Header */}
-        <div className="mb-16 lg:mb-20">
+        <div className="mb-10 lg:mb-12">
           <SectionHeading
             eyebrow="Why FutureMinds wins"
             title="FutureMinds AI Guru stands apart"
             description="Compare the next generation of AI-powered learning with conventional platforms."
+            centered
           />
-          <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#189b9b]/25 bg-[#189b9b]/8 px-3.5 py-1.5 text-[11px] font-semibold text-[#189b9b]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#189b9b]" />
-            Trusted by 835k+ learners worldwide
-          </div>
         </div>
 
         {/* Comparison Table Wrapper */}
@@ -580,17 +577,7 @@ export default function HomePage() {
             })}
 
             {/* Footer CTA strip */}
-            <div className="border-t border-slate-200/60 dark:border-white/8 bg-slate-50/60 dark:bg-white/[0.02] px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-2.5">
-                <div className="flex items-center gap-0.5">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-3 w-3 fill-[#d8a444] text-[#d8a444]" />
-                  ))}
-                </div>
-                <span className="text-[12.5px] font-medium text-slate-500 dark:text-slate-400">
-                  Rated <span className="font-semibold text-slate-700 dark:text-slate-200">5.0</span> by learners, teachers &amp; parents
-                </span>
-              </div>
+            <div className="border-t border-slate-200/60 dark:border-white/8 bg-slate-50/60 dark:bg-white/[0.02] px-6 py-4 flex justify-center sm:justify-end">
               <a
                 href="/signup"
                 className="inline-flex items-center gap-1.5 rounded-full border border-[#189b9b] bg-[#189b9b] px-5 py-2 text-[13px] font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#148282] hover:border-[#148282] hover:shadow-md flex-shrink-0"
@@ -615,7 +602,7 @@ export default function HomePage() {
           title="Enterprise-grade protection and transparency"
           description="FERPA, GDPR, and COPPA compliant with SOC 2 Type II certification and annual security audits."
         />
-        <div className="mt-16 lg:mt-20 rounded-[2.5rem] bg-white/60 dark:bg-[#1a1727]/30 border border-slate-200/40 dark:border-white/5 p-8 backdrop-blur-md shadow-sm grid gap-10 lg:gap-12 md:grid-cols-3">
+        <div className="mt-8 lg:mt-10 rounded-[2.5rem] bg-white/60 dark:bg-[#1a1727]/30 border border-slate-200/40 dark:border-white/5 p-8 backdrop-blur-md shadow-sm grid gap-10 lg:gap-12 md:grid-cols-3">
           {[
             { title: "Data Privacy", icon: <Lock className="h-[18px] w-[18px] text-[#1D9E75]" strokeWidth={2.5} />, items: ["GDPR Compliant", "FERPA Certified", "COPPA Compliant", "End-to-end Encryption"] },
             { title: "Security Standards", icon: <ShieldCheck className="h-[18px] w-[18px] text-[#1D9E75]" strokeWidth={2.5} />, items: ["SOC 2 Type II", "ISO 27001", "Regular Penetration Testing", "99.9% Uptime SLA"] },
