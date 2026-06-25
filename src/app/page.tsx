@@ -19,7 +19,9 @@ import {
   MessageSquare,
   LineChart,
   AlertTriangle,
-  X
+  X,
+  Lock,
+  PersonStanding
 } from "lucide-react";
 import { BrandMark, FeatureBadge, GlassCard, SectionHeading, SimpleList, Pill, cn } from "@/components/platform";
 import { featureCards, testimonials } from "@/lib/mock-data";
@@ -635,15 +637,18 @@ export default function HomePage() {
         />
         <div className="mt-16 lg:mt-20 rounded-[2.5rem] bg-white/60 dark:bg-[#1a1727]/30 border border-slate-200/40 dark:border-white/5 p-8 backdrop-blur-md shadow-sm grid gap-10 lg:gap-12 md:grid-cols-3">
           {[
-            { title: "Data Privacy", items: ["GDPR Compliant", "FERPA Certified", "COPPA Compliant", "End-to-end Encryption"] },
-            { title: "Security Standards", items: ["SOC 2 Type II", "ISO 27001", "Regular Penetration Testing", "99.9% Uptime SLA"] },
-            { title: "Accessibility", items: ["WCAG 2.1 AA", "Multi-language Support", "Screen Reader Compatible", "Keyboard Navigation"] },
+            { title: "Data Privacy", icon: <Lock className="h-[18px] w-[18px] text-[#1D9E75]" strokeWidth={2.5} />, items: ["GDPR Compliant", "FERPA Certified", "COPPA Compliant", "End-to-end Encryption"] },
+            { title: "Security Standards", icon: <ShieldCheck className="h-[18px] w-[18px] text-[#1D9E75]" strokeWidth={2.5} />, items: ["SOC 2 Type II", "ISO 27001", "Regular Penetration Testing", "99.9% Uptime SLA"] },
+            { title: "Accessibility", icon: <PersonStanding className="h-[18px] w-[18px] text-[#1D9E75]" strokeWidth={2.5} />, items: ["WCAG 2.1 AA", "Multi-language Support", "Screen Reader Compatible", "Keyboard Navigation"] },
           ].map((section, idx) => (
             <div key={section.title} className={cn(
               "p-4",
               idx > 0 ? "md:border-l md:border-slate-200/60 md:dark:border-white/5 md:pl-8" : ""
             )}>
-              <h3 className="text-lg font-bold text-ink">{section.title}</h3>
+              <div className="flex items-center gap-2">
+                {section.icon}
+                <h3 className="text-lg font-bold text-ink">{section.title}</h3>
+              </div>
               <ul className="mt-5 space-y-2.5">
                 {section.items.map((item) => (
                   <li key={item} className="flex items-start gap-2.5 text-sm text-slate-500 dark:text-slate-400">
