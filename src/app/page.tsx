@@ -21,7 +21,9 @@ import {
   AlertTriangle,
   X,
   Lock,
-  PersonStanding
+  PersonStanding,
+  School,
+  Handshake
 } from "lucide-react";
 import { BrandMark, FeatureBadge, GlassCard, SectionHeading, SimpleList, Pill, cn } from "@/components/platform";
 import { featureCards, testimonials } from "@/lib/mock-data";
@@ -651,7 +653,7 @@ export default function HomePage() {
               <div className="inline-flex items-center rounded-full bg-[#fc9438]/10 border border-[#fc9438]/20 px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#fc9438]">
                 Get in touch
               </div>
-              <h2 className="mt-3 text-3xl font-extrabold leading-tight text-white sm:text-4xl">
+              <h2 className="mt-3 text-[27px] sm:text-[32px] font-extrabold leading-tight text-white">
                 We&apos;re here for<br className="hidden sm:block" /> every learner
               </h2>
               <p className="mt-4 text-sm leading-[1.85] text-white/65 max-w-md">
@@ -663,47 +665,41 @@ export default function HomePage() {
                 {[
                   {
                     role: "Student",
-                    icon: "🎓",
+                    icon: <GraduationCap className="h-5 w-5 text-[#189b9b]" strokeWidth={2.5} />,
                     desc: "Explore AI-powered courses and personalized learning paths.",
-                    color: "#189b9b",
-                    bg: "rgba(24,155,155,0.10)",
-                    border: "rgba(24,155,155,0.25)",
+                    classes: "bg-[#189b9b]/10 border-[#189b9b]/25 hover:border-[#189b9b]/50 hover:shadow-[0_10px_25px_-5px_rgba(24,155,155,0.15)]",
                   },
                   {
                     role: "Parent",
-                    icon: "👨‍👩‍👧",
+                    icon: <Users className="h-5 w-5 text-[#fc9438]" strokeWidth={2.5} />,
                     desc: "Track your child's progress and stay connected to their growth.",
-                    color: "#fc9438",
-                    bg: "rgba(252,148,56,0.10)",
-                    border: "rgba(252,148,56,0.25)",
+                    classes: "bg-[#fc9438]/10 border-[#fc9438]/25 hover:border-[#fc9438]/50 hover:shadow-[0_10px_25px_-5px_rgba(252,148,56,0.15)]",
                   },
                   {
                     role: "Teacher / School",
-                    icon: "🏫",
+                    icon: <School className="h-5 w-5 text-[#7c5cbf]" strokeWidth={2.5} />,
                     desc: "Access classroom tools, analytics, and curriculum integrations.",
-                    color: "#7c5cbf",
-                    bg: "rgba(124,92,191,0.10)",
-                    border: "rgba(124,92,191,0.25)",
+                    classes: "bg-[#7c5cbf]/10 border-[#7c5cbf]/25 hover:border-[#7c5cbf]/50 hover:shadow-[0_10px_25px_-5px_rgba(124,92,191,0.15)]",
                   },
                   {
                     role: "Partnership",
-                    icon: "🤝",
+                    icon: <Handshake className="h-5 w-5 text-[#d8a444]" strokeWidth={2.5} />,
                     desc: "Explore institutional licensing and strategic EdTech partnerships.",
-                    color: "#d8a444",
-                    bg: "rgba(216,164,68,0.10)",
-                    border: "rgba(216,164,68,0.25)",
+                    classes: "bg-[#d8a444]/10 border-[#d8a444]/25 hover:border-[#d8a444]/50 hover:shadow-[0_10px_25px_-5px_rgba(216,164,68,0.15)]",
                   },
                 ].map((item) => (
                   <div
                     key={item.role}
-                    className="group flex flex-col gap-2.5 rounded-2xl p-4 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
-                    style={{ background: item.bg, border: `1px solid ${item.border}` }}
+                    className={cn(
+                      "group flex flex-col gap-2.5 rounded-2xl p-4 border transition-all duration-350 hover:-translate-y-1 cursor-pointer",
+                      item.classes
+                    )}
                   >
                     <div className="flex items-center gap-2.5">
-                      <span className="text-xl leading-none">{item.icon}</span>
-                      <p className="text-sm font-bold text-white">{item.role}</p>
+                      {item.icon}
+                      <p className="text-sm font-extrabold text-white tracking-wide">{item.role}</p>
                     </div>
-                    <p className="text-[12px] leading-relaxed text-white/55 group-hover:text-white/75 transition-colors duration-200">
+                    <p className="text-[12px] leading-relaxed text-white/50 group-hover:text-white/70 transition-colors duration-200">
                       {item.desc}
                     </p>
                   </div>
@@ -715,9 +711,9 @@ export default function HomePage() {
                 {["GDPR Compliant", "SOC 2 Type II", "FERPA Certified"].map((badge) => (
                   <span
                     key={badge}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.06] px-3 py-1 text-[11px] font-medium text-white/60"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1 text-[11px] font-medium text-white/45"
                   >
-                    <span className="h-1 w-1 rounded-full bg-[#189b9b]" />
+                    <span className="h-1 w-1 rounded-full bg-[#189b9b]/70" />
                     {badge}
                   </span>
                 ))}
