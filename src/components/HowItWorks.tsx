@@ -304,7 +304,7 @@ export default function HowItWorks() {
   ];
 
   return (
-    <div className="relative mt-8 lg:mt-12">
+    <div className="relative mt-4 lg:mt-6">
       {/* Dynamic injection of 3D flip CSS */}
       <style dangerouslySetInnerHTML={{__html: `
         .perspective-1000 {
