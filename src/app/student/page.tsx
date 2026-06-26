@@ -36,15 +36,27 @@ export default function StudentDashboardPage() {
           {/* Daily Challenge */}
           <GlassCard className="p-6 flex flex-col justify-between dark:bg-[#151c2e]/50 dark:border-white/5">
             <div>
-              <h3 className="text-2xl font-black text-ink">Complete 1 quiz today</h3>
-              <p className="mt-2 text-sm text-slate-400 leading-relaxed">Keep your streak active and unlock bonus XP with a quick quiz.</p>
+              <h3 className="text-2xl font-bold text-ink">Complete 1 quiz today</h3>
+              
+              {/* Metadata */}
+              <div className="mt-1 flex items-center gap-1.5 text-sm text-slate-400 font-medium">
+                <span>Easy</span>
+                <span>•</span>
+                <span>5 min</span>
+                <span>•</span>
+                <span className="text-orange-500 font-bold">+50 XP</span>
+              </div>
+
+              <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+                Keep your streak active and unlock bonus XP with a quick quiz.
+              </p>
             </div>
             <div className="mt-6">
               <Link 
                 href="/quiz" 
-                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 px-6 py-3.5 text-xs font-bold text-white shadow-lg shadow-orange-500/10 transition-all hover:-translate-y-0.5 active:translate-y-0"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-orange-500 hover:bg-orange-600 px-6 py-2.5 text-xs font-bold text-white transition-all hover:-translate-y-0.5 active:translate-y-0"
               >
-                <span>Start Daily Challenge</span>
+                <span>Start Challenge</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
