@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Flame } from "lucide-react";
 import Link from "next/link";
 import { AppShell } from "@/components/page-shell";
 import { GlassCard, ProgressBar } from "@/components/platform";
@@ -36,25 +36,28 @@ export default function StudentDashboardPage() {
           {/* Daily Challenge */}
           <GlassCard className="p-6 flex flex-col justify-between dark:bg-[#151c2e]/50 dark:border-white/5">
             <div>
-              <h3 className="text-2xl font-bold text-ink">Complete 1 quiz today</h3>
+              <div className="flex items-start justify-between gap-4">
+                <h3 className="text-2xl font-bold text-ink">Complete 1 quiz today</h3>
+                <div className="flex items-center gap-2 text-orange-500 font-black text-xl flex-shrink-0 mr-10 mt-3">
+                  <Flame className="h-6 w-6 fill-orange-500 text-orange-500" />
+                  <span>+25 XP</span>
+                </div>
+              </div>
               
               {/* Metadata */}
-              <div className="mt-1 flex items-center gap-1.5 text-sm text-slate-400 font-medium">
+              <div className="mt-3.5 flex items-center gap-4 text-base text-slate-400 font-bold">
                 <span>Easy</span>
-                <span>•</span>
                 <span>5 min</span>
-                <span>•</span>
-                <span className="text-orange-500 font-bold">+50 XP</span>
               </div>
 
-              <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+              <p className="mt-4 text-[15px] text-slate-400 leading-relaxed">
                 Keep your streak active and unlock bonus XP with a quick quiz.
               </p>
             </div>
             <div className="mt-6">
               <Link 
                 href="/quiz" 
-                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-orange-500 hover:bg-orange-600 px-6 py-2.5 text-xs font-bold text-white transition-all hover:-translate-y-0.5 active:translate-y-0"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-orange-500 hover:bg-orange-600 px-6 py-3.5 text-xs font-bold text-white transition-all hover:-translate-y-0.5 active:translate-y-0"
               >
                 <span>Start Challenge</span>
                 <ArrowRight className="h-3.5 w-3.5" />
