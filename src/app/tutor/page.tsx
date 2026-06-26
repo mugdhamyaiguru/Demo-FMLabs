@@ -33,7 +33,7 @@ export default function TutorPage() {
   };
 
   return (
-    <AppShell active="AI Tutor" title="AI Tutor">
+    <AppShell active="AI Tutor" title="AI Tutor" hideSearch={true}>
       <div className="flex gap-5 items-start">
         {/* COLLAPSIBLE SIDEBAR */}
         <SidebarChats

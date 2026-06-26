@@ -21,9 +21,9 @@ export const roleCards = [
 ];
 
 export const dashboardModules = [
-  { title: "Fractions Lab", subject: "Mathematics", xp: 120, time: "12 min", progress: 72, difficulty: "Beginner" },
-  { title: "Energy Transfer", subject: "Science", xp: 140, time: "15 min", progress: 41, difficulty: "Intermediate" },
-  { title: "Python Basics", subject: "Coding", xp: 100, time: "10 min", progress: 58, difficulty: "Beginner" },
+  { title: "Introduction to AI in Everyday life", subject: "Mathematics", xp: 120, time: "12 min", progress: 72, difficulty: "Beginner" },
+  { title: "Basic Data Concepts", subject: "Science", xp: 140, time: "15 min", progress: 41, difficulty: "Intermediate" },
+  { title: "Ethics and Digital Responsibilty", subject: "Coding", xp: 100, time: "10 min", progress: 58, difficulty: "Beginner" },
   { title: "Binary Basics", subject: "Computer Basics", xp: 100, time: "10 min", progress: 68, difficulty: "Beginner" },
   { title: "Decimals Demystified", subject: "Mathematics", xp: 130, time: "14 min", progress: 55, difficulty: "Intermediate" },
   { title: "Linear Patterns", subject: "Mathematics", xp: 180, time: "20 min", progress: 26, difficulty: "Advanced" },

@@ -274,22 +274,29 @@ export function DashboardTopbar({
   showGreeting = true,
   searchPlaceholder = "Search modules, lessons, or topics",
   hideStats = false,
+  hideSearch = false,
+  hideTitleLabel = false,
 }: {
   title: string;
   greeting?: string;
   showGreeting?: boolean;
   searchPlaceholder?: string;
   hideStats?: boolean;
+  hideSearch?: boolean;
+  hideTitleLabel?: boolean;
 }) {
   return (
     <div className={cn(
       "flex flex-col gap-4 py-3 lg:flex-row lg:items-center lg:justify-between",
-      !showGreeting && "border-b border-slate-200/40 dark:border-white/5 pb-6"
+      !showGreeting && "border-b border-slate-200/40 dark:border-white/5 pb-6",
+      showGreeting && "-mt-2 lg:-mt-3"
     )}>
       <div>
         {showGreeting ? (
           <>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">{title}</p>
+            {!hideTitleLabel && (
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-teal">{title}</p>
+            )}
             <h1 className="text-3xl font-black text-ink mt-0.5">
               Welcome back, <span className="text-[#5bcac8]">{greeting}</span>
             </h1>
@@ -299,20 +306,22 @@ export function DashboardTopbar({
           <h1 className="text-2xl font-black text-ink">{title}</h1>
         )}
       </div>
-      <div className="flex flex-1 items-center gap-3 lg:max-w-2xl lg:justify-end">
-        {showGreeting && (
-          <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-slate-200/20 dark:border-white/5 bg-white/40 dark:bg-white/5 px-4 py-2.5 w-full">
-            <Search className="h-4 w-4 text-slate-400 flex-shrink-0" />
-            <input className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400 text-ink" placeholder="Search modules, lessons, or topics..." />
-          </div>
-        )}
-        {!showGreeting && (
-          <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-slate-200/35 dark:border-white/5 bg-white/40 dark:bg-white/5 px-4 py-2.5 w-full">
-            <LayoutDashboard className="h-4 w-4 text-royal/40 dark:text-white/30" />
-            <input className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400 text-ink" placeholder={searchPlaceholder} />
-          </div>
-        )}
-      </div>
+      {!hideSearch && (
+        <div className="flex flex-1 items-center gap-3 lg:max-w-2xl lg:justify-end">
+          {showGreeting && (
+            <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-slate-200/20 dark:border-white/5 bg-white/40 dark:bg-white/5 px-4 py-2.5 w-full">
+              <Search className="h-4 w-4 text-slate-400 flex-shrink-0" />
+              <input className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400 text-ink" placeholder="Search modules, lessons, or topics..." />
+            </div>
+          )}
+          {!showGreeting && (
+            <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-slate-200/35 dark:border-white/5 bg-white/40 dark:bg-white/5 px-4 py-2.5 w-full">
+              <LayoutDashboard className="h-4 w-4 text-royal/40 dark:text-white/30" />
+              <input className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400 text-ink" placeholder={searchPlaceholder} />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

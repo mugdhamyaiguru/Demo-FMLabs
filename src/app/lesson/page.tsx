@@ -23,7 +23,7 @@ interface ModuleDetail {
 }
 
 const MODULE_LESSONS: Record<string, ModuleDetail> = {
-  "Fractions Lab": {
+  "Introduction to AI in Everyday life": {
     subject: "Mathematics",
     subtitle: "Understanding Fractions",
     description: "Learn how parts of a whole work using visuals, examples, and hands-on practice.",
@@ -41,7 +41,7 @@ const MODULE_LESSONS: Record<string, ModuleDetail> = {
       "Apply the concept in the mini project before moving on.",
     ]
   },
-  "Energy Transfer": {
+  "Basic Data Concepts": {
     subject: "Science",
     subtitle: "Kinetic vs Potential Energy",
     description: "Explore how energy morphs and travels through mechanical and thermal systems.",
@@ -59,7 +59,7 @@ const MODULE_LESSONS: Record<string, ModuleDetail> = {
       "Construct a double-loop roller coaster that preserves mechanical energy.",
     ]
   },
-  "Python Basics": {
+  "Ethics and Digital Responsibilty": {
     subject: "Computer Basics",
     subtitle: "Variables & Print Operations",
     description: "Step into programming with variables, basic data types, and output statements.",
@@ -154,7 +154,7 @@ const defaultModule: ModuleDetail = {
 
 function LessonInner() {
   const searchParams = useSearchParams();
-  const moduleParam = searchParams.get("module") || "Fractions Lab";
+  const moduleParam = searchParams.get("module") || "Introduction to AI in Everyday life";
   const decodedModule = decodeURIComponent(moduleParam);
   const detail = MODULE_LESSONS[decodedModule] || defaultModule;
 

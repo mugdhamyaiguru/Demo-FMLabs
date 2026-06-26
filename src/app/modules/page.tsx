@@ -8,24 +8,24 @@ const categories = ["All", "Mathematics", "Science", "Computer Basics"];
 
 // Custom dark gradient mapping for the card headers matching the screenshots
 const cardGradients: Record<string, string> = {
-  "Fractions Lab": "from-[#1e3a8a] via-[#172554] to-[#0f172a]/95", // Deep Blue
-  "Energy Transfer": "from-[#064e3b] via-[#022c22] to-[#0f172a]/95", // Deep Forest Green
+  "Introduction to AI in Everyday life": "from-[#1e3a8a] via-[#172554] to-[#0f172a]/95", // Deep Blue
+  "Basic Data Concepts": "from-[#064e3b] via-[#022c22] to-[#0f172a]/95", // Deep Forest Green
   "Binary Basics": "from-[#78350f] via-[#451a03] to-[#0f172a]/95", // Dark Gold / Brown
   "Decimals Demystified": "from-[#581c87] via-[#3b0764] to-[#0f172a]/95", // Deep Purple
 };
 
 // Custom subject tag styles matching the mockup
 const moduleTagClasses: Record<string, string> = {
-  "Fractions Lab": "bg-blue-500/10 text-blue-400 border border-blue-500/20",
-  "Energy Transfer": "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+  "Introduction to AI in Everyday life": "bg-blue-500/10 text-blue-400 border border-blue-500/20",
+  "Basic Data Concepts": "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
   "Binary Basics": "bg-amber-500/10 text-amber-400 border border-amber-500/20",
   "Decimals Demystified": "bg-fuchsia-500/10 text-fuchsia-400 border border-fuchsia-500/20",
 };
 
 // Custom button styles for active outlines at the bottom
 const moduleButtonClasses: Record<string, string> = {
-  "Fractions Lab": "text-blue-400 border-blue-500/15 bg-blue-500/5 hover:bg-blue-500/20 hover:text-white hover:border-blue-500",
-  "Energy Transfer": "text-emerald-400 border-emerald-500/15 bg-emerald-500/5 hover:bg-emerald-500/20 hover:text-white hover:border-emerald-500",
+  "Introduction to AI in Everyday life": "text-blue-400 border-blue-500/15 bg-blue-500/5 hover:bg-blue-500/20 hover:text-white hover:border-blue-500",
+  "Basic Data Concepts": "text-emerald-400 border-emerald-500/15 bg-emerald-500/5 hover:bg-emerald-500/20 hover:text-white hover:border-emerald-500",
   "Binary Basics": "text-amber-400 border-amber-500/15 bg-amber-500/5 hover:bg-amber-500/20 hover:text-white hover:border-amber-500",
   "Decimals Demystified": "text-fuchsia-400 border-fuchsia-500/15 bg-fuchsia-500/5 hover:bg-fuchsia-500/20 hover:text-white hover:border-fuchsia-500",
 };

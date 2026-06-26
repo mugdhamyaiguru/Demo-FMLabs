@@ -20,7 +20,7 @@ export default function ProgressPage() {
   ];
 
   return (
-    <AppShell active="Progress" title="Progress Dashboard">
+    <AppShell active="Progress" title="Progress Dashboard" hideSearch={true}>
       <div className="space-y-6 w-full max-w-none">
         {/* Header */}
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between border-b border-slate-200/40 dark:border-white/5 pb-6 mb-2">

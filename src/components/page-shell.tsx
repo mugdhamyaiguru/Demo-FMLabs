@@ -73,7 +73,25 @@ export function AuthShell({ title, subtitle, children, illustration }: { title: 
   );
 }
 
-export function AppShell({ title, active, children, rightPanel, role = "student" }: { title: string; active: string; children: ReactNode; rightPanel?: ReactNode; role?: "student" | "teacher" | "parent" }) {
+export function AppShell({
+  title,
+  active,
+  children,
+  rightPanel,
+  role = "student",
+  hideSearch = false,
+  hideTitleLabel = false,
+  greeting,
+}: {
+  title: string;
+  active: string;
+  children: ReactNode;
+  rightPanel?: ReactNode;
+  role?: "student" | "teacher" | "parent";
+  hideSearch?: boolean;
+  hideTitleLabel?: boolean;
+  greeting?: string;
+}) {
   return (
     <DashboardContainer>
       <div className="mx-auto flex min-h-screen w-full max-w-none flex-col gap-6 px-8 pb-5 pt-0 lg:px-12 lg:pb-7 lg:pt-0">
@@ -84,9 +102,11 @@ export function AppShell({ title, active, children, rightPanel, role = "student"
             {active !== "Modules" && active !== "Settings" && (
               <DashboardTopbar
                 title={title}
-                greeting={role === "teacher" ? "teacher" : role === "parent" ? "parent" : "learner"}
+                greeting={greeting || (role === "teacher" ? "teacher" : role === "parent" ? "parent" : "learner")}
                 showGreeting={active === "Dashboard"}
                 hideStats={active === "Progress" || active === "Settings" || active === "Rewards"}
+                hideSearch={hideSearch}
+                hideTitleLabel={hideTitleLabel}
               />
             )}
             {children}
