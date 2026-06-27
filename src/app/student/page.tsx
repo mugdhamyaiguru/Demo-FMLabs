@@ -38,9 +38,9 @@ export default function StudentDashboardPage() {
             <div>
               <div className="flex items-start justify-between gap-4">
                 <h3 className="text-2xl font-bold text-ink">Complete 1 quiz today</h3>
-                <div className="flex items-center gap-2 text-orange-500 font-black text-xl flex-shrink-0 mr-10 mt-3">
-                  <Flame className="h-6 w-6 fill-orange-500 text-orange-500" />
+                <div className="flex items-center gap-2 text-orange-500 font-black text-2xl flex-shrink-0 mr-10 mt-5">
                   <span>+25 XP</span>
+                  <Flame className="h-7 w-7 fill-orange-500 text-orange-500" />
                 </div>
               </div>
               
