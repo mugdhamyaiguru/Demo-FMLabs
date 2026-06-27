@@ -194,7 +194,7 @@ function LessonInner() {
                 <div 
                   className="absolute inset-0 opacity-15 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105" 
                   style={{ 
-                    backgroundImage: `radial-gradient(circle at center, transparent 30%, #12101e 80%), url('/brain-logo.png')`,
+                    backgroundImage: `radial-gradient(circle at center, transparent 30%, #12101e 80%), url('/brain-logo.jpg')`,
                     backgroundSize: '160px',
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center center'

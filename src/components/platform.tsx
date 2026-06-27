@@ -16,7 +16,7 @@ export function BrandMark() {
   return (
     <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
       <div className="h-11 w-11 flex-shrink-0 overflow-hidden rounded-2xl shadow-glow">
-        <Image src="/brain-logo.png" alt="FutureMinds AI Labs logo" width={44} height={44} className="h-full w-full object-cover" />
+        <Image src="/brain-logo.jpg" alt="FutureMinds AI Labs logo" width={44} height={44} className="h-full w-full object-cover" />
       </div>
       <div>
         <div className="text-sm font-semibold uppercase tracking-[0.35em] text-royal/70">FutureMinds</div>
@@ -30,7 +30,7 @@ export function BrandMarkWhite() {
   return (
     <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
       <div className="h-11 w-11 flex-shrink-0 overflow-hidden rounded-2xl shadow-glow">
-        <Image src="/brain-logo.png" alt="FutureMinds AI Labs logo" width={44} height={44} className="h-full w-full object-cover" />
+        <Image src="/brain-logo.jpg" alt="FutureMinds AI Labs logo" width={44} height={44} className="h-full w-full object-cover" />
       </div>
       <div>
         <div className="text-sm font-semibold uppercase tracking-[0.35em] text-white/60">FutureMinds</div>
@@ -118,13 +118,18 @@ export function MetricCard({ title, value, detail, icon }: { title: string; valu
   );
 }
 
-export function ProgressBar({ value, accent = "teal" }: { value: number; accent?: "teal" | "gold" | "crimson" | "marigold" | "purple" }) {
+export function ProgressBar({ value, accent = "teal" }: { value: number; accent?: "teal" | "gold" | "crimson" | "marigold" | "purple" | "blue" | "green" | "amber" | "indigo" | "fuchsia" }) {
   const barClass = {
     teal: "from-teal to-[#5bcac8]",
     gold: "from-gold to-marigold",
     crimson: "from-crimson to-[#ef6b6b]",
     marigold: "from-marigold to-[#ffd089]",
     purple: "from-[#8b5cf6] to-[#a78bfa]",
+    blue: "from-blue-600 to-blue-400",
+    green: "from-emerald-600 to-emerald-400",
+    amber: "from-amber-600 to-amber-400",
+    indigo: "from-indigo-600 to-indigo-400",
+    fuchsia: "from-fuchsia-600 to-fuchsia-400",
   }[accent];
 
   return (
