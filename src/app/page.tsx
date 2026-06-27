@@ -23,18 +23,18 @@ import FluidBackground from "@/components/FluidBackground";
 import AITutorLive from "@/components/AITutorLive";
 
 export const metadata: Metadata = {
-  title: "FutureMinds AI Guru",
+  title: "FutureMinds AI Labs",
   description: "A futuristic, gamified AI learning platform for students, teachers, and parents.",
   openGraph: {
-    title: "FutureMinds AI Guru",
+    title: "FutureMinds AI Labs",
     description: "A futuristic, gamified AI learning platform for students, teachers, and parents.",
     url: "/",
-    siteName: "FutureMinds AI Guru",
+    siteName: "FutureMinds AI Labs",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "FutureMinds AI Guru",
+    title: "FutureMinds AI Labs",
     description: "A futuristic, gamified AI learning platform for students, teachers, and parents.",
   },
 };
@@ -94,7 +94,7 @@ export default function HomePage() {
                 <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl leading-[1.1]">
                   FutureMinds <br />
                   <span className="bg-gradient-to-r from-[#189b9b] via-[#d8a444] to-[#fc9438] bg-clip-text text-transparent animate-gradient-text bg-[length:200%_auto] font-black">
-                    AI Guru
+                    AI Labs
                   </span>
                 </h1>
                 <p className="text-base text-slate-300 sm:text-lg leading-relaxed pt-2">
@@ -307,7 +307,7 @@ export default function HomePage() {
         <SectionHeading
           eyebrow="Strategic partners"
           title="Trusted by leading educational institutions globally"
-          description="FutureMinds AI Guru partners with schools, universities, and education platforms to transform learning."
+          description="FutureMinds AI Labs partners with schools, universities, and education platforms to transform learning."
         />
         <div className="mt-10 flex flex-wrap items-center justify-center gap-12 md:gap-16">
           {[
@@ -390,7 +390,7 @@ export default function HomePage() {
           <div className="max-w-xl">
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#fc9438]">Start the demo</p>
             <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl">
-              Launch FutureMinds AI Guru for students, teachers, and parents.
+              Launch FutureMinds AI Labs for students, teachers, and parents.
             </h2>
             <p className="mt-3 text-sm leading-7 text-white/65">
               Jump into the experience, explore the modules, and move through the role-based flows exactly as a product demo should.

@@ -57,7 +57,7 @@ export function AuthShell({ title, subtitle, children, illustration }: { title: 
         <section className="flex flex-col justify-between overflow-hidden rounded-[2rem] bg-royal p-6 text-white shadow-glass lg:p-8">
           <BrandMarkWhite />
           <div className="mt-12 space-y-6">
-            <Pill tone="gold">FutureMinds AI Guru</Pill>
+            <Pill tone="gold">FutureMinds AI Labs</Pill>
             <h1 className="max-w-xl text-4xl font-black leading-tight sm:text-5xl">{title}</h1>
             <p className="max-w-xl text-base leading-7 text-white/75 sm:text-lg">{subtitle}</p>
           </div>

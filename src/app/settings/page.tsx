@@ -72,7 +72,7 @@ export default function SettingsPage() {
               </div>
               <div>
                 <h2 className="text-xl font-black text-ink">Aanya Sharma</h2>
-                <p className="text-sm text-slate-500">Student · FutureMinds AI Guru</p>
+                <p className="text-sm text-slate-500">Student · FutureMinds AI Labs</p>
                 <Pill tone="teal">Active</Pill>
               </div>
             </div>

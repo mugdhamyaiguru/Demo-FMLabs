@@ -38,7 +38,7 @@ export default function AdminSettingsPage() {
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg text-white text-2xl font-black">A</div>
             <div>
               <p className="text-lg font-bold text-ink">Super Administrator</p>
-              <p className="text-sm text-slate-400 mt-0.5">FutureMinds AI Guru · Platform Admin</p>
+              <p className="text-sm text-slate-400 mt-0.5">FutureMinds AI Labs · Platform Admin</p>
             </div>
           </div>
 

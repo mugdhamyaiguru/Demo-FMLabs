@@ -6,20 +6,20 @@ import { PersistentNavbar } from "@/components/persistent-navbar";
 export const metadata: Metadata = {
   metadataBase: new URL("http://localhost:3000"),
   title: {
-    default: "FutureMinds AI Guru",
-    template: "%s | FutureMinds AI Guru",
+    default: "FutureMinds AI Labs",
+    template: "%s | FutureMinds AI Labs",
   },
   description: "Personalized AI-powered learning for the next generation.",
   openGraph: {
-    title: "FutureMinds AI Guru",
+    title: "FutureMinds AI Labs",
     description: "Personalized AI-powered learning for students, teachers, and parents.",
     url: "/",
-    siteName: "FutureMinds AI Guru",
+    siteName: "FutureMinds AI Labs",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "FutureMinds AI Guru",
+    title: "FutureMinds AI Labs",
     description: "Personalized AI-powered learning for students, teachers, and parents.",
   },
 };

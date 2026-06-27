@@ -20,7 +20,7 @@ export function BrandMark() {
       </div>
       <div>
         <div className="text-sm font-semibold uppercase tracking-[0.35em] text-royal/70">FutureMinds</div>
-        <div className="text-lg font-bold text-ink">AI Guru</div>
+        <div className="text-lg font-bold text-ink">AI Labs</div>
       </div>
     </Link>
   );
@@ -34,7 +34,7 @@ export function BrandMarkWhite() {
       </div>
       <div>
         <div className="text-sm font-semibold uppercase tracking-[0.35em] text-white/60">FutureMinds</div>
-        <div className="text-lg font-bold text-white">AI Guru</div>
+        <div className="text-lg font-bold text-white">AI Labs</div>
       </div>
     </Link>
   );

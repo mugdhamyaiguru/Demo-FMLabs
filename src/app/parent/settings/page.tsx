@@ -39,7 +39,7 @@ export default function ParentSettingsPage() {
                 <p className="text-lg font-bold text-ink">Mr. Sanjay Sharma</p>
                 <div className="mt-1 flex items-center gap-2 flex-wrap">
                   <Pill tone="crimson">Parent</Pill>
-                  <span className="text-xs text-slate-400">FutureMinds AI Guru</span>
+                  <span className="text-xs text-slate-400">FutureMinds AI Labs</span>
                 </div>
               </div>
             </div>

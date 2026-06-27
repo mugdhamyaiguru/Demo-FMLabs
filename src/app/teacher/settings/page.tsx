@@ -72,7 +72,7 @@ export default function TeacherSettingsPage() {
               </div>
               <div>
                 <h2 className="text-xl font-bold text-ink">Ms. Priya Kapoor</h2>
-                <p className="text-sm text-slate-500">Teacher · FutureMinds AI Guru</p>
+                <p className="text-sm text-slate-500">Teacher · FutureMinds AI Labs</p>
                 <Pill tone="teal">Active</Pill>
               </div>
             </div>

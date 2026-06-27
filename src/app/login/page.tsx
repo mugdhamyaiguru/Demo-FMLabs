@@ -115,7 +115,7 @@ export default function LoginPage() {
           </div>
 
           <p className="relative z-10 text-[11px] text-white/30">
-            © 2026 FutureMinds AI Guru · All rights reserved
+            © 2026 FutureMinds AI Labs · All rights reserved
           </p>
         </div>
 
@@ -128,7 +128,7 @@ export default function LoginPage() {
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-teal to-marigold shadow-sm">
                 <Sparkles className="h-4 w-4 text-white" />
               </div>
-              <span className="text-base font-bold text-ink">FutureMinds AI Guru</span>
+              <span className="text-base font-bold text-ink">FutureMinds AI Labs</span>
             </div>
 
             {/* Header */}

@@ -1,8 +1,11 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
-import { BookOpen, Clock3, HelpCircle, PlayCircle, Sparkles, Target, ArrowLeft, ArrowRight, ThumbsUp, ThumbsDown, Flag } from "lucide-react";
+import { Suspense, useState, useEffect } from "react";
+import { 
+  PlayCircle, Sparkles, Target, ArrowLeft, ArrowRight, ThumbsUp, ThumbsDown, Flag, 
+  PanelLeftClose, PanelLeftOpen, CheckCircle, Circle, ChevronDown, ChevronUp, Menu, Lock 
+} from "lucide-react";
 import { AppShell } from "@/components/page-shell";
 import { GlassCard, Pill, ProgressBar } from "@/components/platform";
 import Link from "next/link";
@@ -152,21 +155,133 @@ const defaultModule: ModuleDetail = {
   ]
 };
 
+interface LessonItem {
+  id: string;
+  title: string;
+  duration: string;
+  state: "completed" | "current" | "locked";
+}
+
+interface ModuleSection {
+  id: string;
+  title: string;
+  subtitle: string;
+  lessons: LessonItem[];
+}
+
+const COURSE_MODULES: Record<string, ModuleSection[]> = {
+  "Introduction to AI in Everyday life": [
+    {
+      id: "mod-1",
+      title: "Module 1",
+      subtitle: "What is AI?",
+      lessons: [
+        { id: "les-1", title: "What is Artificial Intelligence?", duration: "5 min", state: "completed" },
+        { id: "les-2", title: "AI in Everyday Life", duration: "6 min", state: "completed" },
+        { id: "les-3", title: "History of AI", duration: "7 min", state: "current" }
+      ]
+    },
+    {
+      id: "mod-2",
+      title: "Module 2",
+      subtitle: "How AI Learns",
+      lessons: [
+        { id: "les-4", title: "Data and Patterns", duration: "8 min", state: "locked" },
+        { id: "les-5", title: "Machine Learning Basics", duration: "10 min", state: "locked" },
+        { id: "les-6", title: "Training vs Testing Data", duration: "7 min", state: "locked" }
+      ]
+    },
+    {
+      id: "mod-3",
+      title: "Module 3",
+      subtitle: "Thinking Like AI",
+      lessons: [
+        { id: "les-7", title: "Decision Making", duration: "6 min", state: "locked" },
+        { id: "les-8", title: "Neural Networks", duration: "8 min", state: "locked" },
+        { id: "les-9", title: "Mini Quiz", duration: "5 min", state: "locked" }
+      ]
+    }
+  ]
+};
+
+const CUSTOM_LESSON_DETAILS: Record<string, { title: string; desc: string; time: string }> = {
+  "les-1": { title: "What is Artificial Intelligence?", desc: "An introduction to the concepts of human-like intelligence in machines.", time: "5 min" },
+  "les-2": { title: "AI in Everyday Life", desc: "How recommendation engines, navigation apps, and virtual assistants shape our day.", time: "6 min" },
+  "les-3": { title: "History of AI", desc: "From Alan Turing's test to the modern generative AI boom.", time: "7 min" },
+  "les-4": { title: "Data and Patterns", desc: "Exploring how AI processes data structures to extract meaningful features.", time: "8 min" },
+  "les-5": { title: "Machine Learning Basics", desc: "Supervised, unsupervised, and reinforcement learning explained.", time: "10 min" },
+  "les-6": { title: "Training vs Testing Data", desc: "Why we split data to avoid overfitting and ensure model generalization.", time: "7 min" },
+  "les-7": { title: "Decision Making", desc: "Heuristics, search trees, and probabilistic reasoning models.", time: "6 min" },
+  "les-8": { title: "Neural Networks", desc: "A deep dive into layers of nodes, activations, and weight adjustments.", time: "8 min" },
+  "les-9": { title: "Mini Quiz", desc: "Test your knowledge of the fundamentals of AI.", time: "5 min" }
+};
+
 function LessonInner() {
   const searchParams = useSearchParams();
   const moduleParam = searchParams.get("module") || "Introduction to AI in Everyday life";
   const decodedModule = decodeURIComponent(moduleParam);
   const detail = MODULE_LESSONS[decodedModule] || defaultModule;
 
-  const [activeStep, setActiveStep] = useState(1);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-  const subjectPillTone = 
-    detail.subject === "Mathematics" ? "teal" : 
-    detail.subject === "Science" ? "marigold" : "gold";
+  // Generate dynamic sections if they aren't pre-defined (e.g. for other module pages)
+  const sections = COURSE_MODULES[decodedModule] || [
+    {
+      id: "mod-1",
+      title: "Module 1",
+      subtitle: detail.subtitle,
+      lessons: detail.path.map((step, idx) => ({
+        id: `les-dyn-${idx}`,
+        title: step,
+        duration: idx === 1 ? detail.time : `${5 + (idx * 2) % 7} min`,
+        state: idx === 0 ? "completed" as const : idx === 1 ? "current" as const : "locked" as const
+      }))
+    }
+  ];
+
+  const allLessons = sections.flatMap(s => s.lessons);
+  
+  const [activeLessonId, setActiveLessonId] = useState(() => {
+    const currentLesson = allLessons.find(l => l.state === "current") || allLessons[0];
+    return currentLesson?.id || "les-1";
+  });
+
+  const [expandedModuleId, setExpandedModuleId] = useState(() => {
+    const initialExpanded = sections.find(s => s.lessons.some(l => l.id === activeLessonId)) || sections[0];
+    return initialExpanded?.id || "";
+  });
+
+  useEffect(() => {
+    const initialExpanded = sections.find(s => s.lessons.some(l => l.id === activeLessonId)) || sections[0];
+    if (initialExpanded) {
+      setExpandedModuleId(initialExpanded.id);
+    }
+  }, [decodedModule]);
+
+  const activeIndex = allLessons.findIndex(l => l.id === activeLessonId);
+
+  const getLessonDetail = (lessonId: string) => {
+    if (CUSTOM_LESSON_DETAILS[lessonId]) {
+      return CUSTOM_LESSON_DETAILS[lessonId];
+    }
+    // Fallback/dynamic parse
+    const idx = allLessons.findIndex(l => l.id === lessonId);
+    return {
+      title: allLessons[idx]?.title || detail.videoTitle,
+      desc: idx === 1 ? detail.videoDesc : `Guided instruction block for step: ${allLessons[idx]?.title || "Overview"}.`,
+      time: idx === 1 ? detail.time : `${5 + (idx * 2) % 7} min`
+    };
+  };
+
+  const activeLessonDetail = getLessonDetail(activeLessonId);
+
+  const toggleModule = (modId: string) => {
+    setExpandedModuleId(expandedModuleId === modId ? "" : modId);
+  };
 
   return (
     <div className="space-y-6">
-      {/* Back button header */}
+      {/* Back button and header */}
       <div className="flex items-center justify-between">
         <Link 
           href="/modules" 
@@ -177,13 +292,135 @@ function LessonInner() {
         <span className="text-[10px] font-bold text-slate-400 tracking-wider">MODULE PREVIEW</span>
       </div>
 
-      {/* Main 2-Column Responsive Workspace Grid */}
-      <div className="grid gap-6 lg:grid-cols-[1fr_340px] xl:grid-cols-[1fr_360px]">
+      {/* Main 2-Column Responsive Workspace Flexbox */}
+      <div className="flex flex-col lg:flex-row gap-6 items-start">
         
-        {/* Left Column: Interactive Workspace Hub */}
-        <div className="space-y-6">
-          
-          {/* Interactive Workspace Card */}
+        {/* Left Sidebar Column (Coursera-style Lesson Navigator) */}
+        {isSidebarOpen ? (
+          <GlassCard className="p-0 dark:bg-[#1e1b2e]/85 dark:border-white/8 w-full lg:w-[320px] xl:w-[340px] shrink-0 h-[680px] flex flex-col justify-between overflow-hidden transition-all duration-300 ease-in-out relative shadow-lg">
+            
+            {/* Sidebar Header */}
+            <div className="p-5 border-b border-slate-200/40 dark:border-white/5 flex items-start justify-between gap-3">
+              <div className="space-y-1 flex-1">
+                <span className="text-[10px] font-bold tracking-widest text-teal uppercase">Course Navigator</span>
+                <h3 className="text-sm font-extrabold text-ink leading-snug">Introduction to Artificial Intelligence</h3>
+              </div>
+              <button 
+                onClick={() => setIsSidebarOpen(false)}
+                className="text-slate-400 hover:text-teal p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-all flex-shrink-0"
+                title="Close Sidebar"
+              >
+                <PanelLeftClose className="h-4.5 w-4.5" />
+              </button>
+            </div>
+
+            {/* Modules List - Scrollable */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              {sections.map((section) => {
+                const isExpanded = expandedModuleId === section.id;
+                return (
+                  <div key={section.id} className="border border-slate-200/30 dark:border-white/5 rounded-2xl overflow-hidden bg-white/10 dark:bg-white/2">
+                    {/* Module Header Button */}
+                    <button
+                      onClick={() => toggleModule(section.id)}
+                      className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 dark:hover:bg-white/5 transition-all"
+                    >
+                      <div>
+                        <span className="text-[9px] font-bold uppercase tracking-wider text-slate-450 dark:text-slate-500">{section.title}</span>
+                        <h4 className="text-xs font-bold text-ink mt-0.5">{section.subtitle}</h4>
+                      </div>
+                      {isExpanded ? (
+                        <ChevronUp className="h-4 w-4 text-slate-400" />
+                      ) : (
+                        <ChevronDown className="h-4 w-4 text-slate-400" />
+                      )}
+                    </button>
+
+                    {/* Lessons list inside module */}
+                    {isExpanded && (
+                      <div className="border-t border-slate-200/30 dark:border-white/5 bg-slate-50/30 dark:bg-black/10 py-1.5 divide-y divide-slate-200/20 dark:divide-white/3">
+                        {section.lessons.map((lesson) => {
+                          // Find flat index
+                          const flatIdx = allLessons.findIndex(l => l.id === lesson.id);
+                          const resolvedState = flatIdx === activeIndex ? "current" : flatIdx < activeIndex ? "completed" : "locked";
+                          const isCurrent = resolvedState === "current";
+                          const isCompleted = resolvedState === "completed";
+                          
+                          return (
+                            <button
+                              key={lesson.id}
+                              onClick={() => {
+                                if (resolvedState !== "locked") {
+                                  setActiveLessonId(lesson.id);
+                                }
+                              }}
+                              className={`w-full flex items-start gap-3 px-4 py-3.5 text-left transition-all ${
+                                isCurrent 
+                                  ? "bg-teal/8 dark:bg-teal/10 border-l-4 border-teal pl-3" 
+                                  : "hover:bg-slate-100/50 dark:hover:bg-white/2 border-l-4 border-transparent"
+                              } ${resolvedState === "locked" ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}
+                            >
+                              {/* Status Icon */}
+                              <div className="mt-0.5 flex-shrink-0">
+                                {isCompleted ? (
+                                  <CheckCircle className="h-4 w-4 text-teal" />
+                                ) : isCurrent ? (
+                                  <PlayCircle className="h-4 w-4 text-teal fill-teal/20" />
+                                ) : (
+                                  <Circle className="h-4 w-4 text-slate-400 dark:text-slate-650" />
+                                )}
+                              </div>
+                              
+                              {/* Title and duration */}
+                              <div className="min-w-0 flex-1">
+                                <p className={`text-xs leading-snug font-semibold ${isCurrent ? "text-teal font-bold" : "text-ink"}`}>
+                                  {lesson.title}
+                                </p>
+                                <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-1 block">
+                                  {lesson.duration}
+                                </span>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </GlassCard>
+        ) : (
+          /* Slim vertical rail when collapsed */
+          <GlassCard className="p-3 dark:bg-[#1e1b2e]/85 dark:border-white/8 w-[72px] shrink-0 h-[680px] flex flex-col items-center gap-6 overflow-hidden transition-all duration-300 ease-in-out relative shadow-lg">
+            <button 
+              onClick={() => setIsSidebarOpen(true)}
+              className="text-slate-400 hover:text-teal p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-all mt-1"
+              title="Expand Sidebar"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+            <div className="h-px w-6 bg-slate-200/40 dark:bg-white/5" />
+            {/* Sleek vertical progress dots */}
+            <div className="flex-1 flex flex-col gap-4 items-center">
+              {sections.map((section) => {
+                const isSelectedModule = sections.find(s => s.lessons.some(l => l.id === activeLessonId))?.id === section.id;
+                return (
+                  <div 
+                    key={section.id} 
+                    className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
+                      isSelectedModule ? "bg-teal ring-4 ring-teal/20 scale-125" : "bg-slate-400/40 dark:bg-slate-700/60"
+                    }`}
+                    title={`${section.title}: ${section.subtitle}`}
+                  />
+                );
+              })}
+            </div>
+          </GlassCard>
+        )}
+
+        {/* Right Column: Interactive Workspace (Module Video Box) */}
+        <div className="flex-1 min-w-0">
           <GlassCard className="overflow-hidden p-0 dark:bg-[#1e1b2e]/85 dark:border-white/8 shadow-md">
             <div className="p-6 space-y-6">
               
@@ -217,7 +454,7 @@ function LessonInner() {
                       Interactive Workspace
                     </span>
                     <span className="rounded-full bg-black/60 border border-white/10 px-3 py-1 text-[10px] font-bold tracking-widest text-white/70 backdrop-blur-sm uppercase">
-                      Step {activeStep} of {detail.path.length}
+                      Lesson {activeIndex + 1} of {allLessons.length}
                     </span>
                   </div>
 
@@ -228,8 +465,12 @@ function LessonInner() {
                       <div className="absolute -inset-1.5 rounded-full border border-teal/20 animate-ping group-hover:hidden" />
                     </div>
                     <div>
-                      <h3 className="text-lg md:text-xl font-extrabold text-white tracking-tight leading-snug">{detail.videoTitle}</h3>
-                      <p className="mt-1.5 text-xs text-slate-300 max-w-md mx-auto leading-relaxed">{detail.videoDesc}</p>
+                      <h3 className="text-lg md:text-xl font-extrabold text-white tracking-tight leading-snug">
+                        {activeLessonDetail.title}
+                      </h3>
+                      <p className="mt-1.5 text-xs text-slate-300 max-w-md mx-auto leading-relaxed">
+                        {activeLessonDetail.desc}
+                      </p>
                     </div>
                   </div>
 
@@ -239,7 +480,7 @@ function LessonInner() {
                       <button className="hover:text-teal transition-all duration-150 active:scale-90">
                         <svg className="h-5.5 w-5.5 text-teal" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                       </button>
-                      <span className="font-mono text-white/70">00:00 / {detail.time}</span>
+                      <span className="font-mono text-white/70">00:00 / {activeLessonDetail.time}</span>
                     </div>
                     
                     {/* Scrub bar */}
@@ -296,146 +537,6 @@ function LessonInner() {
 
             </div>
           </GlassCard>
-
-          {/* Instructions Step Cards (Wider grid layout) */}
-          <div className="grid gap-5 md:grid-cols-3">
-            {detail.blocks.map((block, index) => (
-              <div 
-                key={block} 
-                className="group rounded-[2rem] border border-slate-200/40 bg-white/40 dark:bg-white/5 dark:border-white/5 p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-teal/30 hover:bg-white/80 dark:hover:bg-[#25203c]/85 relative"
-              >
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-teal/10 text-teal group-hover:bg-teal group-hover:text-white transition-all duration-300 shadow-sm relative">
-                  <Sparkles className="h-4.5 w-4.5" />
-                  <div className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-royal text-white text-[10px] font-black shadow-md">
-                    {index + 1}
-                  </div>
-                </div>
-                <h4 className="mt-5 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">Step Concept 0{index + 1}</h4>
-                <p className="mt-2 text-xs leading-relaxed text-slate-650 dark:text-slate-350 font-semibold">{block}</p>
-              </div>
-            ))}
-          </div>
-
-        </div>
-
-        {/* Right Column: Widgets / Lesson Navigation */}
-        <div className="space-y-6">
-          
-           {/* Combined Lesson Path & Progress Tracker Card */}
-          <GlassCard className="p-5 space-y-6 dark:bg-[#1e1b2e]/85 dark:border-white/8">
-            {/* Lesson Path Header */}
-            <div>
-              <div className="flex items-center justify-between border-b border-slate-200/40 dark:border-white/5 pb-3">
-                <h3 className="text-sm font-bold text-ink uppercase tracking-wider">Lesson Path</h3>
-                <Pill tone={subjectPillTone}>Active Step {activeStep}/{detail.path.length}</Pill>
-              </div>
-              
-              <div className="relative pl-1.5 mt-5 space-y-5">
-                {/* Stepper connecting line */}
-                <div className="absolute left-[15px] top-3.5 bottom-3.5 w-[2px] bg-slate-200 dark:bg-slate-700/60" />
-                
-                {detail.path.map((step, index) => {
-                  const stepNum = index + 1;
-                  const isActive = activeStep === stepNum;
-                  const isCompleted = stepNum < activeStep;
-                  
-                  return (
-                    <button
-                      key={step}
-                      onClick={() => setActiveStep(stepNum)}
-                      className="relative w-full flex items-start gap-4 text-left group focus:outline-none"
-                    >
-                      {/* Indicator node */}
-                      <div className="relative z-10 flex h-7.5 w-7.5 flex-shrink-0 items-center justify-center rounded-full transition-all duration-300">
-                        {isCompleted ? (
-                          <div className="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-teal text-white shadow-glow">
-                            <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                        ) : isActive ? (
-                          <div className="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-royal text-white shadow-md ring-4 ring-royal/20 font-bold text-xs">
-                            {stepNum}
-                          </div>
-                        ) : (
-                          <div className="flex h-7.5 w-7.5 items-center justify-center rounded-full border-2 border-slate-200 bg-white text-slate-400 group-hover:border-teal group-hover:text-teal dark:border-slate-700 dark:bg-slate-900 transition-colors font-bold text-xs">
-                            {stepNum}
-                          </div>
-                        )}
-                      </div>
-                      
-                      {/* Text description */}
-                      <div className="flex-1 min-w-0 pt-0.5">
-                        <p className={`text-xs transition-colors leading-tight ${
-                          isActive 
-                            ? "text-royal dark:text-teal font-extrabold" 
-                            : "text-ink font-semibold group-hover:text-teal"
-                        }`}>
-                          {step}
-                        </p>
-                        <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">Estimated 3-5 min</p>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="h-px bg-slate-200/40 dark:bg-white/5" />
-
-            {/* Progress Tracker Section */}
-            <div>
-              <div className="flex items-center justify-between border-b border-slate-200/40 dark:border-white/5 pb-3">
-                <h3 className="text-sm font-bold text-ink uppercase tracking-wider">Progress Tracker</h3>
-                <Target className="h-4 w-4 text-marigold" />
-              </div>
-              <div className="mt-4 space-y-4">
-                <div>
-                  <div className="mb-1.5 flex justify-between text-xs font-bold">
-                    <span className="text-slate-500">Lesson progress</span>
-                    <span className="font-extrabold text-teal">{detail.progress}%</span>
-                  </div>
-                  <ProgressBar value={detail.progress} accent="teal" />
-                </div>
-                <div>
-                  <div className="mb-1.5 flex justify-between text-xs font-bold">
-                    <span className="text-slate-550">Topic confidence</span>
-                    <span className="font-extrabold text-marigold">{detail.confidence}%</span>
-                  </div>
-                  <ProgressBar value={detail.confidence} accent="marigold" />
-                </div>
-              </div>
-            </div>
-          </GlassCard>
-
-          {/* Quick Help Card */}
-          <GlassCard className="p-5 dark:bg-[#1e1b2e]/85 dark:border-white/8">
-            <div className="flex items-center justify-between border-b border-slate-200/40 dark:border-white/5 pb-3">
-              <h3 className="text-sm font-bold text-ink uppercase tracking-wider">Quick Help</h3>
-              <HelpCircle className="h-4 w-4 text-teal" />
-            </div>
-            <div className="mt-4 space-y-2.5 text-xs font-semibold">
-              <div className="flex items-center gap-3 rounded-2xl bg-surface dark:bg-slate-800/35 border border-royal/5 dark:border-white/5 p-3.5 text-slate-500 hover:border-teal/40 hover:bg-white dark:hover:bg-slate-800/80 cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md group">
-                <span className="text-base group-hover:scale-110 transition-transform">🤖</span>
-                <span className="text-ink">Mini AI Tutor Chat</span>
-              </div>
-              <div className="flex items-center gap-3 rounded-2xl bg-surface dark:bg-slate-800/35 border border-royal/5 dark:border-white/5 p-3.5 text-slate-500 hover:border-teal/40 hover:bg-white dark:hover:bg-slate-800/80 cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md group">
-                <span className="text-base group-hover:scale-110 transition-transform">💡</span>
-                <span className="text-ink">Reveal Step-by-Step Hint</span>
-              </div>
-              <div className="flex items-center gap-3 rounded-2xl bg-surface dark:bg-slate-800/35 border border-royal/5 dark:border-white/5 p-3.5 text-slate-500 hover:border-teal/40 hover:bg-white dark:hover:bg-slate-800/80 cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md group">
-                <span className="text-base group-hover:scale-110 transition-transform">❓</span>
-                <span className="text-ink">Request Tutor Explanation</span>
-              </div>
-            </div>
-          </GlassCard>
-
-          {/* Ask AI Tutor CTA Link */}
-          <Link href="/tutor" className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-royal to-indigo-900 hover:from-indigo-900 hover:to-royal py-3.5 text-sm font-bold text-white shadow-lg shadow-royal/20 transition-all duration-300 hover:-translate-y-0.5 active:scale-98">
-            <Sparkles className="h-4 w-4 text-teal animate-pulse" />
-            Need help? Ask AI Tutor
-          </Link>
-
         </div>
 
       </div>
