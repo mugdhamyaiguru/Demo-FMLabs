@@ -44,7 +44,12 @@ export function SidebarChats({
     const stored = localStorage.getItem("fm-tutor-sessions");
     if (stored) {
       try {
-        setSessions(JSON.parse(stored));
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.some((s: any) => s.id === "fractions" || s.name === "Fractions help")) {
+          initializeDefaults();
+        } else {
+          setSessions(parsed);
+        }
       } catch (e) {
         initializeDefaults();
       }
@@ -57,11 +62,11 @@ export function SidebarChats({
     const now = Date.now();
     const dayMs = 24 * 60 * 60 * 1000;
     const defaults: Session[] = [
-      { id: "fractions", name: "Fractions help", createdAt: now, pinned: false },
-      { id: "python", name: "Python basics", createdAt: now - 30 * 60 * 1000, pinned: false },
-      { id: "science", name: "Science quiz hints", createdAt: now - dayMs - 2 * 60 * 60 * 1000, pinned: false },
-      { id: "project", name: "Project brainstorming", createdAt: now - 4 * dayMs, pinned: false },
-      { id: "ai-revision", name: "AI Revision", createdAt: now - 12 * dayMs, pinned: false },
+      { id: "how-ai-learns", name: "How Does AI Actually Learn", createdAt: now, pinned: false },
+      { id: "ai-vs-ml", name: "Difference Between AI and ML", createdAt: now - 30 * 60 * 1000, pinned: false },
+      { id: "prompt-practice", name: "Prompt Writing Practice", createdAt: now - dayMs - 2 * 60 * 60 * 1000, pinned: false },
+      { id: "neural-networks", name: "Understanding Neural Networks", createdAt: now - 4 * dayMs, pinned: false },
+      { id: "ai-human-thinking", name: "Can AI Think Like Humans", createdAt: now - 12 * dayMs, pinned: false },
     ];
     setSessions(defaults);
     localStorage.setItem("fm-tutor-sessions", JSON.stringify(defaults));
