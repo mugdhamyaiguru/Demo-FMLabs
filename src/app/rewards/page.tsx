@@ -128,84 +128,73 @@ export default function RewardsPage() {
   return (
     <AppShell active="Rewards" title="Rewards & Achievements">
       <div className="space-y-5 w-full max-w-none">
-        {/* Metric Console */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-4 py-3 border-b border-slate-200/20 dark:border-white/5 pb-6">
-          <div className="flex flex-wrap items-center gap-6 md:gap-8 lg:gap-10 w-full justify-between animate-fade-in px-6 md:px-12">
-            {/* Total XP */}
-            <div className="space-y-1">
-              <div className="text-3xl font-black text-ink">8,420</div>
-              <div className="text-xs font-semibold text-slate-400">Total XP</div>
-              <div className="text-[10px] font-bold text-teal">685 / 1,000 XP</div>
-            </div>
-
-            <div className="hidden md:block h-8 w-px bg-slate-200/20 dark:bg-white/10" />
-
-            {/* Current Level */}
-            <div className="space-y-1">
-              <div className="text-3xl font-black text-ink">12</div>
-              <div className="text-xs font-semibold text-slate-400">Current Level</div>
-              <div className="text-[10px] font-bold text-teal">Level 13 next</div>
-            </div>
-
-            <div className="hidden md:block h-8 w-px bg-slate-200/20 dark:bg-white/10" />
-
-            {/* Streak Days */}
-            <div className="space-y-1">
-              <div className="text-3xl font-black text-ink">18</div>
-              <div className="text-xs font-semibold text-slate-400">Streak Days</div>
-              <div className="text-[10px] font-bold text-amber-500">Keep it up today!</div>
-            </div>
-
-            <div className="hidden md:block h-8 w-px bg-slate-200/20 dark:bg-white/10" />
-
-            {/* Badges Earned */}
-            <div className="space-y-1">
-              <div className="text-3xl font-black text-ink">14</div>
-              <div className="text-xs font-semibold text-slate-400">Badges Earned</div>
-              <div className="text-[10px] font-bold text-slate-500">Of 24 badges total</div>
-            </div>
-          </div>
-        </div>
-
         {/* XP Progress & Streak */}
-        <div className="grid gap-5 xl:grid-cols-[1.2fr_0.8fr]">
-          <GlassCard className="p-6 dark:bg-[#1e1b2e]/85 dark:border-white/8">
-            <div className="flex items-center justify-between">
-              <div>
-                <Pill tone="teal">Level Progression</Pill>
-                <h3 className="mt-3 text-2xl font-black text-ink">Level 12 → Level 13</h3>
+        <div className="grid gap-5 grid-cols-1 xl:grid-cols-[0.8fr_1.2fr_0.8fr]">
+          {/* Total XP Card */}
+          <GlassCard className="p-6 dark:bg-[#1e1b2e]/85 dark:border-white/8 flex flex-col justify-between">
+            <div>
+              {/* Gold/amber icon at the top with a border */}
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-gold/30 bg-gold/10 text-gold shadow-sm mb-6">
+                <Zap className="h-6 w-6" />
               </div>
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-teal to-[#0d7272] shadow-sm">
-                <Target className="h-5 w-5 text-white" />
+              {/* 8,420 (large, bold) */}
+              <h3 className="text-4xl font-black text-ink leading-none">8,420</h3>
+              {/* Total XP (subtitle) */}
+              <p className="text-sm font-semibold text-slate-400 mt-2">Total XP</p>
+            </div>
+            
+            {/* XP progress details and bar at the bottom */}
+            <div className="mt-8">
+              <p className="text-sm font-bold text-gold mb-2">685 / 1,000 XP</p>
+              <ProgressBar value={68.5} accent="gold" />
+            </div>
+          </GlassCard>
+
+          {/* Level Progress Card */}
+          <GlassCard className="p-6 dark:bg-[#1e1b2e]/85 dark:border-white/8 flex flex-col justify-between">
+            <div>
+              <div className="flex items-start justify-between">
+                <div>
+                  <Pill tone="teal">Level Progression</Pill>
+                  <h3 className="mt-3 text-3xl font-black text-ink leading-tight">Level 12 → Level 13</h3>
+                </div>
+                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-teal/30 bg-teal/10 text-teal shadow-sm flex-shrink-0">
+                  <Target className="h-5 w-5" />
+                </div>
               </div>
             </div>
-            <div className="mt-6 space-y-4">
+            
+            <div className="mt-8 space-y-4">
               <div>
                 <div className="mb-3 flex justify-between text-sm">
-                  <span className="text-slate-500">Progress</span>
+                  <span className="text-slate-400">Progress</span>
                   <span className="font-semibold text-ink">685 / 1,000 XP</span>
                 </div>
                 <ProgressBar value={68.5} accent="teal" />
               </div>
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-slate-400 leading-normal">
                 Complete 3 more modules or score 315 XP to reach Level 13 and unlock Premium Tutor features.
               </p>
             </div>
           </GlassCard>
 
-          <GlassCard className="p-6 dark:bg-[#1e1b2e]/85 dark:border-white/8">
-            <h3 className="text-xl font-black text-ink">Current Streak</h3>
-            <div className="mt-4 space-y-3">
-              <div className="flex items-center gap-4 rounded-2xl bg-gradient-to-br from-crimson/10 to-marigold/10 p-5">
-                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-crimson to-[#e05555] shadow-lg">
-                  <Flame className="h-7 w-7 text-white" />
-                </div>
-                <div>
-                  <p className="text-4xl font-black text-crimson">18</p>
-                  <p className="mt-1 text-sm text-slate-500">Days of consistent learning</p>
-                </div>
+          {/* Current Streak Card */}
+          <GlassCard className="p-6 dark:bg-[#1e1b2e]/85 dark:border-white/8 flex flex-col justify-between">
+            <div>
+              {/* Icon at the top with a border */}
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-crimson/30 bg-crimson/10 text-crimson shadow-sm mb-6">
+                <Flame className="h-6 w-6" />
               </div>
-              <p className="text-xs text-center text-slate-500">
+              {/* 18 (large, bold) */}
+              <h3 className="text-4xl font-black text-crimson leading-none">18</h3>
+              {/* Days of consistent learning (subtitle) */}
+              <p className="text-sm font-semibold text-slate-400 mt-2">Days of consistent learning</p>
+            </div>
+            
+            {/* Divider and activity guidance at the bottom */}
+            <div className="mt-8">
+              <div className="border-t border-slate-200/20 dark:border-white/5 mb-4" />
+              <p className="text-sm text-slate-400 leading-normal">
                 Complete 1 activity today to keep your streak alive!
               </p>
             </div>

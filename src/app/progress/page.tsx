@@ -185,40 +185,96 @@ export default function ProgressPage() {
               <p className="text-xs text-slate-400">Daily study hours logged this week</p>
             </div>
             
-            <div className="flex-grow flex items-end pt-10">
-              <div className="grid grid-cols-7 items-end gap-2.5 sm:gap-4 md:gap-5 w-full h-40">
-                {[
-                  { day: "Day 01", hours: "1.9", height: 38 },
-                  { day: "Day 02", hours: "2.7", height: 54 },
-                  { day: "Day 03", hours: "3.2", height: 64 },
-                  { day: "Day 04", hours: "3.6", height: 72 },
-                  { day: "Day 05", hours: "2.8", height: 56 },
-                  { day: "Day 06", hours: "4.0", height: 80 },
-                  { day: "Day 07", hours: "4.5", height: 90 },
-                ].map((item, index) => (
-                  <div key={index} className="flex flex-col items-center gap-2 h-full justify-end">
-                    {/* Bar Wrapper Container */}
-                    <div
-                      className="w-full relative group cursor-pointer"
-                      style={{ height: `${item.height}%` }}
-                    >
-                      {/* Tooltip */}
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-20">
-                        <div className="bg-slate-900/95 dark:bg-slate-800/95 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg shadow-xl border border-white/10 backdrop-blur-sm whitespace-nowrap text-center">
-                          {item.hours} hrs
-                        </div>
-                        <div className="w-1.5 h-1.5 bg-slate-900/95 dark:bg-slate-800/95 border-r border-b border-white/10 rotate-45 absolute -bottom-0.5 left-1/2 -translate-x-1/2" />
-                      </div>
+            <div className="flex-grow pt-10 flex flex-row items-stretch">
+              {/* Left Side: Y-axis Label & Ticks */}
+              <div className="flex items-stretch select-none">
+                {/* Y-axis Label (rotated) */}
+                <div className="flex items-center justify-center pr-1 w-8">
+                  <span 
+                    className="text-[10px] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider whitespace-nowrap"
+                    style={{
+                      writingMode: "vertical-lr",
+                      transform: "rotate(180deg)",
+                    }}
+                  >
+                    Study Hours (hrs)
+                  </span>
+                </div>
 
-                      {/* Bar */}
+                {/* Y-axis Ticks */}
+                <div className="flex flex-col justify-between text-right pr-3 text-[10px] sm:text-xs font-semibold text-slate-400 dark:text-slate-500 w-5 py-[2px]">
+                  <span>7</span>
+                  <span>6</span>
+                  <span>5</span>
+                  <span>4</span>
+                  <span>3</span>
+                  <span>2</span>
+                  <span>1</span>
+                  <span>0</span>
+                </div>
+              </div>
+
+              {/* Right Side: Chart Area + X-axis Labels */}
+              <div className="flex-grow flex flex-col">
+                {/* Chart Grid Area */}
+                <div className="flex-grow h-64 relative border-l border-b border-slate-200/20 dark:border-white/10 pb-0">
+                  {/* Horizontal Dotted Grid Lines */}
+                  <div className="absolute inset-0 flex flex-col justify-between pointer-events-none py-[2px]">
+                    {Array.from({ length: 8 }).map((_, i) => (
                       <div
-                        className="w-full h-full rounded-t-xl bg-[#14B8A6] hover:bg-[#20d4bf] hover:shadow-[0_0_15px_#14B8A6] hover:scale-[1.02] transition-all duration-300 animate-bar-grow"
-                        style={{ animationDelay: `${index * 80}ms` }}
+                        key={i}
+                        className="w-full border-t border-dotted border-slate-200/10 dark:border-white/5"
                       />
-                    </div>
-                    <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">{item.day}</span>
+                    ))}
                   </div>
-                ))}
+
+                  {/* Bars Container */}
+                  <div className="absolute inset-x-4 bottom-0 top-[2px] grid grid-cols-7 gap-3 sm:gap-5 items-end">
+                    {[
+                      { day: "DAY 01", hours: 2.5 },
+                      { day: "DAY 02", hours: 3.5 },
+                      { day: "DAY 03", hours: 4.2 },
+                      { day: "DAY 04", hours: 4.8 },
+                      { day: "DAY 05", hours: 3.2 },
+                      { day: "DAY 06", hours: 5.6 },
+                      { day: "DAY 07", hours: 6.2 },
+                    ].map((item, index) => {
+                      const heightPercent = (item.hours / 7) * 100;
+                      return (
+                        <div key={index} className="flex flex-col items-center justify-end h-full relative group">
+                          {/* Bar Wrapper */}
+                          <div
+                            className="w-full relative cursor-pointer"
+                            style={{ height: `${heightPercent}%` }}
+                          >
+                            {/* Tooltip */}
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-20">
+                              <div className="bg-slate-900/95 dark:bg-slate-800/95 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg shadow-xl border border-white/10 backdrop-blur-sm whitespace-nowrap text-center">
+                                {item.hours} hrs
+                              </div>
+                              <div className="w-1.5 h-1.5 bg-slate-900/95 dark:bg-slate-800/95 border-r border-b border-white/10 rotate-45 absolute -bottom-0.5 left-1/2 -translate-x-1/2" />
+                            </div>
+
+                            {/* Bar Fill */}
+                            <div
+                              className="w-full h-full rounded-t-lg bg-[#14B8A6] hover:bg-[#20d4bf] hover:shadow-[0_0_15px_#14B8A6] hover:scale-[1.02] transition-all duration-300 animate-bar-grow"
+                              style={{ animationDelay: `${index * 80}ms` }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* X-axis Labels (aligned perfectly with bars via identical horizontal grid padding/spacing) */}
+                <div className="pt-3 px-4 grid grid-cols-7 gap-3 sm:gap-5 text-center">
+                  {["DAY 01", "DAY 02", "DAY 03", "DAY 04", "DAY 05", "DAY 06", "DAY 07"].map((day) => (
+                    <span key={day} className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+                      {day}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
