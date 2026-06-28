@@ -26,7 +26,7 @@ import {
   Handshake
 } from "lucide-react";
 import { BrandMark, FeatureBadge, GlassCard, SectionHeading, SimpleList, Pill, cn } from "@/components/platform";
-import { featureCards, testimonials } from "@/lib/mock-data";
+import { testimonials } from "@/lib/mock-data";
 import FluidBackground from "@/components/FluidBackground";
 import AITutorLive from "@/components/AITutorLive";
 import ThemeForcer from "@/components/ThemeForcer";
@@ -35,6 +35,7 @@ import TestimonialCarousel from "@/components/TestimonialCarousel";
 import ContactForm from "@/components/ContactForm";
 import LandingHeader from "@/components/LandingHeader";
 import HowItWorks from "@/components/HowItWorks";
+import FeaturesCarousel from "@/components/FeaturesCarousel";
 
 export const metadata: Metadata = {
   title: "FutureMinds AI Guru",
@@ -54,14 +55,6 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  const featureIcons = {
-    "AI Tutor": <Brain className="h-5 w-5" />,
-    "Personalized Learning": <Sparkles className="h-5 w-5" />,
-    "Progress Tracking": <ClipboardList className="h-5 w-5" />,
-    Gamification: <Award className="h-5 w-5" />,
-    "Parent Dashboard": <ShieldCheck className="h-5 w-5" />,
-    "Real-world Projects": <LayoutDashboard className="h-5 w-5" />,
-  } as const;
 
   return (
     <main className="relative overflow-hidden min-h-screen pt-[88px]">
@@ -107,7 +100,7 @@ export default function HomePage() {
               </div>
 
               <div className="space-y-4">
-                <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl leading-[1.1]">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl leading-[1.1] hero-title-font">
                   FutureMinds <br />
                   <span className="bg-gradient-to-r from-[#00E5FF] via-[#00BFA6] to-[#FFC857] bg-clip-text text-transparent">
                     AI Labs
@@ -137,10 +130,44 @@ export default function HomePage() {
               </div>
 
               {/* Stats Row */}
-              <div className="border-t border-white/10 pt-6 mt-4 flex">
-                <div className="space-y-1 bg-[#1e1b2e]/40 border border-white/5 rounded-2xl p-4 shadow-sm backdrop-blur-md max-w-xs">
-                  <p className="text-2xl sm:text-3xl font-black bg-gradient-to-r from-[#189b9b] via-[#d8a444] to-[#fc9438] bg-clip-text text-transparent animate-gradient-text bg-[length:200%_auto]">3 roles</p>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">student, teacher, parent</p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 border-t border-white/10 pt-8 mt-8 w-full">
+                {/* Card 1 */}
+                <div className="bg-[#1e1b2e]/45 border border-white/[0.08] rounded-[20px] p-5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),_0_8px_30px_rgba(24,155,155,0.05)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15),_0_12px_35px_rgba(24,155,155,0.2)] hover:-translate-y-1.5 transition-all duration-300">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#189b9b]/10 border border-[#189b9b]/25 text-[#21d0d0] shadow-[0_0_10px_rgba(24,155,155,0.15)]">
+                    <Brain className="h-5.5 w-5.5" />
+                  </div>
+                  <p className="text-[28px] font-extrabold text-[#21d0d0] leading-none mt-4">
+                    24/7
+                  </p>
+                  <h4 className="text-[15px] font-semibold text-white tracking-tight mt-1">
+                    AI Tutor
+                  </h4>
+                </div>
+
+                {/* Card 2 */}
+                <div className="bg-[#1e1b2e]/45 border border-white/[0.08] rounded-[20px] p-5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),_0_8px_30px_rgba(252,148,56,0.05)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15),_0_12px_35px_rgba(252,148,56,0.2)] hover:-translate-y-1.5 transition-all duration-300">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#fc9438]/10 border border-[#fc9438]/25 text-[#ffa24c] shadow-[0_0_10px_rgba(252,148,56,0.15)]">
+                    <BookOpen className="h-5.5 w-5.5" />
+                  </div>
+                  <p className="text-[28px] font-extrabold text-[#ffa24c] leading-none mt-4">
+                    100+
+                  </p>
+                  <h4 className="text-[15px] font-semibold text-white tracking-tight mt-1">
+                    Interactive Lessons
+                  </h4>
+                </div>
+
+                {/* Card 3 */}
+                <div className="bg-[#1e1b2e]/45 border border-white/[0.08] rounded-[20px] p-5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),_0_8px_30px_rgba(167,139,250,0.05)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15),_0_12px_35px_rgba(167,139,250,0.2)] hover:-translate-y-1.5 transition-all duration-300">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#b19ffb]/10 border border-[#b19ffb]/25 text-[#c3b6fc] shadow-[0_0_10px_rgba(177,159,251,0.15)]">
+                    <Users className="h-5.5 w-5.5" />
+                  </div>
+                  <p className="text-[28px] font-extrabold text-[#c3b6fc] leading-none mt-4">
+                    3
+                  </p>
+                  <h4 className="text-[15px] font-semibold text-white tracking-tight mt-1">
+                    Learning Roles
+                  </h4>
                 </div>
               </div>
             </div>
@@ -234,23 +261,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Features ───────────────────────────────────────── */}
-      <section id="features" className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
-        <SectionHeading
-          eyebrow="Platform features"
-          title="Built to feel futuristic, vibrant, and easy to use"
-          description="The interface mixes SaaS clarity, playful gamification, and student-friendly visuals to make every workflow feel engaging."
-          centered
-        />
-        <div className="mt-16 lg:mt-20 grid gap-8 lg:gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {featureCards.map((feature) => (
-            <FeatureBadge
-              key={feature.title}
-              icon={featureIcons[feature.title as keyof typeof featureIcons]}
-              title={feature.title}
-              description={feature.description}
-            />
-          ))}
+      <section id="features" className="relative z-10 w-full bg-white dark:bg-[#12101e]">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+          <SectionHeading
+            eyebrow="Platform features"
+            title="Built to feel futuristic, vibrant, and easy to use"
+            description="The interface mixes SaaS clarity, playful gamification, and student-friendly visuals to make every workflow feel engaging."
+            centered
+          />
+          <FeaturesCarousel />
         </div>
       </section>
 
