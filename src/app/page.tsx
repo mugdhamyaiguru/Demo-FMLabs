@@ -64,54 +64,41 @@ export default function HomePage() {
   } as const;
 
   return (
-    <main className="relative overflow-hidden min-h-screen pt-24">
+    <main className="relative overflow-hidden min-h-screen pt-[88px]">
       <ThemeForcer />
       {/* ── Header ─────────────────────────────────────────── */}
       <LandingHeader />
 
       {/* ── Hero Section ───────────────────────────────────── */}
-      <section id="home" className="relative z-10 mx-auto max-w-7xl px-4 pb-16 pt-4 sm:px-6 lg:px-8 lg:pb-24 lg:pt-6">
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#2e2542] via-[#201b33] to-[#171424] text-white px-8 py-16 sm:px-12 lg:px-16 shadow-2xl border border-white/10 ring-1 ring-white/5">
-          {/* Interactive Liquid / Fluid Canvas Background */}
-          <FluidBackground />
+      <section id="home" className="relative z-10 w-full overflow-hidden bg-gradient-to-br from-[#2e2542] via-[#201b33] to-[#171424] text-white border-b border-white/10 rounded-none">
+        {/* Interactive Liquid / Fluid Canvas Background */}
+        <FluidBackground />
 
-          {/* Subtle Grid Overlay for SaaS/AI look */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] -z-10 opacity-70"
-          />
+        {/* ── Radial Glow Layers — premium AI/SaaS depth ─────── */}
+        {/* Teal glow — top-left origin */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-32 -left-32 h-[30rem] w-[30rem] rounded-full opacity-35 blur-[120px] animate-pulse-glow-1"
+          style={{ background: "radial-gradient(circle, #189b9b 0%, transparent 70%)" }}
+        />
+        {/* Marigold glow — bottom-right origin */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-24 -right-24 h-[26rem] w-[26rem] rounded-full opacity-30 blur-[100px] animate-pulse-glow-2"
+          style={{ background: "radial-gradient(circle, #fc9438 0%, transparent 70%)" }}
+        />
+        {/* Violet center bloom — adds perceived depth behind the grid content */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[42rem] w-[42rem] rounded-full opacity-[0.15] blur-[140px] animate-pulse-glow-center"
+          style={{ background: "radial-gradient(circle, #7c5cbf 0%, transparent 65%)" }}
+        />
 
-          {/* ── Radial Glow Layers — premium AI/SaaS depth ─────── */}
-          {/* Teal glow — top-left origin */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -top-32 -left-32 h-[30rem] w-[30rem] rounded-full opacity-35 blur-[120px] animate-pulse-glow-1"
-            style={{ background: "radial-gradient(circle, #189b9b 0%, transparent 70%)" }}
-          />
-          {/* Marigold glow — bottom-right origin */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -bottom-24 -right-24 h-[26rem] w-[26rem] rounded-full opacity-30 blur-[100px] animate-pulse-glow-2"
-            style={{ background: "radial-gradient(circle, #fc9438 0%, transparent 70%)" }}
-          />
-          {/* Violet center bloom — adds perceived depth behind the grid content */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[42rem] w-[42rem] rounded-full opacity-[0.15] blur-[140px] animate-pulse-glow-center"
-            style={{ background: "radial-gradient(circle, #7c5cbf 0%, transparent 65%)" }}
-          />
 
-          {/* Floating background decorative icons */}
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden select-none z-0 opacity-15">
-            <Brain className="absolute left-[8%] top-[20%] h-12 w-12 text-[#189b9b] animate-float-slow" />
-            <Sparkles className="absolute right-[12%] top-[14%] h-10 w-10 text-[#fc9438] animate-float-medium" />
-            <GraduationCap className="absolute left-[38%] top-[42%] h-14 w-14 text-white animate-float-fast" />
-            <Trophy className="absolute right-[28%] bottom-[24%] h-12 w-12 text-[#d8a444] animate-float-slow" />
-            <Award className="absolute left-[14%] bottom-[35%] h-10 w-10 text-[#189b9b] animate-float-medium" />
-            <Flame className="absolute right-[6%] bottom-[45%] h-12 w-12 text-[#fc9438] animate-float-fast" />
-          </div>
 
-          <div className="relative z-10 grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
+        {/* Centered max-width container for content */}
+        <div className="relative z-10 mx-auto max-w-7xl px-8 py-16 sm:px-12 lg:px-16 lg:py-24">
+          <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
             {/* Left Content Column */}
             <div className="space-y-8 max-w-xl">
               <div className="flex flex-wrap gap-2.5">
@@ -123,7 +110,7 @@ export default function HomePage() {
                 <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl leading-[1.1]">
                   FutureMinds <br />
                   <span className="bg-gradient-to-r from-[#00E5FF] via-[#00BFA6] to-[#FFC857] bg-clip-text text-transparent">
-                    AI Guru
+                    AI Labs
                   </span>
                 </h1>
                 <p className="text-base text-slate-300 sm:text-lg leading-relaxed pt-2">
@@ -135,14 +122,14 @@ export default function HomePage() {
               <div className="flex flex-wrap gap-4">
                 <a
                   href="/signup"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#189b9b] px-6 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#148282] hover:shadow-xl"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#189b9b] px-6 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#148282] hover:shadow-xl"
                 >
                   <span>Get Started</span>
                   <Play className="h-4 w-4 fill-white text-white" />
                 </a>
                 <a
                   href="/modules"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/25 bg-white/5 px-6 py-4 text-base font-bold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/10"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-6 py-4 text-base font-bold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/10"
                 >
                   <span>Explore Modules</span>
                   <Play className="h-4 w-4 text-white" />
@@ -150,17 +137,11 @@ export default function HomePage() {
               </div>
 
               {/* Stats Row */}
-              <div className="grid gap-6 grid-cols-3 border-t border-white/10 pt-6 mt-4">
-                {[
-                  { value: "92%", label: "module completion" },
-                  { value: "1.2k", label: "XP earned daily" },
-                  { value: "3 roles", label: "student, teacher, parent" },
-                ].map((stat) => (
-                  <div key={stat.label} className="space-y-1 bg-[#1e1b2e]/40 border border-white/5 rounded-2xl p-4 shadow-sm backdrop-blur-md">
-                    <p className="text-2xl sm:text-3xl font-black bg-gradient-to-r from-[#189b9b] via-[#d8a444] to-[#fc9438] bg-clip-text text-transparent animate-gradient-text bg-[length:200%_auto]">{stat.value}</p>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{stat.label}</p>
-                  </div>
-                ))}
+              <div className="border-t border-white/10 pt-6 mt-4 flex">
+                <div className="space-y-1 bg-[#1e1b2e]/40 border border-white/5 rounded-2xl p-4 shadow-sm backdrop-blur-md max-w-xs">
+                  <p className="text-2xl sm:text-3xl font-black bg-gradient-to-r from-[#189b9b] via-[#d8a444] to-[#fc9438] bg-clip-text text-transparent animate-gradient-text bg-[length:200%_auto]">3 roles</p>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">student, teacher, parent</p>
+                </div>
               </div>
             </div>
 
@@ -173,16 +154,11 @@ export default function HomePage() {
               <div className="relative rounded-[2.5rem] border border-white/10 bg-[#1e1b2e]/60 p-6 sm:p-8 shadow-2xl backdrop-blur-xl overflow-visible select-none transition-all duration-300 hover:border-white/15">
                 {/* Header row */}
                 <div className="flex items-start justify-between gap-4">
-                  <div className="max-w-[70%]">
+                  <div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#189b9b]">AI LEARNING ECOSYSTEM</p>
                     <h3 className="text-xl font-bold text-white mt-1 leading-snug">
                       Everything connected in <br className="hidden sm:inline" /> one place
                     </h3>
-                  </div>
-                  <div className="flex-shrink-0">
-                    <div className="rounded-2xl bg-white/10 border border-white/10 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md">
-                      Live demo
-                    </div>
                   </div>
                 </div>
 
@@ -582,7 +558,7 @@ export default function HomePage() {
             <div className="border-t border-slate-200/60 dark:border-white/8 bg-slate-50/60 dark:bg-white/[0.02] px-6 py-4 flex justify-center sm:justify-end">
               <a
                 href="/signup"
-                className="inline-flex items-center gap-1.5 rounded-full border border-[#189b9b] bg-[#189b9b] px-5 py-2 text-[13px] font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#148282] hover:border-[#148282] hover:shadow-md flex-shrink-0"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-[#189b9b] bg-[#189b9b] px-5 py-2 text-[13px] font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#148282] hover:border-[#148282] hover:shadow-md flex-shrink-0"
               >
                 Get started free
                 <span aria-hidden="true" className="text-white/70 text-sm">→</span>

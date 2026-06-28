@@ -15,26 +15,20 @@ export function cn(...classes: Array<string | undefined | false>) {
 
 export function BrandMark() {
   return (
-    <Link href="/" className="flex items-center gap-3 group">
-      <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-xl border border-slate-200/80 dark:border-white/10 bg-white/50 shadow-sm transition-all duration-300 group-hover:scale-105 group-hover:border-teal/30">
-        <Image src="/brain-logo.png" alt="FutureMinds AI Guru logo" width={40} height={40} className="h-full w-full object-cover" />
+    <Link href="/" className="flex items-center group">
+      <div className="relative h-[72px] w-[72px] flex-shrink-0 overflow-hidden transition-all duration-300 group-hover:scale-105">
+        <Image src="/logo.jpg" alt="FutureMinds AI Labs logo" width={72} height={72} className="h-full w-full object-contain" />
       </div>
-      <span className="text-[17px] font-bold tracking-tight text-ink transition-colors duration-300 group-hover:text-teal whitespace-nowrap">
-        FutureMinds AI Guru
-      </span>
     </Link>
   );
 }
 
 export function BrandMarkWhite() {
   return (
-    <Link href="/" className="flex items-center gap-3 group">
-      <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-xl border border-white/15 bg-white/10 shadow-sm transition-all duration-300 group-hover:scale-105 group-hover:border-marigold/30">
-        <Image src="/brain-logo.png" alt="FutureMinds AI Guru logo" width={40} height={40} className="h-full w-full object-cover" />
+    <Link href="/" className="flex items-center group">
+      <div className="relative h-[72px] w-[72px] flex-shrink-0 overflow-hidden transition-all duration-300 group-hover:scale-105">
+        <Image src="/logo.jpg" alt="FutureMinds AI Labs logo" width={72} height={72} className="h-full w-full object-contain" />
       </div>
-      <span className="text-[17px] font-bold tracking-tight text-white transition-colors duration-300 group-hover:text-marigold whitespace-nowrap">
-        FutureMinds AI Guru
-      </span>
     </Link>
   );
 }

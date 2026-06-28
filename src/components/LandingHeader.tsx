@@ -8,7 +8,6 @@ const navLinks = [
   { label: "Features", href: "#features", id: "features" },
   { label: "How It Works", href: "#how-it-works", id: "how-it-works" },
   { label: "Testimonials", href: "#testimonials", id: "testimonials" },
-  { label: "Login", href: "/login", id: "login" },
 ];
 
 export default function LandingHeader() {
@@ -56,14 +55,12 @@ export default function LandingHeader() {
   }, []);
 
   return (
-    <div className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 sm:px-6 lg:px-8 pointer-events-none">
-      <header
-        className={`w-full max-w-7xl pointer-events-auto transition-all duration-300 rounded-full flex items-center justify-between border ${
-          scrolled
-            ? "bg-white/85 backdrop-blur-md border-slate-200/30 py-4 px-8 lg:px-12 shadow-[0_4px_20px_rgba(38,26,67,0.04),0_12px_40px_rgba(38,26,67,0.06)]"
-            : "bg-white/85 backdrop-blur-sm border-slate-200/20 py-5 px-8 lg:px-12 shadow-[0_2px_10px_rgba(38,26,67,0.02),0_6px_20px_rgba(38,26,67,0.03)]"
-        }`}
-      >
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 border-b border-gray-200 bg-white flex items-center justify-between shadow-sm ${
+        scrolled ? "py-1" : "py-2"
+      }`}
+    >
+      <div className="mx-auto w-full max-w-7xl px-8 lg:px-12 flex items-center justify-between">
         {/* Left: Brand Logo */}
         <div className="flex-1 flex justify-start">
           <BrandMark />
@@ -93,12 +90,12 @@ export default function LandingHeader() {
         <div className="flex-1 flex justify-end">
           <a
             href="/signup"
-            className="hidden md:inline-flex rounded-full bg-[#fc9438] px-6 py-2.5 text-sm font-bold text-white transition-all shadow-md hover:-translate-y-0.5 hover:bg-[#e67e22] hover:shadow-lg"
+            className="hidden md:inline-flex rounded-xl bg-[#fc9438] px-6 py-2.5 text-sm font-bold text-white transition-all shadow-md hover:-translate-y-0.5 hover:bg-[#e67e22] hover:shadow-lg"
           >
-            Signup
+            Get Started
           </a>
         </div>
-      </header>
-    </div>
+      </div>
+    </header>
   );
 }
