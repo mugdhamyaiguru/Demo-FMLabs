@@ -276,16 +276,7 @@ export default function HomePage() {
       </section>
 
       {/* ── How it works ───────────────────────────────────── */}
-      <section id="how-it-works" className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24 animate-fade-up">
-        <div className="pb-3">
-          <SectionHeading
-            eyebrow="How it works"
-            title="A polished flow from signup to measurable progress"
-            description="Students join, choose a role, explore modules, learn with quizzes and AI support, and keep momentum with streaks and badges."
-            centered
-          />
-        </div>
-
+      <section id="how-it-works" className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
         <HowItWorks />
       </section>
 

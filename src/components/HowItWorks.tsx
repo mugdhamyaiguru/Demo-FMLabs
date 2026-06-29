@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { 
   Users, 
   LayoutDashboard, 
@@ -12,6 +12,7 @@ import {
   Zap, 
   Flame 
 } from "lucide-react";
+import { SectionHeading } from "@/components/platform";
 
 // Helper for class merging
 function cn(...classes: (string | boolean | undefined | null)[]) {
@@ -235,6 +236,31 @@ function MockupRewards() {
 
 export default function HowItWorks() {
   const [flippedCard, setFlippedCard] = useState<number | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: 0.22,
+      }
+    );
+
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     if (flippedCard === null) return;
@@ -304,133 +330,159 @@ export default function HowItWorks() {
   ];
 
   return (
-    <div className="relative mt-4 lg:mt-6">
-      {/* Dynamic injection of 3D flip CSS */}
-      <style dangerouslySetInnerHTML={{__html: `
-        .perspective-1000 {
-          perspective: 1000px;
-        }
-        .transform-style-3d {
-          transform-style: preserve-3d;
-        }
-        .backface-hidden {
-          backface-visibility: hidden;
-          -webkit-backface-visibility: hidden;
-        }
-        .rotate-y-180 {
-          transform: rotateY(180deg);
-        }
-        .animate-spin-slow {
-          animation: spin 6s linear infinite;
-        }
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `}} />
+    <div ref={sectionRef} className="w-full">
+      {/* Centered section header */}
+      <div 
+        className="text-center max-w-2xl mx-auto mb-8 lg:mb-10"
+        style={{
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? "translateY(0)" : "translateY(40px)",
+          transition: "opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1)",
+          willChange: "transform, opacity",
+        }}
+      >
+        <SectionHeading
+          eyebrow="How it works"
+          title="A polished flow from signup to measurable progress"
+          centered
+        />
+      </div>
 
-      <div className="grid gap-8 grid-cols-1 lg:grid-cols-3 items-stretch">
-        {steps.map((item, idx) => {
-          const isFlipped = flippedCard === idx;
+      <div className="relative mt-4 lg:mt-6">
+        {/* Dynamic injection of 3D flip CSS */}
+        <style dangerouslySetInnerHTML={{__html: `
+          .perspective-1000 {
+            perspective: 1000px;
+          }
+          .transform-style-3d {
+            transform-style: preserve-3d;
+          }
+          .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+          }
+          .rotate-y-180 {
+            transform: rotateY(180deg);
+          }
+          .animate-spin-slow {
+            animation: spin 6s linear infinite;
+          }
+          @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+        `}} />
 
-          return (
-            <div 
-              key={idx}
-              className="perspective-1000 w-full h-[470px] relative group"
-              onMouseEnter={() => setFlippedCard(idx)}
-              onMouseLeave={() => setFlippedCard(null)}
-              onClick={() => setFlippedCard(idx)}
-            >
+        <div className="grid gap-8 grid-cols-1 lg:grid-cols-3 items-stretch">
+          {steps.map((item, idx) => {
+            const isFlipped = flippedCard === idx;
+            const delay = idx === 0 ? "0.10s" : idx === 1 ? "0.18s" : "0.26s";
+
+            return (
               <div 
-                className={cn(
-                  "relative w-full h-full transition-transform duration-700 transform-style-3d cursor-pointer",
-                  isFlipped && "rotate-y-180"
-                )}
+                key={idx}
+                className="perspective-1000 w-full h-[470px] relative group"
+                onMouseEnter={() => setFlippedCard(idx)}
+                onMouseLeave={() => setFlippedCard(null)}
+                onClick={() => setFlippedCard(idx)}
+                style={{
+                  opacity: isVisible ? 1 : 0,
+                  transform: isVisible ? "translateY(0)" : "translateY(35px)",
+                  transition: `opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) ${delay}, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) ${delay}`,
+                  willChange: "transform, opacity",
+                }}
               >
-                {/* CARD FRONT */}
-                <div className="absolute inset-0 backface-hidden z-10">
-                  <div className={cn(
-                    "flex flex-col justify-between h-full w-full rounded-[2.5rem] border border-slate-200/60 dark:border-white/8 bg-white/75 dark:bg-[#1a1727]/50 p-8 shadow-sm backdrop-blur-md border-t-4",
-                    item.colorClass
-                  )}>
-                    <div>
-                      {/* Top row with pill and icon */}
-                      <div className="flex justify-between items-center">
-                        <span className={cn("inline-flex items-center rounded-full px-3.5 py-1 text-xs font-black uppercase tracking-wider border", item.bgPillClass)}>
-                          {item.step}
-                        </span>
-                        <div className={cn("flex h-10 w-10 items-center justify-center rounded-xl", item.bgIconClass)}>
-                          {item.icon}
+                <div 
+                  className={cn(
+                    "relative w-full h-full transition-transform duration-700 transform-style-3d cursor-pointer",
+                    isFlipped && "rotate-y-180"
+                  )}
+                >
+                  {/* CARD FRONT */}
+                  <div className="absolute inset-0 backface-hidden z-10">
+                    <div className={cn(
+                      "flex flex-col justify-between h-full w-full rounded-[2.5rem] border border-slate-200/60 dark:border-white/8 bg-white/75 dark:bg-[#1a1727]/50 p-8 shadow-sm backdrop-blur-md border-t-4",
+                      item.colorClass
+                    )}>
+                      <div>
+                        {/* Top row with pill and icon */}
+                        <div className="flex justify-between items-center">
+                          <span className={cn("inline-flex items-center rounded-full px-3.5 py-1 text-xs font-black uppercase tracking-wider border", item.bgPillClass)}>
+                            {item.step}
+                          </span>
+                          <div className={cn("flex h-10 w-10 items-center justify-center rounded-xl", item.bgIconClass)}>
+                            {item.icon}
+                          </div>
+                        </div>
+
+                        {/* Content */}
+                        <div className="mt-8 space-y-4 text-left">
+                          <h3 className={cn("text-xl font-bold text-slate-800 dark:text-white transition-colors duration-300", `group-hover:${item.textColorClass}`)}>
+                            {item.title}
+                          </h3>
+                          <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+                            {item.description}
+                          </p>
+                        </div>
+
+                        {/* Checkpoints */}
+                        <div className="mt-5 space-y-2 text-left">
+                          {item.checkpoints.map((cp, cpIdx) => (
+                            <div key={cpIdx} className="flex items-start gap-2 text-xs">
+                              <span className={cn("font-bold text-sm leading-none select-none mt-0.5", item.textColorClass)}>
+                                ✓
+                              </span>
+                              <span className="text-[13px] text-slate-600 dark:text-slate-300 font-normal leading-snug">
+                                {cp}
+                              </span>
+                            </div>
+                          ))}
                         </div>
                       </div>
 
-                      {/* Content */}
-                      <div className="mt-8 space-y-4 text-left">
-                        <h3 className={cn("text-xl font-bold text-slate-800 dark:text-white transition-colors duration-300", `group-hover:${item.textColorClass}`)}>
-                          {item.title}
-                        </h3>
-                        <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
-                          {item.description}
-                        </p>
-                      </div>
-
-                      {/* Checkpoints */}
-                      <div className="mt-5 space-y-2 text-left">
-                        {item.checkpoints.map((cp, cpIdx) => (
-                          <div key={cpIdx} className="flex items-start gap-2 text-xs">
-                            <span className={cn("font-bold text-sm leading-none select-none mt-0.5", item.textColorClass)}>
-                              ✓
-                            </span>
-                            <span className="text-[13px] text-slate-600 dark:text-slate-300 font-normal leading-snug">
-                              {cp}
-                            </span>
-                          </div>
-                        ))}
+                      {/* Bottom See Preview Hint */}
+                      <div className={cn("flex justify-end items-center gap-1.5 text-xs font-bold opacity-80 group-hover:opacity-100 transition-opacity duration-300", item.textColorClass)}>
+                        <span>See preview</span>
+                        <RotateCw className="h-3.5 w-3.5 animate-spin-slow" />
                       </div>
                     </div>
+                  </div>
 
-                    {/* Bottom See Preview Hint */}
-                    <div className={cn("flex justify-end items-center gap-1.5 text-xs font-bold opacity-80 group-hover:opacity-100 transition-opacity duration-300", item.textColorClass)}>
-                      <span>See preview</span>
-                      <RotateCw className="h-3.5 w-3.5 animate-spin-slow" />
+                  {/* CARD BACK */}
+                  <div className="absolute inset-0 backface-hidden rotate-y-180 z-20">
+                    <div className={cn(
+                      "relative w-full h-full flex flex-col justify-between p-4 bg-white/75 dark:bg-[#1a1727]/50 rounded-[2.5rem] border border-slate-200/60 dark:border-white/8 border-t-4 shadow-sm backdrop-blur-md",
+                      item.colorClass
+                    )}>
+                      {/* Back Button */}
+                      <div className="absolute top-4 left-6 z-30">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setFlippedCard(null);
+                          }}
+                          className={cn(
+                            "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 dark:bg-[#1a1727]/90 shadow-sm border border-slate-200/40 dark:border-white/5 text-xs font-black hover:scale-105 active:scale-95 transition-all",
+                            item.textColorClass
+                          )}
+                        >
+                          <span>&larr;</span>
+                          <span>Back</span>
+                        </button>
+                      </div>
+
+                      {/* Preview Mockup Panel */}
+                      <div className="w-full h-full flex items-center justify-center pt-8">
+                        {item.mockup}
+                      </div>
                     </div>
                   </div>
+
                 </div>
-
-                {/* CARD BACK */}
-                <div className="absolute inset-0 backface-hidden rotate-y-180 z-20">
-                  <div className={cn(
-                    "relative w-full h-full flex flex-col justify-between p-4 bg-white/75 dark:bg-[#1a1727]/50 rounded-[2.5rem] border border-slate-200/60 dark:border-white/8 border-t-4 shadow-sm backdrop-blur-md",
-                    item.colorClass
-                  )}>
-                    {/* Back Button */}
-                    <div className="absolute top-4 left-6 z-30">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setFlippedCard(null);
-                        }}
-                        className={cn(
-                          "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 dark:bg-[#1a1727]/90 shadow-sm border border-slate-200/40 dark:border-white/5 text-xs font-black hover:scale-105 active:scale-95 transition-all",
-                          item.textColorClass
-                        )}
-                      >
-                        <span>&larr;</span>
-                        <span>Back</span>
-                      </button>
-                    </div>
-
-                    {/* Preview Mockup Panel */}
-                    <div className="w-full h-full flex items-center justify-center pt-8">
-                      {item.mockup}
-                    </div>
-                  </div>
-                </div>
-
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );
