@@ -94,43 +94,45 @@ export default function HomePage() {
           <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
             {/* Left Content Column */}
             <div className="space-y-8 max-w-xl">
-              <div className="flex flex-wrap gap-2.5">
-                <span className="inline-flex items-center rounded-full bg-[#189b9b]/20 text-[#21d0d0] px-3.5 py-1 text-xs font-semibold border border-[#189b9b]/35">AI-powered learning</span>
-                <span className="inline-flex items-center rounded-full bg-[#fc9438]/20 text-[#ffa24c] px-3.5 py-1 text-xs font-semibold border border-[#fc9438]/35">Gamified progress</span>
-              </div>
+              <div className="space-y-8 animate-hero-left">
+                <div className="flex flex-wrap gap-2.5">
+                  <span className="inline-flex items-center rounded-full bg-[#189b9b]/20 text-[#21d0d0] px-3.5 py-1 text-xs font-semibold border border-[#189b9b]/35">AI-powered learning</span>
+                  <span className="inline-flex items-center rounded-full bg-[#fc9438]/20 text-[#ffa24c] px-3.5 py-1 text-xs font-semibold border border-[#fc9438]/35">Gamified progress</span>
+                </div>
 
-              <div className="space-y-4">
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl leading-[1.1] hero-title-font">
-                  FutureMinds <br />
-                  <span className="bg-gradient-to-r from-[#00E5FF] via-[#00BFA6] to-[#FFC857] bg-clip-text text-transparent">
-                    AI Labs
-                  </span>
-                </h1>
-                <p className="text-base text-slate-300 sm:text-lg leading-relaxed pt-2">
-                  Personalized AI-Powered Learning Tailored To Your Goals.
-                </p>
-              </div>
+                <div className="space-y-4">
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl leading-[1.1] hero-title-font">
+                    FutureMinds <br />
+                    <span className="bg-gradient-to-r from-[#00E5FF] via-[#00BFA6] to-[#FFC857] bg-clip-text text-transparent">
+                      AI Labs
+                    </span>
+                  </h1>
+                  <p className="text-base text-slate-300 sm:text-lg leading-relaxed pt-2">
+                    Personalized AI-Powered Learning Tailored To Your Goals.
+                  </p>
+                </div>
 
-              {/* Action Buttons */}
-              <div className="flex flex-wrap gap-4">
-                <a
-                  href="/signup"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#189b9b] px-6 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#148282] hover:shadow-xl"
-                >
-                  <span>Get Started</span>
-                  <Play className="h-4 w-4 fill-white text-white" />
-                </a>
-                <a
-                  href="/modules"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-6 py-4 text-base font-bold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/10"
-                >
-                  <span>Explore Modules</span>
-                  <Play className="h-4 w-4 text-white" />
-                </a>
+                {/* Action Buttons */}
+                <div className="flex flex-wrap gap-4">
+                  <a
+                    href="/signup"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#189b9b] px-6 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#148282] hover:shadow-xl"
+                  >
+                    <span>Get Started</span>
+                    <Play className="h-4 w-4 fill-white text-white" />
+                  </a>
+                  <a
+                    href="/modules"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-6 py-4 text-base font-bold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/10"
+                  >
+                    <span>Explore Modules</span>
+                    <Play className="h-4 w-4 text-white" />
+                  </a>
+                </div>
               </div>
 
               {/* Stats Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 border-t border-white/10 pt-8 mt-8 w-full">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 border-t border-white/10 pt-8 mt-8 w-full animate-hero-stats">
                 {/* Card 1 */}
                 <div className="bg-[#1e1b2e]/45 border border-white/[0.08] rounded-[20px] p-5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),_0_8px_30px_rgba(24,155,155,0.05)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15),_0_12px_35px_rgba(24,155,155,0.2)] hover:-translate-y-1.5 transition-all duration-300">
                   <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#189b9b]/10 border border-[#189b9b]/25 text-[#21d0d0] shadow-[0_0_10px_rgba(24,155,155,0.15)]">
@@ -173,7 +175,7 @@ export default function HomePage() {
             </div>
 
             {/* Right Dashboard Mockup Column */}
-            <div className="relative z-10 w-full max-w-lg mx-auto lg:mx-0 lg:ml-auto">
+            <div className="relative z-10 w-full max-w-lg mx-auto lg:mx-0 lg:ml-auto animate-hero-right">
               {/* Blur backdrop backing */}
               <div className="absolute -inset-4 rounded-full bg-royal/20 blur-3xl opacity-60 -z-10" />
 
