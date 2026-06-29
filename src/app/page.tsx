@@ -281,15 +281,8 @@ export default function HomePage() {
       </section>
 
       {/* ── Role-based ─────────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24 animate-fade-up">
-        <SectionHeading
-          eyebrow="Role-based learning"
-          title="Every role gets a focused experience"
-          description="The demo keeps the student journey immersive while still giving teachers and parents the insights they need."
-        />
-        <div className="mt-16 lg:mt-20">
-          <RoleSelector />
-        </div>
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+        <RoleSelector />
       </section>
 
       {/* ── Testimonials ───────────────────────────────────── */}

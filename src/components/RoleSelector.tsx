@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { 
   GraduationCap, 
   BadgeCheck, 
@@ -15,6 +15,7 @@ import {
   AlertTriangle, 
   Trophy 
 } from "lucide-react";
+import { SectionHeading } from "@/components/platform";
 
 interface HighlightItem {
   title: string;
@@ -32,6 +33,51 @@ interface RoleItem {
 
 export default function RoleSelector() {
   const [activeTab, setActiveTab] = useState(0);
+  const [displayTab, setDisplayTab] = useState(0);
+  const [fadeState, setFadeState] = useState<"visible" | "leaving" | "entering">("visible");
+
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: 0.22,
+      }
+    );
+
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const handleTabChange = (idx: number) => {
+    if (idx === activeTab) return;
+    setFadeState("leaving");
+    setActiveTab(idx);
+
+    setTimeout(() => {
+      setDisplayTab(idx);
+      setFadeState("entering");
+      
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          setFadeState("visible");
+        }, 30);
+      });
+    }, 180);
+  };
 
   const roles: RoleItem[] = [
     {
@@ -105,7 +151,7 @@ export default function RoleSelector() {
     }
   ];
 
-  const activeColor = roles[activeTab].color;
+  const activeColor = roles[displayTab].color;
 
   const rightBorderClass = 
     activeColor === "teal"
@@ -135,93 +181,157 @@ export default function RoleSelector() {
       ? "text-[#d8a444]"
       : "text-[#7c5cbf]";
 
-  return (
-    <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_1.2fr] items-stretch animate-fade-up">
-      {/* Left pane: Tab selection list */}
-      <div className="flex flex-col gap-4 justify-between">
-        {roles.map((item, idx) => {
-          const isActive = activeTab === idx;
-          const colorStyles = 
-            item.color === "teal" 
-              ? { bg: "bg-[#189b9b]/10 text-[#189b9b]", active: "bg-[#189b9b] text-white border-[#189b9b]/20", border: "border-l-[#189b9b]" }
-              : item.color === "gold"
-              ? { bg: "bg-[#d8a444]/10 text-[#d8a444]", active: "bg-[#d8a444] text-white border-[#d8a444]/20", border: "border-l-[#d8a444]" }
-              : { bg: "bg-[#7c5cbf]/10 text-[#7c5cbf]", active: "bg-[#7c5cbf] text-white border-[#7c5cbf]/20", border: "border-l-[#7c5cbf]" };
+  // Internal tab transition style
+  let tabTransitionStyle: React.CSSProperties = {};
+  if (fadeState === "visible") {
+    tabTransitionStyle = {
+      opacity: 1,
+      transform: "translateY(0)",
+      transition: "opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1), transform 0.22s cubic-bezier(0.22, 1, 0.36, 1)",
+      willChange: "transform, opacity",
+    };
+  } else if (fadeState === "leaving") {
+    tabTransitionStyle = {
+      opacity: 0,
+      transform: "translateY(-10px)",
+      transition: "opacity 0.18s cubic-bezier(0.22, 1, 0.36, 1), transform 0.18s cubic-bezier(0.22, 1, 0.36, 1)",
+      willChange: "transform, opacity",
+    };
+  } else if (fadeState === "entering") {
+    tabTransitionStyle = {
+      opacity: 0,
+      transform: "translateY(10px)",
+      transition: "none",
+    };
+  }
 
-          return (
-            <button
-              key={item.title}
-              onClick={() => setActiveTab(idx)}
-              className={`flex items-start gap-5 p-6 rounded-[2rem] border border-l-4 text-left transition-all duration-300 select-none group cursor-pointer ${
-                isActive
-                  ? `bg-white dark:bg-[#1a1727]/40 border-slate-200/80 dark:border-white/10 shadow-md translate-x-1 ${colorStyles.border}`
-                  : "bg-white/50 dark:bg-[#1a1727]/20 border-slate-200/60 dark:border-white/5 border-l-transparent shadow-sm hover:bg-white/80 dark:hover:bg-[#1a1727]/40 hover:border-slate-300/80 dark:hover:border-white/10 hover:shadow-md"
-              }`}
-            >
-              <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl transition-colors duration-300 ${isActive ? colorStyles.active : colorStyles.bg}`}>
-                {item.icon}
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-xl font-bold text-slate-800 dark:text-white">{item.title}</h3>
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{item.description}</p>
-              </div>
-              {!isActive && (
-                <ChevronRight className="self-center ml-2 h-5 w-5 text-slate-400 dark:text-slate-500 transition-transform duration-300 group-hover:translate-x-1 flex-shrink-0" />
-              )}
-            </button>
-          );
-        })}
+  return (
+    <div ref={sectionRef} className="w-full">
+      {/* Centered section header */}
+      <div 
+        className="text-left mb-8 lg:mb-10"
+        style={{
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? "translateY(0)" : "translateY(40px)",
+          transition: "opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1)",
+          willChange: "transform, opacity",
+        }}
+      >
+        <SectionHeading
+          eyebrow="Role-based learning"
+          title="Every role gets a focused experience"
+        />
+        <p className="mt-4 text-base sm:text-[18px] leading-relaxed text-slate-500 dark:text-slate-400">
+          The platform keeps the student journey immersive while still giving teachers and parents the insights they need.
+        </p>
       </div>
 
-      {/* Right pane: Role interactive visual dashboard mockup */}
-      <div className={`relative rounded-[2.5rem] bg-white/60 dark:bg-[#1a1727]/30 border ${rightBorderClass} border-t-[3px] ${rightTopBorderClass} p-8 md:p-10 backdrop-blur-md shadow-sm overflow-hidden flex flex-col justify-between min-h-[350px] transition-all duration-500`}>
-        {/* Dynamic ambient background blur based on role */}
-        <div className={`absolute -right-24 -bottom-24 h-48 w-48 rounded-full opacity-[0.08] blur-3xl transition-colors duration-500 ${
-          roles[activeTab].color === "teal" ? "bg-[#189b9b]" : roles[activeTab].color === "gold" ? "bg-[#d8a444]" : "bg-[#7c5cbf]"
-        }`} />
+      <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_1.2fr] items-stretch">
+        {/* Left pane: Tab selection list */}
+        <div 
+          className="flex flex-col gap-4 justify-between"
+          style={{
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? "translateX(0)" : "translateX(-80px)",
+            transition: "opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.15s, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.15s",
+            willChange: "transform, opacity",
+          }}
+        >
+          {roles.map((item, idx) => {
+            const isActive = activeTab === idx;
+            const colorStyles = 
+              item.color === "teal" 
+                ? { bg: "bg-[#189b9b]/10 text-[#189b9b]", active: "bg-[#189b9b] text-white border-[#189b9b]/20", border: "border-l-[#189b9b]" }
+                : item.color === "gold"
+                ? { bg: "bg-[#d8a444]/10 text-[#d8a444]", active: "bg-[#d8a444] text-white border-[#d8a444]/20", border: "border-l-[#d8a444]" }
+                : { bg: "bg-[#7c5cbf]/10 text-[#7c5cbf]", active: "bg-[#7c5cbf] text-white border-[#7c5cbf]/20", border: "border-l-[#7c5cbf]" };
 
-        <div className="relative z-10 space-y-6 flex-1 flex flex-col justify-between">
-          <div className="space-y-4">
-            <span className={`inline-flex items-center rounded-full px-3.5 py-1 text-xs font-semibold border uppercase tracking-wider transition-all duration-500 ${pillStyles}`}>
-              {roles[activeTab].title} Portal Preview
-            </span>
-            <h4 className="text-2xl font-black text-slate-800 dark:text-white leading-snug">
-              Designed for {roles[activeTab].title.toLowerCase()}
-            </h4>
-            <p className="text-base leading-relaxed text-slate-500 dark:text-slate-400">
-              {roles[activeTab].description}
-            </p>
-          </div>
-
-          <div className="border-t border-slate-200/50 dark:border-white/5 pt-6 mt-4">
-            <p className={`text-xs font-bold uppercase tracking-widest mb-3 transition-colors duration-500 ${highlightLabelColor}`}>Key Dashboard Highlights</p>
-            <div className="space-y-4">
-              {roles[activeTab].highlights.map((highlight, index) => {
-                const iconColorClass = 
-                  activeColor === "teal"
-                    ? "text-[#189b9b] bg-[#189b9b]/10"
-                    : activeColor === "gold"
-                    ? "text-[#d8a444] bg-[#d8a444]/10"
-                    : "text-[#7c5cbf] bg-[#7c5cbf]/10";
-
-                return (
-                  <div key={index} className="flex items-start gap-4 p-1">
-                    <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl transition-colors duration-500 ${iconColorClass}`}>
-                      {highlight.icon}
-                    </div>
-                    <div className="text-left">
-                      <p className="text-sm font-semibold text-slate-800 dark:text-white leading-snug">
-                        {highlight.title}
-                      </p>
-                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 font-normal leading-relaxed">
-                        {highlight.desc}
-                      </p>
-                    </div>
+            return (
+              <button
+                key={item.title}
+                onClick={() => handleTabChange(idx)}
+                className={`flex items-start gap-5 p-6 rounded-[2rem] border border-l-4 text-left transition-all duration-300 select-none group cursor-pointer ${
+                  isActive
+                    ? `bg-white dark:bg-[#1a1727]/40 border-slate-200/80 dark:border-white/10 shadow-md translate-x-1 ${colorStyles.border}`
+                    : "bg-white/50 dark:bg-[#1a1727]/20 border-slate-200/60 dark:border-white/5 border-l-transparent shadow-sm hover:bg-white/80 dark:hover:bg-[#1a1727]/40 hover:border-slate-300/80 dark:hover:border-white/10 hover:shadow-md"
+                }`}
+              >
+                <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl transition-colors duration-300 ${isActive ? colorStyles.active : colorStyles.bg}`}>
+                  {item.icon}
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-xl font-bold text-slate-800 dark:text-white">{item.title}</h3>
                   </div>
-                );
-              })}
+                  <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{item.description}</p>
+                </div>
+                {!isActive && (
+                  <ChevronRight className="self-center ml-2 h-5 w-5 text-slate-400 dark:text-slate-500 transition-transform duration-300 group-hover:translate-x-1 flex-shrink-0" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Right pane: Role interactive visual dashboard mockup */}
+        <div 
+          className={`relative rounded-[2.5rem] bg-white/60 dark:bg-[#1a1727]/30 border ${rightBorderClass} border-t-[3px] ${rightTopBorderClass} p-8 md:p-10 backdrop-blur-md shadow-sm overflow-hidden flex flex-col justify-between min-h-[350px] transition-all duration-500`}
+          style={{
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? "translateX(0)" : "translateX(80px)",
+            transition: "opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.25s, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.25s",
+            willChange: "transform, opacity",
+          }}
+        >
+          {/* Dynamic ambient background blur based on role */}
+          <div className={`absolute -right-24 -bottom-24 h-48 w-48 rounded-full opacity-[0.08] blur-3xl transition-colors duration-500 ${
+            roles[displayTab].color === "teal" ? "bg-[#189b9b]" : roles[displayTab].color === "gold" ? "bg-[#d8a444]" : "bg-[#7c5cbf]"
+          }`} />
+
+          <div 
+            className="relative z-10 space-y-6 flex-1 flex flex-col justify-between"
+            style={tabTransitionStyle}
+          >
+            <div className="space-y-4">
+              <span className={`inline-flex items-center rounded-full px-3.5 py-1 text-xs font-semibold border uppercase tracking-wider transition-all duration-500 ${pillStyles}`}>
+                {roles[displayTab].title} Portal Preview
+              </span>
+              <h4 className="text-2xl font-black text-slate-800 dark:text-white leading-snug">
+                Designed for {roles[displayTab].title.toLowerCase()}
+              </h4>
+              <p className="text-base leading-relaxed text-slate-500 dark:text-slate-400">
+                {roles[displayTab].description}
+              </p>
+            </div>
+
+            <div className="border-t border-slate-200/50 dark:border-white/5 pt-6 mt-4">
+              <p className={`text-xs font-bold uppercase tracking-widest mb-3 transition-colors duration-500 ${highlightLabelColor}`}>Key Dashboard Highlights</p>
+              <div className="space-y-4">
+                {roles[displayTab].highlights.map((highlight, index) => {
+                  const iconColorClass = 
+                    activeColor === "teal"
+                      ? "text-[#189b9b] bg-[#189b9b]/10"
+                      : activeColor === "gold"
+                      ? "text-[#d8a444] bg-[#d8a444]/10"
+                      : "text-[#7c5cbf] bg-[#7c5cbf]/10";
+
+                  return (
+                    <div key={index} className="flex items-start gap-4 p-1">
+                      <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl transition-colors duration-500 ${iconColorClass}`}>
+                        {highlight.icon}
+                      </div>
+                      <div className="text-left">
+                        <p className="text-sm font-semibold text-slate-800 dark:text-white leading-snug">
+                          {highlight.title}
+                        </p>
+                        <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 font-normal leading-relaxed">
+                          {highlight.desc}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
