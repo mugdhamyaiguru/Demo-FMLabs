@@ -1,14 +1,42 @@
-import { Download, Flame, PieChart, TrendingUp, Trophy, AlertTriangle, BadgeCheck, CheckCircle2 } from "lucide-react";
+import { Download, Flame, PieChart, TrendingUp, Trophy, AlertTriangle, BadgeCheck, CheckCircle2, ChevronRight } from "lucide-react";
 import { AppShell } from "@/components/page-shell";
 import { EmptyState, GlassCard, Pill, ProgressBar, SectionHeading } from "@/components/platform";
 
 export default function ProgressPage() {
-  const weakTopics = ["Fractions", "Data types", "Ecosystems"];
-  const leaderboardRows = [
-    ["#12", "Aanya", "1,240 XP"],
-    ["#13", "Mira", "1,110 XP"],
-    ["#14", "Ravi", "980 XP"],
+  const weakTopicsDetail = [
+    {
+      title: "Introduction to AI",
+      tag: "Needs Practice",
+      progress: 52,
+      tagBg: "bg-red-500/10 text-red-500 border border-red-500/20 dark:bg-red-950/40 dark:text-red-400 dark:border-red-900/30",
+      barColor: "bg-red-500",
+      textColor: "text-red-500 dark:text-red-400",
+    },
+    {
+      title: "AI vs Machine Learning",
+      tag: "Needs Revision",
+      progress: 45,
+      tagBg: "bg-orange-500/10 text-orange-500 border border-orange-500/20 dark:bg-orange-950/40 dark:text-orange-400 dark:border-orange-900/30",
+      barColor: "bg-orange-500",
+      textColor: "text-orange-500 dark:text-orange-400",
+    },
+    {
+      title: "Responsible AI",
+      tag: "Needs Improvement",
+      progress: 38,
+      tagBg: "bg-amber-500/10 text-amber-500 border border-amber-500/20 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-900/30",
+      barColor: "bg-amber-500",
+      textColor: "text-amber-500 dark:text-amber-400",
+    },
   ];
+
+  const leaderboardDetail = [
+    { rank: 12, name: "Aanya", xp: "1,240 XP" },
+    { rank: 13, name: "Mira", xp: "1,110 XP" },
+    { rank: 14, name: "Ravi", xp: "980 XP" },
+  ];
+
+  const currentUserRank = { rank: 15, name: "You (Madhura)", xp: "920 XP" };
   const lineChartData = [
     { day: "Mon", value: 3, x: "5%", y: "60.4%" },
     { day: "Tue", value: 5, x: "20%", y: "39.6%" },
@@ -20,7 +48,7 @@ export default function ProgressPage() {
   ];
 
   return (
-    <AppShell active="Progress" title="Progress Dashboard" hideSearch={true}>
+    <AppShell active="Progress" title="Progress Dashboard" hideSearch={true} hideTopbar={true}>
       <div className="space-y-6 w-full max-w-none">
         {/* Header */}
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between border-b border-slate-200/40 dark:border-white/5 pb-6 mb-2">
@@ -28,6 +56,96 @@ export default function ProgressPage() {
           <button className="inline-flex items-center gap-2 rounded-full bg-royal px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:bg-[#3d3252] hover:-translate-y-0.5">
             <Download className="h-4 w-4" /> Download report
           </button>
+        </div>
+
+        {/* ── Bottom Console: Needs More Practice & Weekly Leaderboard ── */}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 items-stretch w-full">
+          
+          {/* Left Card: Needs More Practice */}
+          <div className="rounded-[2.5rem] bg-white/40 dark:bg-[#1a1727]/30 border border-slate-200/20 dark:border-white/5 p-8 backdrop-blur-md flex flex-col justify-between h-full gap-6">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-base font-bold text-ink">Needs More Practice</h3>
+                  <p className="text-xs text-slate-400 mt-1">3 Topics Need Attention</p>
+                </div>
+                <AlertTriangle className="h-5 w-5 text-crimson" />
+              </div>
+
+              <div className="flex flex-col gap-4 pt-2">
+                {weakTopicsDetail.map((topic) => (
+                  <div key={topic.title} className="rounded-2xl bg-white/50 dark:bg-white/5 border border-slate-200/40 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
+                    {/* Title + Pill */}
+                    <div className="flex items-center justify-between gap-2">
+                      <h4 className="text-sm font-bold text-ink">{topic.title}</h4>
+                      <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${topic.tagBg}`}>
+                        {topic.tag}
+                      </span>
+                    </div>
+                    
+                    {/* Progress Bar Label (Weak) + Bar + Percent */}
+                    <div className="flex items-center gap-3 mt-4">
+                      <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider w-8 flex-shrink-0">Weak</span>
+                      <div className="flex-grow h-2 bg-slate-200/50 dark:bg-white/5 rounded-full overflow-hidden">
+                        <div className={`h-full ${topic.barColor} rounded-full`} style={{ width: `${topic.progress}%` }} />
+                      </div>
+                      <span className={`text-xs font-bold w-8 text-right flex-shrink-0 ${topic.textColor}`}>{topic.progress}%</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <button className="w-full relative py-3.5 border border-teal/40 hover:border-teal hover:bg-teal/5 text-teal font-semibold rounded-xl transition-all duration-200 flex items-center justify-center mt-2">
+              <span>Review Weak Topics</span>
+              <ChevronRight className="h-4 w-4 absolute right-4" />
+            </button>
+          </div>
+
+          {/* Right Card: Weekly Leaderboard */}
+          <div className="rounded-[2.5rem] bg-white/40 dark:bg-[#1a1727]/30 border border-slate-200/20 dark:border-white/5 p-8 backdrop-blur-md flex flex-col justify-between h-full gap-6">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-base font-bold text-ink">Weekly Leaderboard</h3>
+                  <p className="text-xs text-slate-400 mt-1">Rank #15 of 42 learners</p>
+                </div>
+                <button className="px-3.5 py-1.5 border border-teal/30 hover:border-teal hover:bg-teal/5 text-teal text-xs font-semibold rounded-lg transition-all duration-200">
+                  View All
+                </button>
+              </div>
+
+              <div className="flex flex-col pt-2">
+                {leaderboardDetail.map((player, index) => (
+                  <div key={player.name} className={`flex items-center justify-between py-3 border-b border-slate-200/20 dark:border-white/5 ${index === leaderboardDetail.length - 1 ? 'border-b-0 pb-4' : ''}`}>
+                    <div className="flex items-center gap-4">
+                      <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200/20 dark:border-white/5 flex items-center justify-center text-xs font-bold text-slate-500 dark:text-slate-400">
+                        {player.rank}
+                      </div>
+                      <span className="text-sm font-semibold text-ink">{player.name}</span>
+                    </div>
+                    <span className="text-sm font-bold text-[#9B7EF3] dark:text-[#A389F4]">{player.xp}</span>
+                  </div>
+                ))}
+
+                <div className="mt-2 flex items-center justify-between p-4 rounded-2xl border border-teal/40 bg-teal/5 transition-all duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="w-8 h-8 rounded-lg bg-teal/10 border border-teal/20 flex items-center justify-center text-xs font-bold text-teal">
+                      {currentUserRank.rank}
+                    </div>
+                    <span className="text-sm font-bold text-teal">{currentUserRank.name}</span>
+                  </div>
+                  <span className="text-sm font-bold text-teal">{currentUserRank.xp}</span>
+                </div>
+              </div>
+            </div>
+
+            <button className="w-full relative py-3.5 border border-teal/40 hover:border-teal hover:bg-teal/5 text-teal font-semibold rounded-xl transition-all duration-200 flex items-center justify-center mt-2">
+              <span>View Full Leaderboard</span>
+              <ChevronRight className="h-4 w-4 absolute right-4" />
+            </button>
+          </div>
+
         </div>
 
         {/* Top Console: Streak Heatmap, Skill Distribution, Badges */}
@@ -427,64 +545,6 @@ export default function ProgressPage() {
             </div>
           </div>
 
-        </div>
-
-        {/* ── Bottom Console: Weak Topics & Leaderboard ── */}
-        <div className="grid gap-8 grid-cols-1 md:grid-cols-[minmax(0,_1fr)_auto_minmax(0,_1fr)] rounded-[2.5rem] bg-white/40 dark:bg-[#1a1727]/30 border border-slate-200/20 dark:border-white/5 p-8 backdrop-blur-md">
-          {/* Weak Topics */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-base font-bold text-ink">Weak Topics</h3>
-              <AlertTriangle className="h-5 w-5 text-crimson" />
-            </div>
-            {weakTopics.length > 0 ? (
-              <div className="flex flex-col gap-3 pt-2">
-                {weakTopics.map((topic) => (
-                  <div key={topic} className="flex items-center gap-2.5 text-sm font-semibold text-ink">
-                    <span className="h-2 w-2 rounded-full bg-crimson" />
-                    <span>{topic}</span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="mt-4">
-                <EmptyState
-                  icon={<BadgeCheck className="h-6 w-6" />}
-                  title="No weak topics right now"
-                  description="As more activity comes in, this section can surface the topics that need the most attention."
-                />
-              </div>
-            )}
-          </div>
-
-          <div className="hidden md:block w-px bg-slate-200/30 dark:bg-white/5 h-full self-stretch" />
-
-          {/* Leaderboard Ranking */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-base font-bold text-ink">Leaderboard Ranking</h3>
-              <Trophy className="h-5 w-5 text-gold" />
-            </div>
-            {leaderboardRows.length > 0 ? (
-              <div className="space-y-1">
-                {leaderboardRows.map(([rank, name, xp]) => (
-                  <div key={name} className="flex items-center justify-between py-2.5 border-b border-slate-200/20 dark:border-white/5 text-xs font-semibold">
-                    <span className="text-ink font-bold">{rank}</span>
-                    <span className="text-ink font-medium">{name}</span>
-                    <span className="text-slate-500 font-semibold">{xp}</span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="mt-4">
-                <EmptyState
-                  icon={<Trophy className="h-6 w-6" />}
-                  title="Leaderboard data coming soon"
-                  description="This fallback keeps the ranking panel polished even when no score data is loaded yet."
-                />
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </AppShell>
