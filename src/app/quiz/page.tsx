@@ -1,80 +1,220 @@
-import { CheckCircle2, Circle, Clock3, Medal, RotateCcw, SkipForward } from "lucide-react";
-import { AppShell } from "@/components/page-shell";
-import { EmptyState, GlassCard, Pill, ProgressBar } from "@/components/platform";
+"use client";
+
+import { useState } from "react";
+import { CheckCircle2, Circle, XCircle } from "lucide-react";
+import { AppShell, BackLink } from "@/components/page-shell";
+import { GlassCard, ProgressBar } from "@/components/platform";
 import { quizQuestions } from "@/lib/mock-data";
 
 export default function QuizPage() {
-  const score = 2;
-  const accuracy = quizQuestions.length > 0 ? Math.round((score / quizQuestions.length) * 100) : 0;
+  // Pre-populate answers to match the 100% score example:
+  // Question 1: 1 (Voice Assistant), Question 2: 2 (Learn patterns), Question 3: 3 (Recommendations)
+  const [selectedOptions, setSelectedOptions] = useState<Record<number, number>>({
+    0: 1,
+    1: 2,
+    2: 3,
+  });
+
+  const handleSelect = (questionIndex: number, optionIndex: number) => {
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [questionIndex]: optionIndex,
+    }));
+  };
+
+  const attemptedCount = Object.keys(selectedOptions).length;
+  const unattemptedCount = quizQuestions.length - attemptedCount;
+
+  let correctCount = 0;
+  quizQuestions.forEach((q, idx) => {
+    if (selectedOptions[idx] !== undefined && selectedOptions[idx] === q.answer) {
+      correctCount++;
+    }
+  });
+
+  const incorrectCount = attemptedCount - correctCount;
+  const accuracy = attemptedCount > 0 ? Math.round((correctCount / attemptedCount) * 100) : 0;
+  
+  // Custom XP calculation: 160 XP for 3/3, else scale: 100 XP for 2/3, 50 XP for 1/3, 0 for 0/3
+  const finalScore = correctCount * 50 + (correctCount === 3 ? 10 : 0);
 
   return (
-    <AppShell active="Dashboard" title="Quiz System">
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
-        <GlassCard className="p-6">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <Pill tone="teal">Multiple Choice Quiz</Pill>
-            <div className="inline-flex items-center gap-2 rounded-full bg-surface px-4 py-2 text-sm font-semibold text-ink"><Clock3 className="h-4 w-4 text-teal" />02:14 left</div>
-          </div>
-          <div className="mt-5"><ProgressBar value={66} /></div>
-
-          {quizQuestions.length > 0 ? (
-            <div className="mt-6 space-y-5">
-              {quizQuestions.map((question, index) => (
-                <div key={question.prompt} className="rounded-[2rem] border border-royal/10 bg-white p-5 shadow-sm">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-bold text-ink">{index + 1}. {question.prompt}</h3>
-                    <span className="text-sm text-slate-500">Question {index + 1}</span>
-                  </div>
-                  <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                    {question.options.map((option, optionIndex) => {
-                      const selected = optionIndex === question.answer;
-                      const correct = selected;
-                      return (
-                        <button key={option} className={selected ? "flex items-center gap-3 rounded-2xl border border-teal bg-teal/10 px-4 py-3 text-left font-semibold text-ink" : "flex items-center gap-3 rounded-2xl border border-royal/10 bg-surface px-4 py-3 text-left font-semibold text-ink"}>
-                          {correct ? <CheckCircle2 className="h-5 w-5 text-teal" /> : <Circle className="h-5 w-5 text-slate-400" />}
-                          {option}
-                        </button>
-                      );
-                    })}
-                  </div>
-                  <div className="mt-4 rounded-2xl bg-marigold/10 px-4 py-3 text-sm text-[#8b4f00]">Instant feedback: Great choice. Keep going.</div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="mt-6">
-              <EmptyState
-                icon={<Medal className="h-6 w-6" />}
-                title="No quiz questions yet"
-                description="This fallback keeps the quiz screen polished until new questions are loaded into the demo data."
-              />
-            </div>
-          )}
-        </GlassCard>
-
-        <div className="space-y-5">
-          <GlassCard className="p-6">
-            <h3 className="text-xl font-black text-ink">Final Scorecard</h3>
-            <div className="mt-5 space-y-4">
-              <div className="rounded-3xl bg-royal px-5 py-4 text-white">
-                <p className="text-sm text-white/70">XP earned</p>
-                <p className="mt-1 text-3xl font-black">160 XP</p>
-              </div>
-              <div className="rounded-3xl bg-surface px-5 py-4">
-                <p className="text-sm text-slate-500">Accuracy</p>
-                <p className="mt-1 text-3xl font-black text-ink">{accuracy}%</p>
-              </div>
-              <div className="rounded-3xl bg-gold/15 px-5 py-4">
-                <p className="text-sm text-[#8a6213]">Earned badge</p>
-                <p className="mt-1 text-2xl font-black text-ink">Medal of Momentum</p>
-              </div>
-            </div>
-            <div className="mt-5 grid gap-3">
-              <button className="inline-flex items-center justify-center gap-2 rounded-full bg-teal px-5 py-3 font-semibold text-white shadow-glow"><RotateCcw className="h-4 w-4" />Retry Quiz</button>
-              <button className="inline-flex items-center justify-center gap-2 rounded-full border border-royal/15 bg-white px-5 py-3 font-semibold text-ink"><SkipForward className="h-4 w-4" />Continue Learning</button>
-            </div>
-          </GlassCard>
+    <AppShell active="Dashboard" title="Quiz System" hideTopbar={true}>
+      <div className="w-full space-y-8 pb-12">
+        {/* Navigation */}
+        <div>
+          <BackLink href="/student" label="Back to Dashboard" />
         </div>
+
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-teal">
+              Module 1 • AI Fundamentals
+            </p>
+            <h1 className="text-3xl font-black text-ink dark:text-white mt-1">
+              AI Fundamentals Quiz
+            </h1>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
+              Question 3 of 3 <span className="mx-2">•</span> Estimated Time: 8 mins
+            </p>
+          </div>
+
+          {/* Progress bar */}
+          <div className="w-full md:w-80 space-y-2">
+            <div className="flex justify-between text-xs font-bold uppercase tracking-wider">
+              <span className="text-slate-400 dark:text-slate-500">Progress</span>
+              <span className="text-teal font-black">{Math.round((attemptedCount / quizQuestions.length) * 100)}%</span>
+            </div>
+            <ProgressBar value={Math.round((attemptedCount / quizQuestions.length) * 100)} />
+            <p className="text-xs text-slate-400 dark:text-slate-500 text-right">
+              {attemptedCount} / {quizQuestions.length} questions completed
+            </p>
+          </div>
+        </div>
+
+        {/* Stacked Question Cards */}
+        <div className="space-y-6">
+          {quizQuestions.map((question, idx) => {
+            return (
+              <GlassCard key={question.prompt} className="p-8">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-teal">
+                    Question {idx + 1}
+                  </span>
+                  <h3 className="text-xl font-bold text-ink dark:text-white mt-2">
+                    {question.prompt}
+                  </h3>
+                </div>
+
+                {/* Option choices in a clean 2x2 grid */}
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  {question.options.map((option, optionIndex) => {
+                    const isSelected = selectedOptions[idx] === optionIndex;
+                    const isCorrect = optionIndex === question.answer;
+
+                    let btnClass = "flex items-center gap-3 rounded-2xl border border-royal/10 dark:border-white/5 bg-surface px-5 py-4 text-left font-semibold text-ink dark:text-white transition-all w-full hover:bg-royal/5 dark:hover:bg-white/5";
+                    let icon = <Circle className="h-5 w-5 text-slate-400 flex-shrink-0" />;
+
+                    if (isSelected) {
+                      if (isCorrect) {
+                        btnClass = "flex items-center gap-3 rounded-2xl border border-teal bg-teal/10 px-5 py-4 text-left font-semibold text-ink dark:text-white transition-all w-full";
+                        icon = <CheckCircle2 className="h-5 w-5 text-teal flex-shrink-0" />;
+                      } else {
+                        btnClass = "flex items-center gap-3 rounded-2xl border border-crimson bg-crimson/10 px-5 py-4 text-left font-semibold text-ink dark:text-white transition-all w-full";
+                        icon = <XCircle className="h-5 w-5 text-crimson flex-shrink-0" />;
+                      }
+                    }
+
+                    return (
+                      <button
+                        key={option}
+                        onClick={() => handleSelect(idx, optionIndex)}
+                        className={btnClass}
+                      >
+                        {icon}
+                        <span>{option}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Small Feedback Panel */}
+                {selectedOptions[idx] !== undefined && (
+                  <div className={`mt-5 rounded-2xl p-4 flex gap-3 items-start text-sm border ${
+                    selectedOptions[idx] === question.answer
+                      ? "bg-teal/5 dark:bg-teal/10 border-teal/25 dark:border-teal/30 text-ink dark:text-[#eeeaf8]"
+                      : "bg-crimson/5 dark:bg-crimson/10 border-crimson/25 dark:border-crimson/30 text-ink dark:text-[#eeeaf8]"
+                  }`}>
+                    {selectedOptions[idx] === question.answer ? (
+                      <CheckCircle2 className="h-5 w-5 text-teal flex-shrink-0 mt-0.5" />
+                    ) : (
+                      <XCircle className="h-5 w-5 text-crimson flex-shrink-0 mt-0.5" />
+                    )}
+                    <div>
+                      <p className={`font-bold mb-1 ${
+                        selectedOptions[idx] === question.answer ? "text-teal" : "text-crimson"
+                      }`}>
+                        {selectedOptions[idx] === question.answer ? "Correct!" : "Incorrect"}
+                      </p>
+                      <p className="text-slate-600 dark:text-slate-300">
+                        {selectedOptions[idx] === question.answer
+                          ? question.feedback.correct
+                          : question.feedback.incorrect}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </GlassCard>
+            );
+          })}
+        </div>
+
+        {/* Quiz Summary Section */}
+        <GlassCard className="p-8">
+          <h3 className="text-lg font-bold text-ink dark:text-white mb-6">Quiz Summary</h3>
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-y-6 md:gap-y-0 text-center">
+            {/* Final Score */}
+            <div className="flex flex-col items-center justify-center py-2">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                Final Score
+              </span>
+              <span className="mt-2 text-3xl font-black text-ink dark:text-white">
+                {finalScore} XP
+              </span>
+            </div>
+
+            {/* Attempted */}
+            <div className="flex flex-col items-center justify-center py-2 border-l border-slate-200/20 dark:border-white/5">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                Attempted
+              </span>
+              <span className="mt-2 text-3xl font-black text-ink dark:text-white">
+                {attemptedCount}/3
+              </span>
+            </div>
+
+            {/* Unattempted */}
+            <div className="flex flex-col items-center justify-center py-2 border-l-0 md:border-l border-slate-200/20 dark:border-white/5">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                Unattempted
+              </span>
+              <span className="mt-2 text-3xl font-black text-ink dark:text-white">
+                {unattemptedCount}
+              </span>
+            </div>
+
+            {/* Correct */}
+            <div className="flex flex-col items-center justify-center py-2 border-l border-slate-200/20 dark:border-white/5">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                Correct
+              </span>
+              <span className="mt-2 text-3xl font-black text-teal">
+                {correctCount}
+              </span>
+            </div>
+
+            {/* Incorrect */}
+            <div className="flex flex-col items-center justify-center py-2 border-l-0 md:border-l border-slate-200/20 dark:border-white/5">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                Incorrect
+              </span>
+              <span className="mt-2 text-3xl font-black text-crimson">
+                {incorrectCount}
+              </span>
+            </div>
+
+            {/* Accuracy */}
+            <div className="flex flex-col items-center justify-center py-2 border-l border-slate-200/20 dark:border-white/5">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                Accuracy
+              </span>
+              <span className="mt-2 text-3xl font-black text-[#d8a444] dark:text-[#ffd089]">
+                {accuracy}%
+              </span>
+            </div>
+          </div>
+        </GlassCard>
       </div>
     </AppShell>
   );

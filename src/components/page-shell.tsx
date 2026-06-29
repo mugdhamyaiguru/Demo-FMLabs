@@ -82,6 +82,7 @@ export function AppShell({
   hideSearch = false,
   hideTitleLabel = false,
   greeting,
+  hideTopbar = false,
 }: {
   title: string;
   active: string;
@@ -91,6 +92,7 @@ export function AppShell({
   hideSearch?: boolean;
   hideTitleLabel?: boolean;
   greeting?: string;
+  hideTopbar?: boolean;
 }) {
   return (
     <DashboardContainer>
@@ -99,7 +101,7 @@ export function AppShell({
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Main content */}
           <div className="min-w-0 flex-1 space-y-6">
-            {active !== "Modules" && active !== "Settings" && active !== "AI Tutor" && (
+            {!hideTopbar && active !== "Modules" && active !== "Settings" && active !== "AI Tutor" && (
               <DashboardTopbar
                 title={title}
                 greeting={greeting || (role === "teacher" ? "teacher" : role === "parent" ? "parent" : "learner")}

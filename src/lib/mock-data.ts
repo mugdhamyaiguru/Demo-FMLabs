@@ -55,20 +55,47 @@ export const lessonBlocks = [
 
 export const quizQuestions = [
   {
-    prompt: "Which fraction is equivalent to 1/2?",
-    options: ["2/4", "1/3", "3/5", "4/7"],
-    answer: 0,
+    prompt: "Which of the following is an example of Artificial Intelligence in everyday life?",
+    options: [
+      "A wooden chair",
+      "A voice assistant like Siri or Google Assistant",
+      "A notebook",
+      "A pencil"
+    ],
+    answer: 1,
+    feedback: {
+      correct: "Correct! Voice assistants use AI to understand your voice and answer questions.",
+      incorrect: "Incorrect. Voice assistants use AI to process your commands; items like wooden chairs, notebooks, and pencils are non-digital objects."
+    }
   },
   {
-    prompt: "What is the main purpose of a computer browser?",
-    options: ["Write code", "Access websites", "Store files", "Charge a battery"],
-    answer: 1,
+    prompt: "What is one thing that AI can do?",
+    options: [
+      "Eat food",
+      "Sleep at night",
+      "Learn patterns from data to help make decisions",
+      "Grow like a plant"
+    ],
+    answer: 2,
+    feedback: {
+      correct: "Correct! AI learns from data and patterns to make predictions or solve problems.",
+      incorrect: "Incorrect. Biological processes like eating, sleeping, or growing belong to living things, whereas AI analyzes data to solve problems."
+    }
   },
   {
-    prompt: "Which planet is known as the Red Planet?",
-    options: ["Venus", "Mars", "Jupiter", "Saturn"],
-    answer: 1,
-  },
+    prompt: "Which activity below is most likely using AI?",
+    options: [
+      "Writing with a pen",
+      "Riding a bicycle",
+      "Reading a printed book",
+      "Getting movie recommendations on Netflix or YouTube"
+    ],
+    answer: 3,
+    feedback: {
+      correct: "Correct! Recommendation systems use AI to suggest movies and videos based on what you like.",
+      incorrect: "Incorrect. Traditional offline activities do not use computational learning models, whereas recommendation algorithms process user patterns to suggest content."
+    }
+  }
 ];
 
 export const savedTutorSessions = [
