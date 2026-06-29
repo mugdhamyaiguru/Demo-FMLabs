@@ -174,46 +174,90 @@ const COURSE_MODULES: Record<string, ModuleSection[]> = {
     {
       id: "mod-1",
       title: "Module 1",
-      subtitle: "What is AI?",
+      subtitle: "Meaning of AI",
       lessons: [
-        { id: "les-1", title: "What is Artificial Intelligence?", duration: "5 min", state: "completed" },
-        { id: "les-2", title: "AI in Everyday Life", duration: "6 min", state: "completed" },
-        { id: "les-3", title: "History of AI", duration: "7 min", state: "current" }
+        { id: "les-1-1", title: "Discover", duration: "5 min", state: "current" },
+        { id: "les-1-2", title: "Learn", duration: "7 min", state: "locked" },
+        { id: "les-1-3", title: "Explore", duration: "6 min", state: "locked" },
+        { id: "les-1-4", title: "Think", duration: "5 min", state: "locked" },
+        { id: "les-1-5", title: "Create", duration: "8 min", state: "locked" },
+        { id: "les-1-6", title: "Review", duration: "4 min", state: "locked" }
       ]
     },
     {
       id: "mod-2",
       title: "Module 2",
-      subtitle: "How AI Learns",
+      subtitle: "AI in Daily Life",
       lessons: [
-        { id: "les-4", title: "Data and Patterns", duration: "8 min", state: "locked" },
-        { id: "les-5", title: "Machine Learning Basics", duration: "10 min", state: "locked" },
-        { id: "les-6", title: "Training vs Testing Data", duration: "7 min", state: "locked" }
+        { id: "les-2-1", title: "Discover", duration: "5 min", state: "locked" },
+        { id: "les-2-2", title: "Learn", duration: "7 min", state: "locked" },
+        { id: "les-2-3", title: "Explore", duration: "6 min", state: "locked" },
+        { id: "les-2-4", title: "Think", duration: "5 min", state: "locked" },
+        { id: "les-2-5", title: "Create", duration: "8 min", state: "locked" },
+        { id: "les-2-6", title: "Review", duration: "4 min", state: "locked" }
       ]
     },
     {
       id: "mod-3",
       title: "Module 3",
-      subtitle: "Thinking Like AI",
+      subtitle: "AI vs Machine Learning",
       lessons: [
-        { id: "les-7", title: "Decision Making", duration: "6 min", state: "locked" },
-        { id: "les-8", title: "Neural Networks", duration: "8 min", state: "locked" },
-        { id: "les-9", title: "Mini Quiz", duration: "5 min", state: "locked" }
+        { id: "les-3-1", title: "Discover", duration: "5 min", state: "locked" },
+        { id: "les-3-2", title: "Learn", duration: "7 min", state: "locked" },
+        { id: "les-3-3", title: "Explore", duration: "6 min", state: "locked" },
+        { id: "les-3-4", title: "Think", duration: "5 min", state: "locked" },
+        { id: "les-3-5", title: "Create", duration: "8 min", state: "locked" },
+        { id: "les-3-6", title: "Review", duration: "4 min", state: "locked" }
+      ]
+    },
+    {
+      id: "mod-4",
+      title: "Module 4",
+      subtitle: "Types of Learning in AI",
+      lessons: [
+        { id: "les-4-1", title: "Discover", duration: "5 min", state: "locked" },
+        { id: "les-4-2", title: "Learn", duration: "7 min", state: "locked" },
+        { id: "les-4-3", title: "Explore", duration: "6 min", state: "locked" },
+        { id: "les-4-4", title: "Think", duration: "5 min", state: "locked" },
+        { id: "les-4-5", title: "Create", duration: "8 min", state: "locked" },
+        { id: "les-4-6", title: "Review", duration: "4 min", state: "locked" }
       ]
     }
   ]
 };
 
 const CUSTOM_LESSON_DETAILS: Record<string, { title: string; desc: string; time: string }> = {
-  "les-1": { title: "What is Artificial Intelligence?", desc: "An introduction to the concepts of human-like intelligence in machines.", time: "5 min" },
-  "les-2": { title: "AI in Everyday Life", desc: "How recommendation engines, navigation apps, and virtual assistants shape our day.", time: "6 min" },
-  "les-3": { title: "History of AI", desc: "From Alan Turing's test to the modern generative AI boom.", time: "7 min" },
-  "les-4": { title: "Data and Patterns", desc: "Exploring how AI processes data structures to extract meaningful features.", time: "8 min" },
-  "les-5": { title: "Machine Learning Basics", desc: "Supervised, unsupervised, and reinforcement learning explained.", time: "10 min" },
-  "les-6": { title: "Training vs Testing Data", desc: "Why we split data to avoid overfitting and ensure model generalization.", time: "7 min" },
-  "les-7": { title: "Decision Making", desc: "Heuristics, search trees, and probabilistic reasoning models.", time: "6 min" },
-  "les-8": { title: "Neural Networks", desc: "A deep dive into layers of nodes, activations, and weight adjustments.", time: "8 min" },
-  "les-9": { title: "Mini Quiz", desc: "Test your knowledge of the fundamentals of AI.", time: "5 min" }
+  // Module 1: Meaning of AI
+  "les-1-1": { title: "Discover", desc: "Learn the basics of AI and how it is part of our everyday life.", time: "5 min" },
+  "les-1-2": { title: "Learn", desc: "Deep dive into core concepts and definitions of AI.", time: "7 min" },
+  "les-1-3": { title: "Explore", desc: "Exploring early examples and simple rule-based systems.", time: "6 min" },
+  "les-1-4": { title: "Think", desc: "Critical thinking questions on the capabilities of AI.", time: "5 min" },
+  "les-1-5": { title: "Create", desc: "Hands-on project to design your own simple logic tree.", time: "8 min" },
+  "les-1-6": { title: "Review", desc: "Review session covering the key takeaways of Module 1.", time: "4 min" },
+
+  // Module 2: AI in Daily Life
+  "les-2-1": { title: "Discover", desc: "Spotting AI technologies in your household and daily routine.", time: "5 min" },
+  "les-2-2": { title: "Learn", desc: "How virtual assistants, maps, and recommendations use AI.", time: "7 min" },
+  "les-2-3": { title: "Explore", desc: "Exploring recommendation algorithms on media platforms.", time: "6 min" },
+  "les-2-4": { title: "Think", desc: "Analyzing privacy and customization in daily AI systems.", time: "5 min" },
+  "les-2-5": { title: "Create", desc: "Build a simple model of a smart home routine helper.", time: "8 min" },
+  "les-2-6": { title: "Review", desc: "Revisiting AI applications in everyday contexts.", time: "4 min" },
+
+  // Module 3: AI vs Machine Learning
+  "les-3-1": { title: "Discover", desc: "Comparing machine learning with traditional programming.", time: "5 min" },
+  "les-3-2": { title: "Learn", desc: "Understanding supervised and unsupervised training models.", time: "7 min" },
+  "les-3-3": { title: "Explore", desc: "Interactive playground to see pattern recognition in action.", time: "6 min" },
+  "les-3-4": { title: "Think", desc: "Ethical questions about machine learning biases and inputs.", time: "5 min" },
+  "les-3-5": { title: "Create", desc: "Train a simple image classifier model in a sandbox.", time: "8 min" },
+  "les-3-6": { title: "Review", desc: "Summary of ML vs AI structures and models.", time: "4 min" },
+
+  // Module 4: Types of Learning in AI
+  "les-4-1": { title: "Discover", desc: "An overview of reinforcement learning and neural patterns.", time: "5 min" },
+  "les-4-2": { title: "Learn", desc: "How neural networks learn from rewards and feedback.", time: "7 min" },
+  "les-4-3": { title: "Explore", desc: "Simulating neural pathways and activation gates.", time: "6 min" },
+  "les-4-4": { title: "Think", desc: "Pondering the limits of deep learning architectures.", time: "5 min" },
+  "les-4-5": { title: "Create", desc: "Design a reinforcement agent path solver map.", time: "8 min" },
+  "les-4-6": { title: "Review", desc: "Recapping types of learning and final module wrap-up.", time: "4 min" }
 };
 
 function LessonInner() {
@@ -303,7 +347,11 @@ function LessonInner() {
             <div className="p-5 border-b border-slate-200/40 dark:border-white/5 flex items-start justify-between gap-3">
               <div className="space-y-1 flex-1">
                 <span className="text-[10px] font-bold tracking-widest text-teal uppercase">Course Navigator</span>
-                <h3 className="text-sm font-extrabold text-ink leading-snug">Introduction to Artificial Intelligence</h3>
+                <h3 className="text-sm font-extrabold text-ink leading-snug">
+                  {decodedModule === "Introduction to AI in Everyday life" 
+                    ? "Introduction to Artificial Intelligence and Everyday Examples" 
+                    : decodedModule}
+                </h3>
               </div>
               <button 
                 onClick={() => setIsSidebarOpen(false)}

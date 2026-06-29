@@ -35,8 +35,8 @@ export default function QuizPage() {
   const incorrectCount = attemptedCount - correctCount;
   const accuracy = attemptedCount > 0 ? Math.round((correctCount / attemptedCount) * 100) : 0;
   
-  // Custom XP calculation: 160 XP for 3/3, else scale: 100 XP for 2/3, 50 XP for 1/3, 0 for 0/3
-  const finalScore = correctCount * 50 + (correctCount === 3 ? 10 : 0);
+  // Custom XP calculation: 25 XP for 3/3, else scale: 15 XP for 2/3, 5 XP for 1/3, 0 for 0/3
+  const finalScore = correctCount === 3 ? 25 : correctCount === 2 ? 15 : correctCount === 1 ? 5 : 0;
 
   return (
     <AppShell active="Dashboard" title="Quiz System" hideTopbar={true}>
@@ -46,32 +46,7 @@ export default function QuizPage() {
           <BackLink href="/student" label="Back to Dashboard" />
         </div>
 
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-teal">
-              Module 1 • AI Fundamentals
-            </p>
-            <h1 className="text-3xl font-black text-ink dark:text-white mt-1">
-              AI Fundamentals Quiz
-            </h1>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
-              Question 3 of 3 <span className="mx-2">•</span> Estimated Time: 8 mins
-            </p>
-          </div>
 
-          {/* Progress bar */}
-          <div className="w-full md:w-80 space-y-2">
-            <div className="flex justify-between text-xs font-bold uppercase tracking-wider">
-              <span className="text-slate-400 dark:text-slate-500">Progress</span>
-              <span className="text-teal font-black">{Math.round((attemptedCount / quizQuestions.length) * 100)}%</span>
-            </div>
-            <ProgressBar value={Math.round((attemptedCount / quizQuestions.length) * 100)} />
-            <p className="text-xs text-slate-400 dark:text-slate-500 text-right">
-              {attemptedCount} / {quizQuestions.length} questions completed
-            </p>
-          </div>
-        </div>
 
         {/* Stacked Question Cards */}
         <div className="space-y-6">

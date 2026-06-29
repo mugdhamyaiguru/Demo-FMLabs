@@ -137,6 +137,16 @@ export default function ProgressPage() {
                   </div>
                   <span className="text-sm font-bold text-teal">{currentUserRank.xp}</span>
                 </div>
+
+                <div className="mt-3 flex items-center justify-between py-3 border-t border-slate-200/20 dark:border-white/5 pt-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200/20 dark:border-white/5 flex items-center justify-center text-xs font-bold text-slate-500 dark:text-slate-400">
+                      16
+                    </div>
+                    <span className="text-sm font-semibold text-ink">Yash</span>
+                  </div>
+                  <span className="text-sm font-bold text-[#9B7EF3] dark:text-[#A389F4]">850 XP</span>
+                </div>
               </div>
             </div>
 
