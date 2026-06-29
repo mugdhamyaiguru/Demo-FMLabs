@@ -32,7 +32,7 @@ import AITutorLive from "@/components/AITutorLive";
 import ThemeForcer from "@/components/ThemeForcer";
 import RoleSelector from "@/components/RoleSelector";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
-import ContactForm from "@/components/ContactForm";
+import ContactSection from "@/components/ContactSection";
 import LandingHeader from "@/components/LandingHeader";
 import HowItWorks from "@/components/HowItWorks";
 import FeaturesCarousel from "@/components/FeaturesCarousel";
@@ -627,100 +627,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Contact / Get in Touch ───────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:py-24 lg:px-10">
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#32284a] via-[#1e1930] to-[#131020] shadow-[0_32px_80px_rgba(0,0,0,0.55)]">
-
-          {/* Ambient glow layers */}
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-0">
-            <div className="absolute -top-40 -left-40 h-[32rem] w-[32rem] rounded-full opacity-[0.16] blur-[100px]" style={{ background: "radial-gradient(circle, #189b9b, transparent 70%)" }} />
-            <div className="absolute -bottom-24 right-0 h-[26rem] w-[26rem] rounded-full opacity-[0.12] blur-[90px]" style={{ background: "radial-gradient(circle, #fc9438, transparent 70%)" }} />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[40rem] w-[40rem] rounded-full opacity-[0.06] blur-[130px]" style={{ background: "radial-gradient(circle, #7c5cbf, transparent 65%)" }} />
-          </div>
-
-          {/* Smooth inner vignette */}
-          <div aria-hidden="true" className="absolute inset-0 -z-0" style={{ background: "radial-gradient(ellipse at 50% 100%, rgba(24,155,155,0.04) 0%, transparent 70%)" }} />
-
-          <div className="relative z-10 grid gap-0 lg:grid-cols-2">
-
-            {/* ─── LEFT: Role-based contact options ─────────────── */}
-            <div className="px-8 py-14 lg:px-14 lg:py-20 border-b border-white/[0.06] lg:border-b-0 lg:border-r lg:border-white/[0.06]">
-              {/* Section label */}
-              <div className="inline-flex items-center rounded-full bg-[#fc9438]/10 border border-[#fc9438]/20 px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#fc9438]">
-                Get in touch
-              </div>
-              <h2 className="mt-3 text-[27px] sm:text-[32px] font-extrabold leading-tight text-white">
-                We&apos;re here for<br className="hidden sm:block" /> every learner
-              </h2>
-              <p className="mt-4 text-sm leading-[1.85] text-white/65 max-w-md">
-                Whether you&apos;re a student exploring AI learning, a parent tracking progress, or a school looking to partner &mdash; we&apos;d love to hear from you.
-              </p>
-
-              {/* Role-based contact cards */}
-              <div className="mt-10 grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-                {[
-                  {
-                    role: "Student",
-                    icon: <GraduationCap className="h-5 w-5 text-[#189b9b]" strokeWidth={2.5} />,
-                    desc: "Explore AI-powered courses and personalized learning paths.",
-                    classes: "bg-[#189b9b]/10 border-[#189b9b]/25 hover:border-[#189b9b]/50 hover:shadow-[0_10px_25px_-5px_rgba(24,155,155,0.15)]",
-                  },
-                  {
-                    role: "Parent",
-                    icon: <Users className="h-5 w-5 text-[#fc9438]" strokeWidth={2.5} />,
-                    desc: "Track your child's progress and stay connected to their growth.",
-                    classes: "bg-[#fc9438]/10 border-[#fc9438]/25 hover:border-[#fc9438]/50 hover:shadow-[0_10px_25px_-5px_rgba(252,148,56,0.15)]",
-                  },
-                  {
-                    role: "Teacher / School",
-                    icon: <School className="h-5 w-5 text-[#7c5cbf]" strokeWidth={2.5} />,
-                    desc: "Access classroom tools, analytics, and curriculum integrations.",
-                    classes: "bg-[#7c5cbf]/10 border-[#7c5cbf]/25 hover:border-[#7c5cbf]/50 hover:shadow-[0_10px_25px_-5px_rgba(124,92,191,0.15)]",
-                  },
-                  {
-                    role: "Partnership",
-                    icon: <Handshake className="h-5 w-5 text-[#d8a444]" strokeWidth={2.5} />,
-                    desc: "Explore institutional licensing and strategic EdTech partnerships.",
-                    classes: "bg-[#d8a444]/10 border-[#d8a444]/25 hover:border-[#d8a444]/50 hover:shadow-[0_10px_25px_-5px_rgba(216,164,68,0.15)]",
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.role}
-                    className={cn(
-                      "group flex flex-col gap-2.5 rounded-2xl p-4 border transition-all duration-350 hover:-translate-y-1 cursor-pointer",
-                      item.classes
-                    )}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      {item.icon}
-                      <p className="text-sm font-extrabold text-white tracking-wide">{item.role}</p>
-                    </div>
-                    <p className="text-[12px] leading-relaxed text-white/50 group-hover:text-white/70 transition-colors duration-200">
-                      {item.desc}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              {/* Trust badges */}
-              <div className="mt-10 flex flex-wrap items-center gap-3">
-                {["GDPR Compliant", "SOC 2 Type II", "FERPA Certified"].map((badge) => (
-                  <span
-                    key={badge}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1 text-[11px] font-medium text-white/45"
-                  >
-                    <span className="h-1 w-1 rounded-full bg-[#189b9b]/70" />
-                    {badge}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* ─── RIGHT: Contact form ──────────────────────────── */}
-            <ContactForm />
-
-          </div>
-        </div>
-      </section>
+      <ContactSection />
 
       {/* ── Footer ─────────────────────────────────────────── */}
       <footer className="relative z-10 border-t border-slate-200/80 dark:border-white/8 bg-white/80 backdrop-blur">
