@@ -3,7 +3,7 @@
 import { useState } from "react";
 import {
   Mail, Lock, GraduationCap, School, ShieldCheck, LayoutDashboard,
-  Sparkles, Eye, EyeOff, ArrowRight,
+  Sparkles, Eye, EyeOff, ArrowRight, Users
 } from "lucide-react";
 import Link from "next/link";
 import { BrandMarkWhite } from "@/components/platform";
@@ -44,7 +44,7 @@ const roles: {
     id: "parent",
     label: "Parent",
     tagline: "Track. Support. Celebrate.",
-    icon: <ShieldCheck className="h-4 w-4" />,
+    icon: <Users className="h-4 w-4" />,
     iconBg: "bg-crimson/10",
     iconText: "text-crimson",
     accent: "border-crimson ring-crimson/30",
@@ -80,10 +80,8 @@ export default function LoginPage() {
       <div className="grid h-full lg:grid-cols-[0.9fr_1.1fr]">
 
         {/* ── Left branded panel ── */}
-        <div className="relative hidden flex-col justify-between overflow-hidden bg-royal p-8 lg:flex">
-          {/* Gradient blobs */}
-          <div className="pointer-events-none absolute -top-20 -left-20 h-72 w-72 rounded-full bg-teal/20 blur-3xl" />
-          <div className="pointer-events-none absolute bottom-10 right-0 h-56 w-56 rounded-full bg-marigold/15 blur-2xl" />
+        <div className="relative hidden flex-col justify-between overflow-hidden bg-gradient-to-b from-[#3a2f55] via-royal to-[#2d2445] p-8 lg:flex">
+
 
           <BrandMarkWhite />
 

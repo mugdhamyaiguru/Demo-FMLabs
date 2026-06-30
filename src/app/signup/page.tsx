@@ -51,7 +51,7 @@ const roles: {
     label: "Parent",
     tagline: "Track. Support. Celebrate.",
     description: "Monitor your child's progress, subjects, and achievements.",
-    icon: <ShieldCheck className="h-5 w-5" />,
+    icon: <Users className="h-5 w-5" />,
     accentClass: "border-crimson",
     gradientFrom: "from-crimson",
     gradientTo: "to-[#8b1010]",
@@ -167,7 +167,7 @@ function AdminForm() {
 function LeftPanel({ step, selectedRole }: { step: number; selectedRole: RoleId | null }) {
   const role = roles.find((r) => r.id === selectedRole);
   return (
-    <div className="flex h-full flex-col justify-between overflow-hidden rounded-[1.75rem] bg-gradient-to-b from-[#3a2f55] via-royal to-[#2d2445] p-6 text-white shadow-glass">
+    <div className="flex h-full flex-col justify-between overflow-hidden rounded-none bg-gradient-to-b from-[#3a2f55] via-royal to-[#2d2445] p-8 lg:p-12 text-white shadow-glass">
       <BrandMarkWhite />
 
       <div className="mt-6 space-y-3">
@@ -224,13 +224,13 @@ export default function SignupPage() {
 
   return (
     <div className="h-screen overflow-hidden bg-[radial-gradient(circle_at_15%_20%,rgba(24,155,155,0.12),transparent_22%),radial-gradient(circle_at_85%_12%,rgba(252,148,56,0.12),transparent_18%),linear-gradient(180deg,#f9f7f4_0%,#f4eff8_100%)]">
-      <main className="mx-auto grid h-full max-w-7xl gap-5 px-5 py-5 lg:grid-cols-[0.85fr_1.15fr] lg:px-8 lg:py-6">
+      <main className="grid h-full w-full lg:grid-cols-[0.85fr_1.15fr] overflow-hidden">
 
         {/* Left decorative panel */}
         <LeftPanel step={step} selectedRole={selectedRole} />
 
         {/* Right content panel */}
-        <section className="flex items-center justify-center overflow-y-auto">
+        <section className="flex items-center justify-center overflow-y-auto px-6 py-10 lg:px-16">
           <div className="w-full max-w-lg py-2">
 
             {/* ── STEP 1: Role picker ── */}
