@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Brain, Sparkles, ClipboardList, Award, ShieldCheck, Users } from "lucide-react";
 import { featureCards } from "@/lib/mock-data";
 
@@ -53,6 +53,31 @@ const carouselCards = featureCards.slice(0, 5);
 export default function FeaturesCarousel() {
   const [activeIdx, setActiveIdx] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: 0.22,
+      }
+    );
+
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     if (isHovered) return;
@@ -204,107 +229,140 @@ export default function FeaturesCarousel() {
 
   return (
     <div
-      className="mt-12 lg:mt-16 w-full max-w-4xl mx-auto animate-fade-up"
+      ref={sectionRef}
+      className="w-full grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Relative card container with cross-fade */}
-      <div className="relative min-h-[360px] md:min-h-[280px]">
-        {carouselCards.map((feature, idx) => {
-          const isActive = idx === activeIdx;
-          const IconComponent = featureIcons[feature.title as keyof typeof featureIcons];
-          const bullets = featureBullets[feature.title as keyof typeof featureBullets] || [];
-          const socialProof = featureSocialProofs[feature.title as keyof typeof featureSocialProofs] || "";
+      {/* Left Column (40% width on desktop) */}
+      <div 
+        className="lg:col-span-2 space-y-5 text-left"
+        style={{
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? "translateX(0)" : "translateX(-80px)",
+          transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s",
+          willChange: "transform, opacity",
+        }}
+      >
+        <div className="inline-flex items-center rounded-full bg-teal/10 dark:bg-teal/15 border border-teal/20 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-teal">
+          Platform features
+        </div>
+        <h2 className="text-3xl lg:text-[46px] lg:leading-[1.15] text-slate-800 dark:text-white tracking-tight font-normal">
+          Built to feel <span className="font-extrabold italic text-[#7c5cbf]">futuristic</span>, <span className="font-extrabold italic text-[#fc9438]">vibrant</span>, and easy to use
+        </h2>
+        <p className="text-sm sm:text-base leading-relaxed text-slate-500 dark:text-slate-400">
+          The interface mixes SaaS clarity, playful gamification, and student-friendly visuals to make every workflow feel engaging.
+        </p>
+      </div>
 
-          return (
-            <div
-              key={feature.title}
-              className={`w-full rounded-[2rem] border border-slate-200/40 p-6 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.03)] text-center transition-all duration-500 ease-in-out ${
-                isActive
-                  ? "opacity-100 scale-100 relative z-10 pointer-events-auto"
-                  : "opacity-0 scale-95 absolute inset-0 z-0 pointer-events-none"
-              }`}
-              style={{
-                background: "linear-gradient(135deg, #EEE9FE 40%, #C8F0E4 100%)"
-              }}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-8 items-center text-left">
-                {/* Left Column (60% width) - always dark text for readability on light gradient */}
-                <div className="space-y-4">
-                  {/* Icon */}
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#EEE9FE] text-[#189b9b] shadow-sm border border-slate-200/40">
-                    {IconComponent}
-                  </div>
+      {/* Right Column (60% width on desktop) */}
+      <div 
+        className="lg:col-span-3 w-full space-y-6"
+        style={{
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? "translateX(0)" : "translateX(80px)",
+          transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s",
+          willChange: "transform, opacity",
+        }}
+      >
+        {/* Relative card container with cross-fade */}
+        <div className="relative min-h-[360px] md:min-h-[280px] w-full">
+          {carouselCards.map((feature, idx) => {
+            const isActive = idx === activeIdx;
+            const IconComponent = featureIcons[feature.title as keyof typeof featureIcons];
+            const bullets = featureBullets[feature.title as keyof typeof featureBullets] || [];
+            const socialProof = featureSocialProofs[feature.title as keyof typeof featureSocialProofs] || "";
 
-                  {/* Bold Title */}
-                  <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 tracking-tight">
-                    {feature.title}
-                  </h3>
+            return (
+              <div
+                key={feature.title}
+                className={`w-full rounded-[2rem] border border-slate-200/40 p-6 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.03)] text-center transition-all duration-500 ease-in-out ${
+                  isActive
+                    ? "opacity-100 scale-100 relative z-10 pointer-events-auto"
+                    : "opacity-0 scale-95 absolute inset-0 z-0 pointer-events-none"
+                }`}
+                style={{
+                  background: "linear-gradient(135deg, #EEE9FE 40%, #C8F0E4 100%)"
+                }}
+              >
+                <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-8 items-center text-left">
+                  {/* Left Column (60% width) - always dark text for readability on light gradient */}
+                  <div className="space-y-4">
+                    {/* Icon */}
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#EEE9FE] text-[#189b9b] shadow-sm border border-slate-200/40">
+                      {IconComponent}
+                    </div>
 
-                  {/* Description */}
-                  <p className="text-slate-700 text-sm leading-relaxed">
-                    {feature.description}
-                  </p>
+                    {/* Bold Title */}
+                    <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 tracking-tight">
+                      {feature.title}
+                    </h3>
 
-                  {/* Bullet checkpoints */}
-                  <div className="space-y-2 pt-1">
-                    {bullets.map((bullet) => (
-                      <div key={bullet} className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                        <span className="text-[#189b9b] font-extrabold">✓</span>
-                        <span>{bullet}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Social Proof Line */}
-                  <div className="border-t border-slate-200/60 pt-3.5 mt-2 flex items-center gap-1.5">
-                    <Users className="h-3.5 w-3.5 text-[#534AB7] flex-shrink-0" />
-                    <p className="text-xs font-medium text-[#374151]">
-                      {socialProof}
+                    {/* Description */}
+                    <p className="text-slate-700 text-sm leading-relaxed">
+                      {feature.description}
                     </p>
-                  </div>
-                </div>
 
-                {/* Right Column (40% width) */}
-                <div className="flex items-center justify-center">
-                  <div
-                    className="w-full max-w-[280px] p-2.5 rounded-2xl"
-                    style={{
-                      background: "rgba(255, 255, 255, 0.35)",
-                      backdropFilter: "blur(12px)",
-                      WebkitBackdropFilter: "blur(12px)",
-                      border: "1px solid rgba(255, 255, 255, 0.6)",
-                      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.08)"
-                    }}
-                  >
-                    {renderVisual(feature.title)}
+                    {/* Bullet checkpoints */}
+                    <div className="space-y-2 pt-1">
+                      {bullets.map((bullet) => (
+                        <div key={bullet} className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                          <span className="text-[#189b9b] font-extrabold">✓</span>
+                          <span>{bullet}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Social Proof Line */}
+                    <div className="border-t border-slate-200/60 pt-3.5 mt-2 flex items-center gap-1.5">
+                      <Users className="h-3.5 w-3.5 text-[#534AB7] flex-shrink-0" />
+                      <p className="text-xs font-medium text-[#374151]">
+                        {socialProof}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Right Column (40% width) */}
+                  <div className="flex items-center justify-center">
+                    <div
+                      className="w-full max-w-[280px] p-2.5 rounded-2xl"
+                      style={{
+                        background: "rgba(255, 255, 255, 0.35)",
+                        backdropFilter: "blur(12px)",
+                        WebkitBackdropFilter: "blur(12px)",
+                        border: "1px solid rgba(255, 255, 255, 0.6)",
+                        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.08)"
+                      }}
+                    >
+                      {renderVisual(feature.title)}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
 
-      {/* Numbered Pagination */}
-      <div className="mt-8 flex justify-center items-center gap-6 text-sm font-semibold select-none">
-        {carouselCards.map((feature, idx) => {
-          const isActive = idx === activeIdx;
-          const numString = String(idx + 1).padStart(2, "0");
-          return (
-            <button
-              key={feature.title}
-              onClick={() => setActiveIdx(idx)}
-              className={`transition-all duration-300 focus:outline-none ${
-                isActive
-                  ? "text-[#189b9b] font-black text-base scale-110"
-                  : "text-slate-300 dark:text-slate-700 hover:text-slate-500 dark:hover:text-slate-500 font-bold"
-              }`}
-            >
-              {numString}
-            </button>
-          );
-        })}
+        {/* Numbered Pagination (left-aligned directly under the card) */}
+        <div className="flex justify-center items-center gap-6 text-sm font-semibold select-none">
+          {carouselCards.map((feature, idx) => {
+            const isActive = idx === activeIdx;
+            const numString = String(idx + 1).padStart(2, "0");
+            return (
+              <button
+                key={feature.title}
+                onClick={() => setActiveIdx(idx)}
+                className={`transition-all duration-300 focus:outline-none ${
+                  isActive
+                    ? "text-[#189b9b] font-black text-base scale-110"
+                    : "text-slate-300 dark:text-slate-700 hover:text-slate-500 dark:hover:text-slate-500 font-bold"
+                }`}
+              >
+                {numString}
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

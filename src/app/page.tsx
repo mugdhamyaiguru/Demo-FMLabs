@@ -266,12 +266,6 @@ export default function HomePage() {
 
       <section id="features" className="relative z-10 w-full bg-white dark:bg-[#12101e]">
         <div className="mx-auto max-w-7xl px-6 py-8 lg:px-10 lg:py-12">
-          <SectionHeading
-            eyebrow="Platform features"
-            title="Built to feel futuristic, vibrant, and easy to use"
-            description="The interface mixes SaaS clarity, playful gamification, and student-friendly visuals to make every workflow feel engaging."
-            centered
-          />
           <FeaturesCarousel />
         </div>
       </section>

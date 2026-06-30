@@ -84,7 +84,7 @@ export default function ContactSection() {
             willChange: "transform, opacity",
           }}
         >
-          <h2 className="text-[28px] lg:text-[32px] font-extrabold leading-tight text-white hero-title-font">
+          <h2 className="text-3xl lg:text-[38px] font-extrabold leading-tight text-white hero-title-font">
             We&apos;re here for every learner
           </h2>
           <p className="mt-2 text-[14px] leading-6 text-white/70">
